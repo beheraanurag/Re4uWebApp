@@ -44,6 +44,13 @@ async function directusRequest(path: string, init?: RequestInit) {
 
   if (!res.ok) {
     const text = await res.text();
+    if (res.status === 403) {
+      throw new Error(
+        `Directus API 403 (no permission). The token/user must be an Administrator with full access. ` +
+          `Use the admin account: set DIRECTUS_ADMIN_EMAIL and DIRECTUS_ADMIN_PASSWORD in .env and remove or leave empty DIRECTUS_ADMIN_TOKEN so the script logs in as admin. ` +
+          `Or create a new token in Directus (admin user → Access Tokens) and set DIRECTUS_ADMIN_TOKEN. Original: ${text}`
+      );
+    }
     throw new Error(`Directus API error ${res.status}: ${text}`);
   }
   return res.json();
