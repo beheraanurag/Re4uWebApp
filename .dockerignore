@@ -1,0 +1,31 @@
+# Dependencies and build output
+node_modules
+.next
+out
+build
+.pnp
+.pnp.*
+
+# Git and IDE
+.git
+.gitignore
+.cursor
+.vscode
+*.md
+!README.md
+
+# Env (inject at runtime, do not bake in image)
+.env
+.env.*
+!.env.example
+
+# Misc
+.DS_Store
+*.log
+coverage
+.vercel
+directus/db
+directus/uploads
+
+# Keep directus/extensions for optional app Dockerfile
+# directus/extensions

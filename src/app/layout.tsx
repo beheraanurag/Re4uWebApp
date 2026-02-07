@@ -1,0 +1,41 @@
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { Providers } from "./providers";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "Researchedit4u - Academic Editing and Research Support",
+  description:
+    "Premium academic editing, research support, and publication readiness for scholars.",
+  metadataBase: new URL("http://localhost:3000"),
+  openGraph: {
+    title: "Researchedit4u",
+    description: "Premium academic editing and research support.",
+    url: "http://localhost:3000",
+    type: "website",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <Providers>
+          <div className="min-h-screen bg-white">
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+          </div>
+        </Providers>
+      </body>
+    </html>
+  );
+}
