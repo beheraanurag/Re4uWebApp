@@ -137,3 +137,91 @@ If the Next.js process uses a lot of CPU on the server:
 2. **Use PM2 with the ecosystem file** – `pm2 start ecosystem.config.cjs` restarts the app if it exceeds 800MB memory and keeps a single instance.
 3. **Page caching** – The app uses ISR (`revalidate = 60`) on the homepage, blog, and case studies so responses are cached for 60 seconds instead of re-rendering on every request. After pulling the latest code and rebuilding, CPU should drop under normal traffic.
 4. **Restart after deploy** – Always run `pm2 restart re4u-web` after `npm run build` so the new build is used.
+
+---
+
+## Site not loading (http://your-server-ip/)
+
+For **http://62.72.56.143/** (or your server IP) to show the site, **both** must be true:
+
+1. **Caddy (proxy)** is running in Docker and listening on port **80**.
+2. **Next.js** is running on the **host** on port **3000** (Caddy proxies `/` to `host.docker.internal:3000`).
+
+**On the server, run:**
+
+```bash
+# 1. Go to project
+cd /path/to/Re4uWebApp   # replace with real path, e.g. /root/Re4uWebApp
+
+# 2. Pull latest (includes proxy in compose)
+git pull origin initial
+
+# 3. Start full stack (db + directus + proxy). Proxy will appear as re4u-proxy / re4uwebapp-proxy-1
+docker compose up -d
+
+# 4. Build and run Next.js on the host (so Caddy can proxy to it)
+npm ci
+npm run build
+pm2 start ecosystem.config.cjs
+# or: pm2 restart re4u-web   if it was already added
+pm2 save
+```
+
+**Check:**
+
+```bash
+docker ps                    # should show proxy, directus, db (3 containers)
+ss -tlnp | grep -E ':80|:3000'   # 80 = Caddy, 3000 = Next.js
+pm2 list                     # re4u-web should be online
+```
+
+**Firewall:** If port 80 is closed, open it (e.g. `ufw allow 80 && ufw reload`).
+
+---
+
+## Site not running – fix (only Re4uWebApp in PM2, high ↺)
+
+If **http://62.72.56.143/** does not load and you see only **Re4uWebApp** in `pm2 list` (with a high **↺** restart count), the site is down because:
+
+- **Re4uWebApp** is crash-looping (old start method, no memory limit).
+- **re4u-web** (from `ecosystem.config.cjs`) was removed, so there is no stable Next.js on port 3000 for Caddy to proxy to.
+
+**On the server, run:**
+
+```bash
+cd /opt/Re4uWebApp
+
+# 1. Remove the crash-looping app
+pm2 delete Re4uWebApp
+
+# 2. Ensure build exists (required for next start)
+npm run build
+
+# 3. Start the app with the ecosystem config (memory limit, stable)
+pm2 start ecosystem.config.cjs
+pm2 save
+```
+
+Then check:
+
+```bash
+pm2 list          # only re4u-web, status "online", ↺ 0 or low
+curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3000   # should be 200
+```
+
+After that, **http://62.72.56.143/** should load (Caddy on 80 → Next.js on 3000).
+
+---
+
+## PM2: re4u-web keeps restarting (↺ high)
+
+If you see **two** apps (e.g. **Re4uWebApp** and **re4u-web**) or one app with a high **↺** (restart) count:
+
+1. **Remove the old app** so only **re4u-web** (from `ecosystem.config.cjs`) runs:
+   ```bash
+   pm2 delete Re4uWebApp    # remove the old one (exact name from pm2 list)
+   pm2 start ecosystem.config.cjs   # ensure re4u-web is running
+   pm2 save
+   ```
+2. Use **one** way to run the app: either `pm2 start ecosystem.config.cjs` (recommended) or `pm2 start npm --name "re4u-web" -- start`, not both. Prefer the ecosystem file (memory limit, single instance).
+3. If **re4u-web** still restarts a lot, check logs: `pm2 logs re4u-web` (e.g. port in use, out of memory, or build missing — run `npm run build` first).

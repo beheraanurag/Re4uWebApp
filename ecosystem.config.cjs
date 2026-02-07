@@ -6,7 +6,7 @@
 module.exports = {
   apps: [
     {
-      name: "re4u-web",
+      name: "Re4uWebApp",
       script: "node_modules/next/dist/bin/next",
       args: "start",
       cwd: "./",
