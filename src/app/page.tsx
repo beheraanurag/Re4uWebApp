@@ -8,7 +8,8 @@ import { BlogPreview } from "@/components/sections/BlogPreview";
 import { CaseStudiesPreview } from "@/components/sections/CaseStudiesPreview";
 import { FaqSection } from "@/components/sections/FaqSection";
 
-export const dynamic = "force-dynamic";
+// Cache for 60s to reduce CPU; revalidate in background (was force-dynamic)
+export const revalidate = 60;
 
 export default async function HomePage() {
   const [services, posts, studies] = await Promise.all([

@@ -35,19 +35,21 @@ How to deploy and update the app on a server (first time and when code changes).
 
 5. **Run the Next.js app** (choose one):
 
-   - **Process manager (recommended)** – e.g. with PM2:
+   - **Process manager (recommended)** – PM2 with memory limit (see `ecosystem.config.cjs`):
 
      ```bash
      npm install -g pm2
-     pm2 start npm --name "re4u-web" -- start
+     pm2 start ecosystem.config.cjs
      pm2 save && pm2 startup
      ```
 
    - **Plain Node** (for testing):
 
      ```bash
-   npm run start
-   ```
+     npm run start
+     ```
+
+   **Important:** Always run **production** on the server (`npm run build` then `npm run start` or PM2). **Never run `npm run dev`** on the server—dev mode uses much more CPU and memory.
 
 6. **Point Caddy at the app**  
    The Caddyfile proxies `/` to `host.docker.internal:3000`. On the server, Next.js runs on the host, so Caddy will forward to it. Ensure the app is listening on port **3000** (Next.js default for `npm run start`).
@@ -124,3 +126,14 @@ echo "Update complete."
 ```
 
 Run with `bash scripts/update-server.sh` after editing the `cd` path.
+
+---
+
+## High CPU usage
+
+If the Next.js process uses a lot of CPU on the server:
+
+1. **Use production only** – Run `npm run build` and `npm run start` (or PM2). Do **not** run `npm run dev` on the server.
+2. **Use PM2 with the ecosystem file** – `pm2 start ecosystem.config.cjs` restarts the app if it exceeds 800MB memory and keeps a single instance.
+3. **Page caching** – The app uses ISR (`revalidate = 60`) on the homepage, blog, and case studies so responses are cached for 60 seconds instead of re-rendering on every request. After pulling the latest code and rebuilding, CPU should drop under normal traffic.
+4. **Restart after deploy** – Always run `pm2 restart re4u-web` after `npm run build` so the new build is used.

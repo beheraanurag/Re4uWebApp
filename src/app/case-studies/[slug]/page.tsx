@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { getCaseStudy } from "@/lib/api";
 import { Card } from "@/components/ui/card";
 
+export const revalidate = 60;
+
 type Props = {
   params: { slug: string } | Promise<{ slug: string }>;
 };
