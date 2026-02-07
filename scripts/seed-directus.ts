@@ -24,9 +24,9 @@ async function loginWithEmail() {
   return data?.data?.access_token as string | undefined;
 }
 
-let directusClient:
-  | ReturnType<typeof createDirectus>
-  | null = null;
+/** Client with rest() has .request(); SDK types are strict so we use a loose type for seed script. */
+type DirectusRestClient = { request: (op: unknown) => Promise<unknown> };
+let directusClient: DirectusRestClient | null = null;
 
 type DirectusCollection = {
   collection: string;
@@ -340,16 +340,18 @@ async function getOrCreateByField(collection: string, field: string, value: stri
   if (!directusClient) {
     throw new Error("Directus client not initialized.");
   }
-  const items = await directusClient.request(
-    readItems(collection as any, { filter: { [field]: { _eq: value } }, limit: 1 })
-  );
+  const items = (await directusClient.request(
+    readItems(collection as never, { filter: { [field]: { _eq: value } }, limit: 1 }) as unknown
+  )) as Record<string, unknown>[];
   if (items.length) return items[0];
-  return directusClient.request(createItem(collection as any, payload));
+  return directusClient.request(
+    createItem(collection as never, payload as never) as unknown
+  ) as Promise<Record<string, unknown>>;
 }
 
 async function seed() {
   if (!directusAdminToken) {
-    directusAdminToken = await loginWithEmail();
+    directusAdminToken = (await loginWithEmail()) ?? undefined;
   }
   if (!directusAdminToken) {
     console.error("Missing DIRECTUS_ADMIN_TOKEN or admin email/password.");
@@ -358,9 +360,33 @@ async function seed() {
 
   directusClient = createDirectus(DIRECTUS_URL)
     .with(staticToken(directusAdminToken))
-    .with(rest());
+    .with(rest()) as DirectusRestClient;
 
-  await ensureSchema();
+  // If token is invalid (401), try login with email/password and retry
+  try {
+    await ensureSchema();
+  } catch (err: unknown) {
+    const msg = String(err);
+    if (msg.includes("401") || msg.includes("INVALID_CREDENTIALS")) {
+      if (DIRECTUS_ADMIN_EMAIL && DIRECTUS_ADMIN_PASSWORD) {
+        const token = await loginWithEmail();
+        directusAdminToken = token ?? undefined;
+        if (directusAdminToken) {
+          directusClient = createDirectus(DIRECTUS_URL)
+            .with(staticToken(directusAdminToken))
+            .with(rest()) as DirectusRestClient;
+          await ensureSchema();
+        } else {
+          throw err;
+        }
+      } else {
+        throw err;
+      }
+    } else {
+      throw err;
+    }
+  }
+
   try {
     await ensureEditorRole();
   } catch (err: unknown) {
@@ -543,25 +569,25 @@ async function seed() {
     if (!directusClient) {
       throw new Error("Directus client not initialized.");
     }
-    const existing = await directusClient.request(
-      readItems("posts" as any, { filter: { slug: { _eq: post.slug } }, limit: 1 })
-    );
+    const existing = (await directusClient.request(
+      readItems("posts" as never, { filter: { slug: { _eq: post.slug } }, limit: 1 }) as unknown
+    )) as Record<string, unknown>[];
     if (existing.length) continue;
 
     const { tags: tagLinks, ...postPayload } = post;
-    const created = await directusClient.request(
-      createItem("posts" as any, postPayload)
-    );
+    const created = (await directusClient.request(
+      createItem("posts" as never, postPayload as never) as unknown
+    )) as { id: string };
     const postId = (created as { id: string }).id;
     if (postId && Array.isArray(tagLinks) && tagLinks.length > 0) {
       for (const link of tagLinks) {
         const tagsId = link?.tags_id ?? link;
         if (tagsId) {
           await directusClient.request(
-            createItem("posts_tags" as any, {
+            createItem("posts_tags" as never, {
               posts_id: postId,
               tags_id: typeof tagsId === "object" ? (tagsId as { id: string }).id : tagsId,
-            })
+            } as never) as unknown
           );
         }
       }
