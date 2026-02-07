@@ -130,15 +130,18 @@ return { ...payload, slug };
 
 4. Save and set the flow to **Active**. When you create or update a post, **leave the Slug field empty** and save — the flow will set the slug from the title before the item is saved.
 
-## Deployment (Self-hosted Node)
+## Deployment and server updates
 
-```bash
-npm install
-npm run build
-npm run start
-```
-
-Ensure `.env` is set on the server with `DIRECTUS_URL` and `DIRECTUS_PUBLIC_TOKEN`.
+- **First-time setup:** See [docs/server-update.md](docs/server-update.md) for clone, `.env`, Docker, and running the Next.js app (e.g. with PM2).
+- **After pushing new code:** On the server run:
+  ```bash
+  cd /path/to/Re4uWebApp
+  git pull origin main    # or your branch name
+  docker compose up -d    # only if you changed Docker/env
+  npm ci && npm run build
+  pm2 restart re4u-web    # or restart your process manager
+  ```
+  Full steps and one-liner: [docs/server-update.md](docs/server-update.md).
 
 ## Scripts
 
