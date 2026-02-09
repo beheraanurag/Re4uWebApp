@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   // Satisfy Next.js 16 when webpack config is present (Turbopack is default)
   turbopack: {},
   webpack: (config) => {
