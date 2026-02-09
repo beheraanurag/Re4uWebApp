@@ -30,7 +30,7 @@ Set:
 - `NEXTAUTH_URL` to `http://62.72.56.143` or your domain
 - `NEXTAUTH_SECRET` to a strong secret
 - `DB_PASSWORD` strong
-- Directus secrets & admin password
+- update `DATABASE_URL` to match the DB password
 
 ## 4) Build and run
 
@@ -38,17 +38,23 @@ Set:
 docker compose -f docker-compose.prod.yml up -d --build
 ```
 
-## 5) Verify
+## 5) Seed (optional)
+
+This runs in a one-off container with dev deps:
+
+```bash
+docker compose -f docker-compose.prod.yml --profile seed run --rm seed
+```
+
+## 6) Verify
 
 - App: `http://62.72.56.143/`
-- Directus: `http://62.72.56.143/directus/`
 
-## 6) Useful commands
+## 7) Useful commands
 
 ```bash
 # logs
 sudo docker logs -f re4u-web
-sudo docker logs -f re4u-directus
 sudo docker logs -f re4u-db
 sudo docker logs -f re4u-nginx
 

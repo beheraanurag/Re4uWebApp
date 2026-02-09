@@ -6,15 +6,17 @@ import { Providers } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const siteUrl = process.env.NEXTAUTH_URL || "http://62.72.56.143";
+
 export const metadata: Metadata = {
   title: "Researchedit4u - Academic Editing and Research Support",
   description:
     "Premium academic editing, research support, and publication readiness for scholars.",
-  metadataBase: new URL("http://localhost:3000"),
+  metadataBase: new URL(siteUrl),
   openGraph: {
     title: "Researchedit4u",
     description: "Premium academic editing and research support.",
-    url: "http://localhost:3000",
+    url: siteUrl,
     type: "website",
   },
 };
