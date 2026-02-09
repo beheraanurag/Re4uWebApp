@@ -6,14 +6,14 @@ import { Card } from "@/components/ui/card";
 export const revalidate = 60;
 
 type Props = {
-  params: { slug: string } | Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
-  const resolved = await Promise.resolve(params);
-  const study = await getCaseStudy(resolved.slug);
+  const { slug } = await params;
+  const study = await getCaseStudy(slug);
   if (!study) return {};
   return {
     title: `${study.title} - Researchedit4u`,
@@ -22,8 +22,8 @@ export async function generateMetadata({
 }
 
 export default async function CaseStudyDetailPage({ params }: Props) {
-  const resolved = await Promise.resolve(params);
-  const study = await getCaseStudy(resolved.slug);
+  const { slug } = await params;
+  const study = await getCaseStudy(slug);
   if (!study) notFound();
 
   return (

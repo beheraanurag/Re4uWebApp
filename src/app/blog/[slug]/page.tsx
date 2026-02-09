@@ -3,20 +3,20 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PostMeta } from "@/components/post-meta";
 import { TagPill } from "@/components/tag-pill";
-import { getAssetUrl, getPostBySlug } from "@/lib/directus";
+import { getPostBySlug } from "@/lib/blog";
 import { sanitizeContent } from "@/lib/sanitize";
 
 export const revalidate = 60;
 
 type PostPageProps = {
-  params: { slug: string } | Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({
   params,
 }: PostPageProps): Promise<Metadata> {
-  const resolvedParams = await Promise.resolve(params);
-  const post = await getPostBySlug(resolvedParams.slug);
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
   if (!post) return {};
   return {
     title: post.title,
@@ -25,11 +25,11 @@ export async function generateMetadata({
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-  const resolvedParams = await Promise.resolve(params);
-  const post = await getPostBySlug(resolvedParams.slug);
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
   if (!post) notFound();
 
-  const coverUrl = getAssetUrl(post.cover_image);
+  const coverUrl = post.cover_image ?? null;
   const safeHtml = sanitizeContent(post.content ?? "");
 
   return (
