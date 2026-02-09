@@ -47,6 +47,14 @@ export function PostForm({ post, isEditing = false, authors }: PostFormProps) {
   const [isCoverDragActive, setIsCoverDragActive] = useState(false);
   const [tagInput, setTagInput] = useState("");
   const coverFileInputRef = useRef<HTMLInputElement>(null);
+  const coverPreviewSrc = (() => {
+    if (!formData.coverImage) return "";
+    if (formData.coverImage.startsWith("http")) return formData.coverImage;
+    if (typeof window !== "undefined") {
+      return `${window.location.origin}${formData.coverImage}`;
+    }
+    return formData.coverImage;
+  })();
   
   const [formData, setFormData] = useState<Post>({
     title: post?.title || "",
@@ -333,7 +341,7 @@ export function PostForm({ post, isEditing = false, authors }: PostFormProps) {
                   {formData.coverImage ? (
                     <div className="border rounded-md overflow-hidden">
                       <img
-                        src={formData.coverImage}
+                        src={coverPreviewSrc}
                         alt="Cover preview"
                         className="w-full h-40 object-cover"
                       />

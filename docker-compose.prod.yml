@@ -20,6 +20,8 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+    volumes:
+      - ./public/uploads:/app/public/uploads
     environment:
       NODE_ENV: production
       NEXTAUTH_URL: ${NEXTAUTH_URL}

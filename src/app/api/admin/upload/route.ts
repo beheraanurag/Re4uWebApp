@@ -59,8 +59,9 @@ export async function POST(request: NextRequest) {
       await writeFile(filepath, buffer);
     }
 
-    // Return the public URL
-    const url = `/uploads/${filename}`;
+    // Return the public URL (absolute)
+    const baseUrl = process.env.NEXTAUTH_URL || request.nextUrl.origin;
+    const url = new URL(`/uploads/${filename}`, baseUrl).toString();
 
     return NextResponse.json({ 
       url,
