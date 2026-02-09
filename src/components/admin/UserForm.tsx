@@ -13,12 +13,12 @@ import { Save, Eye, EyeOff } from "lucide-react";
 
 interface User {
   id?: string;
-  name: string;
+  name?: string | null;
   email: string;
   password?: string;
   role: string;
   isActive: boolean;
-  avatar: string;
+  avatar?: string | null;
 }
 
 interface UserFormProps {
@@ -96,7 +96,7 @@ export function UserForm({ user, isEditing = false }: UserFormProps) {
                 <Label htmlFor="name">Full Name</Label>
                 <Input
                   id="name"
-                  value={formData.name}
+                  value={formData.name ?? ""}
                   onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                   placeholder="Enter full name..."
                   required
@@ -149,7 +149,7 @@ export function UserForm({ user, isEditing = false }: UserFormProps) {
               <Label htmlFor="avatar">Avatar URL</Label>
               <Input
                 id="avatar"
-                value={formData.avatar}
+                value={formData.avatar ?? ""}
                 onChange={(e) => setFormData(prev => ({ ...prev, avatar: e.target.value }))}
                 placeholder="https://example.com/avatar.jpg"
               />

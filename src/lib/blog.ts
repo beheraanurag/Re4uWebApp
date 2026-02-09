@@ -8,10 +8,12 @@ function mapRowToPost(row: {
   excerpt: string | null;
   coverImage: string | null;
   content: string;
-  authorName: string | null;
   updatedAt: Date;
   createdAt: Date;
+  tags: string[];
+  author?: { id: string; name: string | null; email: string } | null;
 }): Post {
+  const authorName = row.author?.name ?? row.author?.email ?? null;
   return {
     id: row.id,
     title: row.title,
@@ -22,10 +24,10 @@ function mapRowToPost(row: {
     published_at: row.updatedAt.toISOString(),
     updated_at: row.updatedAt.toISOString(),
     status: "published",
-    author: row.authorName
-      ? { id: row.id, name: row.authorName, avatar: null, bio: null }
+    author: authorName
+      ? { id: row.author?.id ?? row.id, name: authorName, avatar: null, bio: null }
       : null,
-    tags: [],
+    tags: (row.tags ?? []).map((name, i) => ({ id: i, name, slug: name.toLowerCase().replace(/\s+/g, "-") })),
   };
 }
 
@@ -35,6 +37,7 @@ export async function getLatestPosts(limit = 6): Promise<Post[]> {
       where: { published: true },
       orderBy: { updatedAt: "desc" },
       take: limit,
+      include: { author: { select: { id: true, name: true, email: true } } },
     });
     return rows.map(mapRowToPost);
   } catch {
@@ -49,6 +52,7 @@ export async function getPostsPage(page = 1, limit = 9): Promise<Post[]> {
       orderBy: { updatedAt: "desc" },
       skip: (page - 1) * limit,
       take: limit,
+      include: { author: { select: { id: true, name: true, email: true } } },
     });
     return rows.map(mapRowToPost);
   } catch {
@@ -60,6 +64,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
   try {
     const row = await prisma.post.findUnique({
       where: { slug },
+      include: { author: { select: { id: true, name: true, email: true } } },
     });
     if (!row || !row.published) return null;
     return mapRowToPost(row);

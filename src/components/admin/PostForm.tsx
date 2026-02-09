@@ -25,12 +25,13 @@ interface Post {
   title: string;
   slug: string;
   content: string;
-  excerpt: string;
-  coverImage: string;
+  excerpt?: string | null;
+  coverImage?: string | null;
   published: boolean;
   featured: boolean;
-  tags: string[];
+  tags?: string[];
   authorId?: string | null;
+  author?: { name: string | null; email: string } | null;
 }
 
 interface PostFormProps {
@@ -77,10 +78,10 @@ export function PostForm({ post, isEditing = false, authors }: PostFormProps) {
   };
 
   const addTag = () => {
-    if (tagInput.trim() && !formData.tags.includes(tagInput.trim())) {
+    if (tagInput.trim() && !(formData.tags ?? []).includes(tagInput.trim())) {
       setFormData(prev => ({
         ...prev,
-        tags: [...prev.tags, tagInput.trim()]
+        tags: [...(prev.tags ?? []), tagInput.trim()]
       }));
       setTagInput("");
     }
@@ -89,7 +90,7 @@ export function PostForm({ post, isEditing = false, authors }: PostFormProps) {
   const removeTag = (tagToRemove: string) => {
     setFormData(prev => ({
       ...prev,
-      tags: prev.tags.filter(tag => tag !== tagToRemove)
+      tags: (prev.tags ?? []).filter(tag => tag !== tagToRemove)
     }));
   };
 
@@ -213,7 +214,7 @@ export function PostForm({ post, isEditing = false, authors }: PostFormProps) {
                 <Label htmlFor="excerpt">Excerpt</Label>
                 <Textarea
                   id="excerpt"
-                  value={formData.excerpt}
+                  value={formData.excerpt ?? ""}
                   onChange={(e) => setFormData(prev => ({ ...prev, excerpt: e.target.value }))}
                   placeholder="Brief description of the post..."
                   rows={3}
@@ -299,7 +300,7 @@ export function PostForm({ post, isEditing = false, authors }: PostFormProps) {
                   <Label htmlFor="coverImage">Image URL</Label>
                   <Input
                     id="coverImage"
-                    value={formData.coverImage}
+                    value={formData.coverImage ?? ""}
                     onChange={(e) => setFormData(prev => ({ ...prev, coverImage: e.target.value }))}
                     placeholder="https://example.com/image.jpg"
                   />
@@ -372,7 +373,7 @@ export function PostForm({ post, isEditing = false, authors }: PostFormProps) {
               </div>
               
               <div className="flex flex-wrap gap-2">
-                {formData.tags.map((tag) => (
+                {(formData.tags ?? []).map((tag) => (
                   <Badge key={tag} variant="secondary" className="flex items-center gap-1">
                     {tag}
                     <X 

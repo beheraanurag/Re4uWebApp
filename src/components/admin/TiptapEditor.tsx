@@ -63,7 +63,7 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
     immediatelyRender: false,
     extensions: [
       StarterKit.configure({
-        codeBlock: true,
+        codeBlock: false,
         link: false,
         underline: false,
       }),

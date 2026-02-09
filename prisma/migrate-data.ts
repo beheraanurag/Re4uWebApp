@@ -7,12 +7,11 @@ async function migrateData() {
   console.log("Starting data migration...");
 
   try {
-    // Get existing posts to preserve authorName data
     const posts = await prisma.post.findMany({
-      select: { id: true, authorName: true }
+      select: { id: true, authorId: true }
     });
 
-    console.log(`Found ${posts.length} posts to migrate`);
+    console.log(`Found ${posts.length} posts`);
 
     // Apply schema changes with data loss acceptance
     console.log("Applying schema changes...");
