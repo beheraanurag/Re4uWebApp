@@ -47,15 +47,7 @@ export function PostForm({ post, isEditing = false, authors }: PostFormProps) {
   const [isCoverDragActive, setIsCoverDragActive] = useState(false);
   const [tagInput, setTagInput] = useState("");
   const coverFileInputRef = useRef<HTMLInputElement>(null);
-  const coverPreviewSrc = (() => {
-    if (!formData.coverImage) return "";
-    if (formData.coverImage.startsWith("http")) return formData.coverImage;
-    if (typeof window !== "undefined") {
-      return `${window.location.origin}${formData.coverImage}`;
-    }
-    return formData.coverImage;
-  })();
-  
+
   const [formData, setFormData] = useState<Post>({
     title: post?.title || "",
     slug: post?.slug || "",
@@ -67,6 +59,14 @@ export function PostForm({ post, isEditing = false, authors }: PostFormProps) {
     tags: post?.tags || [],
     authorId: post?.authorId ?? null,
   });
+
+  const coverPreviewSrc = (() => {
+    const src = formData.coverImage ?? "";
+    if (!src) return "";
+    if (src.startsWith("http")) return src;
+    if (typeof window !== "undefined") return `${window.location.origin}${src}`;
+    return src;
+  })();
 
   const generateSlug = (title: string) => {
     return title
