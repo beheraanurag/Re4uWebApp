@@ -32,18 +32,38 @@ type DirectusCollection = {
   collection: string;
 };
 
+function isConnectionRefused(err: unknown): boolean {
+  const cause = err instanceof Error ? (err as { cause?: { code?: string } }).cause : null;
+  return cause != null && typeof cause === "object" && (cause as { code?: string }).code === "ECONNREFUSED";
+}
+
 async function directusRequest(path: string, init?: RequestInit) {
-  const res = await fetch(`${DIRECTUS_URL}${path}`, {
-    ...init,
-    headers: {
-      Authorization: `Bearer ${directusAdminToken}`,
-      "Content-Type": "application/json",
-      ...(init?.headers ?? {}),
-    },
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${DIRECTUS_URL}${path}`, {
+      ...init,
+      headers: {
+        Authorization: `Bearer ${directusAdminToken}`,
+        "Content-Type": "application/json",
+        ...(init?.headers ?? {}),
+      },
+    });
+  } catch (err) {
+    if (isConnectionRefused(err)) {
+      throw new Error(
+        `Cannot connect to Directus at ${DIRECTUS_URL}. Is Directus running? Start with: docker compose up -d. If using port 8055, set DIRECTUS_URL=http://localhost:8055`
+      );
+    }
+    throw err;
+  }
 
   if (!res.ok) {
     const text = await res.text();
+    if (res.status === 401) {
+      throw new Error(
+        `Directus API 401: Invalid token or credentials. Set DIRECTUS_ADMIN_EMAIL and DIRECTUS_ADMIN_PASSWORD in .env to log in with credentials, or create a new token in Directus (admin user → Access Tokens). Original: ${text}`
+      );
+    }
     if (res.status === 403) {
       throw new Error(
         `Directus API 403 (no permission). The token/user must be an Administrator with full access. ` +
@@ -316,6 +336,86 @@ async function ensureEditorRole() {
   });
 }
 
+const PUBLIC_ROLE_NAME = "Public";
+const PUBLIC_POLICY_NAME = "Public read";
+
+async function ensurePublicRole() {
+  const rolesRes = await directusRequest("/roles?filter[name][_eq]=" + encodeURIComponent(PUBLIC_ROLE_NAME));
+  const existingRole = rolesRes.data?.[0];
+  let roleId: string;
+
+  if (existingRole?.id) {
+    roleId = existingRole.id;
+  } else {
+    const createRoleRes = await directusRequest("/roles", {
+      method: "POST",
+      body: JSON.stringify({
+        name: PUBLIC_ROLE_NAME,
+        description: "Read-only access for public site (blog posts, authors, tags).",
+        icon: "public",
+      }),
+    });
+    roleId = createRoleRes.data?.id;
+    if (!roleId) throw new Error("Failed to create Public role.");
+  }
+
+  const policiesRes = await directusRequest("/policies?filter[name][_eq]=" + encodeURIComponent(PUBLIC_POLICY_NAME));
+  const existingPolicy = policiesRes.data?.[0];
+  let policyId: string;
+
+  if (existingPolicy?.id) {
+    policyId = existingPolicy.id;
+    await directusRequest(`/policies/${policyId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ roles: [roleId] }),
+    });
+  } else {
+    const createPolicyRes = await directusRequest("/policies", {
+      method: "POST",
+      body: JSON.stringify({
+        name: PUBLIC_POLICY_NAME,
+        description: "Read-only access to blog content for DIRECTUS_PUBLIC_TOKEN.",
+        icon: "visibility",
+        app_access: false,
+        admin_access: false,
+        roles: [roleId],
+      }),
+    });
+    policyId = createPolicyRes.data?.id;
+    if (!policyId) throw new Error("Failed to create Public policy.");
+  }
+
+  const permissionsRes = await directusRequest("/permissions?filter[policy][_eq]=" + policyId);
+  const existingPerms = (permissionsRes.data ?? []) as { collection: string; action: string }[];
+  const needed = [
+    { collection: "posts", action: "read" },
+    { collection: "authors", action: "read" },
+    { collection: "tags", action: "read" },
+    { collection: "posts_tags", action: "read" },
+    { collection: "directus_files", action: "read" },
+  ];
+  const hasKey = (p: { collection: string; action: string }) =>
+    existingPerms.some((e) => e.collection === p.collection && e.action === p.action);
+  const toCreate = needed.filter((p) => !hasKey(p));
+  if (toCreate.length === 0) return;
+
+  await directusRequest("/permissions", {
+    method: "POST",
+    body: JSON.stringify({
+      data: toCreate.map(({ collection, action }) => ({
+        collection,
+        action,
+        policy: policyId,
+        permissions: {},
+        validation: {},
+        presets: {},
+        fields: [],
+      })),
+    }),
+  });
+  console.log("Public role configured. Create a user with role 'Public', generate a static token, set DIRECTUS_PUBLIC_TOKEN in .env");
+}
+
 async function uploadFileFromUrl(url: string, title: string) {
   const response = await fetch(url);
   if (!response.ok) {
@@ -357,11 +457,20 @@ async function getOrCreateByField(collection: string, field: string, value: stri
 }
 
 async function seed() {
+  // Prefer login with email/password when set (avoids invalid or expired DIRECTUS_ADMIN_TOKEN)
+  if (DIRECTUS_ADMIN_EMAIL && DIRECTUS_ADMIN_PASSWORD) {
+    try {
+      const token = await loginWithEmail();
+      if (token) directusAdminToken = token;
+    } catch (_) {
+      // keep existing token if login fails
+    }
+  }
   if (!directusAdminToken) {
     directusAdminToken = (await loginWithEmail()) ?? undefined;
   }
   if (!directusAdminToken) {
-    console.error("Missing DIRECTUS_ADMIN_TOKEN or admin email/password.");
+    console.error("Missing or invalid credentials. Set DIRECTUS_ADMIN_EMAIL and DIRECTUS_ADMIN_PASSWORD in .env, or a valid DIRECTUS_ADMIN_TOKEN.");
     process.exit(1);
   }
 
@@ -401,6 +510,19 @@ async function seed() {
     if (msg.includes("403") || msg.includes("FORBIDDEN") || msg.includes("permission")) {
       console.warn(
         "Skipping Editor role creation: token lacks permission to manage roles/policies. Create the Editor role manually in Directus (Settings → User Roles / Access Policies)."
+      );
+    } else {
+      throw err;
+    }
+  }
+
+  try {
+    await ensurePublicRole();
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    if (msg.includes("403") || msg.includes("FORBIDDEN") || msg.includes("permission")) {
+      console.warn(
+        "Skipping Public role: token lacks permission. In Directus, give the Public role read access to posts, authors, tags, posts_tags, directus_files and set DIRECTUS_PUBLIC_TOKEN to a token for that role."
       );
     } else {
       throw err;

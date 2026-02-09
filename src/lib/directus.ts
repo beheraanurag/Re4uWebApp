@@ -76,6 +76,12 @@ export function getAssetUrl(assetId?: string | null) {
   return `${directusUrl}/assets/${assetId}`;
 }
 
+function logDirectusError(context: string, err: unknown) {
+  if (process.env.NODE_ENV === "development") {
+    console.error(`[Directus] ${context}:`, err instanceof Error ? err.message : err);
+  }
+}
+
 export async function getLatestPosts(limit = 6) {
   try {
     const items = await directus.request(
@@ -87,7 +93,8 @@ export async function getLatestPosts(limit = 6) {
       })
     );
     return items.map(normalizePost);
-  } catch {
+  } catch (err) {
+    logDirectusError("getLatestPosts", err);
     return [];
   }
 }
@@ -104,7 +111,8 @@ export async function getPostsPage(page = 1, limit = 8) {
       })
     );
     return items.map(normalizePost);
-  } catch {
+  } catch (err) {
+    logDirectusError("getPostsPage", err);
     return [];
   }
 }
@@ -130,7 +138,8 @@ export async function getPostBySlug(slug: string) {
     const normalized = fallback.map(normalizePost);
     const match = normalized.find((p) => p.slug === slug);
     return match ?? null;
-  } catch {
+  } catch (err) {
+    logDirectusError("getPostBySlug", err);
     return null;
   }
 }
