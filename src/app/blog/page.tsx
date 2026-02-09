@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { BlogHero } from "@/components/blog-hero";
-import { getPostsPage, getAssetUrl } from "@/lib/directus";
+import { getPostsPage } from "@/lib/blog";
 import type { Post } from "@/lib/types";
 
 export const revalidate = 60;
@@ -20,7 +20,7 @@ function formatBlogDate(value?: string | null): string {
 }
 
 function BlogPostCard({ post }: { post: Post }) {
-  const coverUrl = getAssetUrl(post.cover_image);
+  const coverUrl = post.cover_image ?? null;
   return (
     <Card
       className="rounded-blog border overflow-hidden transition-all hover:shadow-blog2"
@@ -34,7 +34,7 @@ function BlogPostCard({ post }: { post: Post }) {
         <div className="aspect-[16/10] w-full overflow-hidden">
           <img
             src={coverUrl}
-            alt=""
+            alt={post.title}
             className="h-full w-full object-cover"
             loading="lazy"
           />
@@ -57,7 +57,7 @@ function BlogPostCard({ post }: { post: Post }) {
             className="text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-3"
             style={{ color: "var(--muted-blog)" }}
           >
-            {post.excerpt}
+            {post.excerpt || "Read more."}
           </p>
         </div>
         <Link
@@ -127,7 +127,11 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 color: "var(--muted-blog)",
               }}
             >
-              No posts found.
+              <p className="font-medium">No posts yet.</p>
+              <p className="mt-2 text-xs opacity-90">
+                Run <code className="rounded bg-black/5 px-1.5 py-0.5">npm run seed:blog</code> after{" "}
+                <code className="rounded bg-black/5 px-1.5 py-0.5">npx prisma db push</code> to add sample posts.
+              </p>
             </div>
           )}
         </div>

@@ -20,7 +20,7 @@ export function BlogPreview({ posts }: { posts: PostPreview[] }) {
       }}
     >
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <div className="mb-2.5 text-xs uppercase tracking-[0.18em] text-[#5a6980]">
               Resources
@@ -28,28 +28,29 @@ export function BlogPreview({ posts }: { posts: PostPreview[] }) {
             <h2 className="m-0 text-3xl font-bold leading-[1.12] tracking-[-0.02em] md:text-[34px]">
               Insights & Guides
             </h2>
-            <p className="mt-2.5 text-[15.5px] leading-relaxed text-[#5a6980]">
+            <p className="mt-2.5 max-w-[560px] text-[15.5px] leading-relaxed text-[#5a6980]">
               Practical resources on rejection, journal choice, and peer review.
             </p>
           </div>
           <Link
             href="/blog"
-            className="whitespace-nowrap text-sm font-semibold text-[#0b2d5c] hover:underline hover:text-[#0b3c71]"
+            className="inline-flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-[#0b2d5c] hover:underline hover:text-[#0b3c71]"
           >
-            View all →
+            View all
+            <span aria-hidden>→</span>
           </Link>
         </div>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
             <Card
               key={post.id}
-              className="overflow-hidden rounded-[18px] border border-[#d7e0ee] bg-white shadow-[0_12px_30px_rgba(11,18,32,.08)] transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(11,18,32,.06)]"
+              className="group overflow-hidden rounded-[18px] border border-[#d7e0ee] bg-white shadow-[0_12px_30px_rgba(11,18,32,.08)] transition-all hover:-translate-y-0.5 hover:border-[#c6d3e7] hover:shadow-[0_18px_34px_rgba(11,18,32,.06)]"
             >
-              <CardContent className="p-5">
-                <h3 className="mb-2 text-lg font-bold text-[#0b1220]">
+              <CardContent className="p-5 sm:p-6">
+                <h3 className="mb-2 line-clamp-2 text-lg font-bold text-[#0b1220] md:text-[18.5px]">
                   {post.title}
                 </h3>
-                <p className="mb-4 text-sm leading-relaxed text-[#5a6980]">
+                <p className="mb-4 line-clamp-4 text-sm leading-relaxed text-[#5a6980]">
                   {post.excerpt}
                 </p>
                 {(post.tags ?? []).length > 0 && (
@@ -57,7 +58,7 @@ export function BlogPreview({ posts }: { posts: PostPreview[] }) {
                     {(post.tags ?? []).map((tag) => (
                       <Badge
                         key={tag}
-                        className="rounded-full border border-[rgba(215,223,236,.95)] bg-[rgba(238,243,251,.7)] px-2 py-1 text-xs font-semibold text-[#0b2d5c]"
+                        className="rounded-full border border-[rgba(215,223,236,.95)] bg-[rgba(238,243,251,.7)] px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#0b2d5c]"
                       >
                         {tag}
                       </Badge>
@@ -66,7 +67,7 @@ export function BlogPreview({ posts }: { posts: PostPreview[] }) {
                 )}
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="inline-flex items-center gap-1 text-sm font-bold text-[#0b2d5c] hover:text-[#0ea5a4] hover:underline"
+                  className="inline-flex items-center gap-1 text-sm font-bold text-[#0b2d5c] transition-colors group-hover:text-[#0ea5a4] group-hover:underline"
                 >
                   Read more
                   <span>→</span>

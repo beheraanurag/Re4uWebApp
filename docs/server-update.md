@@ -15,15 +15,15 @@ How to deploy and update the app on a server (first time and when code changes).
 
    ```bash
    cp .env.example .env
-   # Edit .env: set DB_PASSWORD, DIRECTUS_SECRET, DIRECTUS_ADMIN_EMAIL,
-   # DIRECTUS_ADMIN_PASSWORD, DIRECTUS_URL (e.g. https://yourdomain.com/directus),
-   # DIRECTUS_PUBLIC_TOKEN (after creating it in Directus)
+   # Edit .env: set DB_PASSWORD, DATABASE_URL (e.g. postgresql://blog:blog@localhost:5432/blog)
    ```
 
-3. **Start the backend** (PostgreSQL + Directus + Caddy):
+3. **Start Postgres** (if using Docker):
 
    ```bash
    docker compose up -d
+   npx prisma db push
+   npm run seed:blog
    ```
 
 4. **Install Node deps and build the Next.js app**:

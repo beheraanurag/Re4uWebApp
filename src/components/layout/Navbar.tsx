@@ -66,15 +66,40 @@ export function Navbar() {
     <header className="sticky top-0 z-20">
       <div className="border-b border-[rgba(209,213,219,0.8)] bg-[#f9fafb] text-[0.78rem] text-[#6b7280]">
         <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
-          <div className="flex h-auto flex-wrap items-center justify-between gap-3 py-2 sm:h-10 sm:gap-6 sm:py-0">
-            <div className="flex flex-wrap gap-1 text-[0.7rem] sm:gap-1.5 sm:text-[0.78rem]">
-              <span className="whitespace-nowrap">Trusted by 4051+ researchers</span>
-              <span className="before:mx-1 before:content-['·'] sm:before:mx-1.5 whitespace-nowrap">200+ accepted papers</span>
-              <span className="before:mx-1 before:content-['·'] sm:before:mx-1.5 whitespace-nowrap">95% satisfaction</span>
+          {/* Mobile + tablet marquee */}
+          <div className="relative overflow-hidden py-2 lg:hidden">
+            <div className="flex min-w-full items-center gap-6 text-[0.7rem] marquee">
+              <div className="flex items-center gap-1">
+                <span className="whitespace-nowrap">Trusted by 4051+ researchers</span>
+                <span className="whitespace-nowrap">· 200+ accepted papers</span>
+                <span className="whitespace-nowrap">· 95% satisfaction</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="whitespace-nowrap">Mon–Sat: 10:00–19:00 IST</span>
+                <span className="whitespace-nowrap">· Email: support@researchedit4u.in</span>
+              </div>
+              <div className="flex items-center gap-1" aria-hidden>
+                <span className="whitespace-nowrap">Trusted by 4051+ researchers</span>
+                <span className="whitespace-nowrap">· 200+ accepted papers</span>
+                <span className="whitespace-nowrap">· 95% satisfaction</span>
+              </div>
+              <div className="flex items-center gap-1" aria-hidden>
+                <span className="whitespace-nowrap">Mon–Sat: 10:00–19:00 IST</span>
+                <span className="whitespace-nowrap">· Email: support@researchedit4u.in</span>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2 text-[0.7rem] sm:gap-5 sm:text-[0.78rem]">
-              <span className="hidden whitespace-nowrap sm:inline">Mon–Sat: 10:00–19:00 IST</span>
-              <span className="before:mx-1 before:content-['·'] sm:before:mx-1.5 hidden whitespace-nowrap sm:inline">Email: support@researchedit4u.in</span>
+          </div>
+
+          {/* Desktop static layout */}
+          <div className="hidden h-10 items-center justify-between gap-6 lg:flex">
+            <div className="flex flex-wrap gap-1.5 text-[0.78rem]">
+              <span className="whitespace-nowrap">Trusted by 4051+ researchers</span>
+              <span className="whitespace-nowrap before:mx-1.5 before:content-['·']">200+ accepted papers</span>
+              <span className="whitespace-nowrap before:mx-1.5 before:content-['·']">95% satisfaction</span>
+            </div>
+            <div className="flex flex-wrap gap-5 text-[0.78rem]">
+              <span className="whitespace-nowrap">Mon–Sat: 10:00–19:00 IST</span>
+              <span className="whitespace-nowrap before:mx-1.5 before:content-['·']">Email: support@researchedit4u.in</span>
             </div>
           </div>
         </div>

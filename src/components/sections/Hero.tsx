@@ -224,9 +224,6 @@ export function Hero() {
                     <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </button>
                 </div>
-                <Badge className="pointer-events-auto order-1 whitespace-nowrap rounded-full border border-[rgba(148,163,184,0.6)] bg-[rgba(255,255,255,0.96)] px-2 py-1 text-[0.7rem] text-[#6b7280] sm:order-2 sm:px-3 sm:py-1.5 sm:text-[0.74rem]">
-                  Click arrows to explore
-                </Badge>
               </div>
             </div>
           </div>

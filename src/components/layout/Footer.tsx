@@ -144,6 +144,13 @@ export function Footer() {
             <Link href="#terms" className="font-extrabold text-[#6b7280] no-underline hover:underline">Terms</Link>
             <Link href="#privacy" className="font-extrabold text-[#6b7280] no-underline hover:underline">Privacy</Link>
             <Link href="#cookies" className="font-extrabold text-[#6b7280] no-underline hover:underline">Cookies</Link>
+            <Link
+              href="/admin/login"
+              className="text-[#9ca3af] no-underline hover:text-[#6b7280] hover:underline"
+              aria-label="Admin login"
+            >
+              Admin
+            </Link>
           </div>
           <div className="ml-auto max-md:ml-0">
             <Link
