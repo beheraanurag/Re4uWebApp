@@ -49,17 +49,14 @@ Content is stored as HTML in `Post.content`. Cover images use full URLs in `Post
 
 ## Deployment and server updates
 
-- **First-time setup:** See [docs/server-update.md](docs/server-update.md) for clone, `.env`, Docker, and running the Next.js app (e.g. with PM2).
+- **First-time setup:** See [DEPLOY.md](DEPLOY.md) for clone, `.env`, and Docker.
 - **After pushing new code:** On the server run:
   ```bash
-  cd /path/to/Re4uWebApp
-  git pull origin main    # or your branch name
-  docker compose up -d    # only if you changed Docker/env
-  npm ci && npm run build
-  npx prisma db push      # if schema changed
-  pm2 restart re4u-web    # or restart your process manager
+  cd /opt/Re4uWebApp
+  git pull
+  docker compose -f docker-compose.prod.yml up -d --build
   ```
-  Full steps: [docs/server-update.md](docs/server-update.md).
+  See [DEPLOY.md](DEPLOY.md) for details.
 
 ## Scripts
 
