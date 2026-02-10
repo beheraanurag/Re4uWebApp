@@ -19,6 +19,11 @@ export const metadata: Metadata = {
     url: siteUrl,
     type: "website",
   },
+  icons: {
+    icon: "/logo-main.webp",
+    shortcut: "/logo-main.webp",
+    apple: "/logo-main.webp",
+  },
 };
 
 export default function RootLayout({

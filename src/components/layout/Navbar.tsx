@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, Search, ChevronDown } from "lucide-react";
@@ -109,24 +110,16 @@ export function Navbar() {
         <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
           <div className="flex h-[70px] items-center justify-between gap-3 md:gap-5">
             <Link href="/" className="flex min-w-0 flex-shrink-0 items-center gap-2.5 md:gap-3">
-              <div className="flex h-[40px] w-[40px] flex-shrink-0 items-center justify-center overflow-hidden rounded-[10px] border border-slate-300/60 bg-gradient-to-br from-blue-50 to-white md:h-[42px] md:w-[42px]">
-                <div className="flex flex-col items-center justify-center">
-                  <div className="flex items-center gap-0.5">
-                    <span className="text-base font-bold text-[#0b3c71] md:text-lg">R</span>
-                    <span className="relative">
-                      <span className="text-base font-bold text-[#0b3c71] md:text-lg">E</span>
-                    </span>
-                  </div>
-                  <div className="mt-0.5 text-[6px] leading-tight text-[#0b3c71]">
-                    <div>Research</div>
-                    <div>Edit4U</div>
-                  </div>
-                </div>
-              </div>
-              <div className="hidden min-w-0 flex-col sm:block">
-                <span className="text-[0.95rem] font-semibold leading-tight text-[#111827] whitespace-nowrap md:text-[1.05rem]">ResearchEdit4U Solution</span>
-                <span className="hidden text-[0.75rem] leading-tight text-[#6b7280] lg:block md:text-[0.8rem]">Research paper editing & publication support</span>
-              </div>
+              <span className="inline-flex items-center">
+                <Image
+                  src="/logo-main.webp"
+                  alt="Researchedit4u logo"
+                  width={140}
+                  height={40}
+                  priority
+                  className="h-9 w-auto md:h-10"
+                />
+              </span>
             </Link>
 
             <nav className="hidden flex-1 justify-center text-[0.9rem] text-[#6b7280] xl:flex max-w-2xl items-center gap-5 lg:gap-6">
