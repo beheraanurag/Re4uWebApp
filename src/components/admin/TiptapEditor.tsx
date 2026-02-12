@@ -359,10 +359,10 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => editor.chain().focus().setColor('#ef4444').run()}
-              title="Red text"
+              onClick={() => editor.chain().focus().setColor('#3F7F72').run()}
+              title="Brand green text"
             >
-              <Palette className="h-4 w-4 text-red-500" />
+              <Palette className="h-4 w-4 text-[#3F7F72]" />
             </Button>
             <Button
               variant="ghost"

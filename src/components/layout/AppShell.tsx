@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -13,10 +14,11 @@ export function AppShell({ children }: AppShellProps) {
   const isAdminRoute = pathname?.startsWith("/admin");
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="flex min-h-screen flex-col">
       {!isAdminRoute && <Navbar />}
-      <main>{children}</main>
+      <main className="flex-1">{children}</main>
       {!isAdminRoute && <Footer />}
+      {!isAdminRoute && <WhatsAppFloat />}
     </div>
   );
 }

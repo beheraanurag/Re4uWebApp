@@ -47,15 +47,15 @@
 }
 
 .tiptap-editor .ProseMirror blockquote {
-  border-left: 4px solid #e5e7eb;
+  border-left: 4px solid var(--border);
   padding-left: 1rem;
   margin: 1rem 0;
   font-style: italic;
-  color: #6b7280;
+  color: var(--muted-foreground);
 }
 
 .tiptap-editor .ProseMirror code {
-  background-color: #f3f4f6;
+  background-color: color-mix(in srgb, var(--brand-sand) 45%, #ffffff);
   padding: 0.125rem 0.25rem;
   border-radius: 0.25rem;
   font-family: 'Courier New', Courier, monospace;
@@ -63,8 +63,8 @@
 }
 
 .tiptap-editor .ProseMirror pre {
-  background-color: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background-color: var(--muted);
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   padding: 1rem;
   margin: 1rem 0;
@@ -85,12 +85,12 @@
 }
 
 .tiptap-editor .ProseMirror a {
-  color: #2563eb;
+  color: var(--brand-lapis);
   text-decoration: underline;
 }
 
 .tiptap-editor .ProseMirror a:hover {
-  color: #1d4ed8;
+  color: color-mix(in srgb, var(--brand-lapis) 82%, #ffffff);
 }
 
 /* Table Styles */
@@ -105,7 +105,7 @@
 .tiptap-editor .ProseMirror td,
 .tiptap-editor .ProseMirror th {
   min-width: 1em;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border);
   padding: 0.5rem;
   vertical-align: top;
   box-sizing: border-box;
@@ -115,7 +115,7 @@
 .tiptap-editor .ProseMirror th {
   font-weight: 600;
   text-align: left;
-  background-color: #f9fafb;
+  background-color: var(--surface-sand);
 }
 
 .tiptap-editor .ProseMirror .selectedCell:after {
@@ -133,7 +133,7 @@
   top: 0;
   bottom: -2px;
   width: 4px;
-  background-color: #adf;
+  background-color: var(--brand-sky);
   pointer-events: none;
 }
 
@@ -149,14 +149,14 @@
 
 /* Highlight Styles */
 .tiptap-editor .ProseMirror mark {
-  background-color: #fef08a;
+  background-color: color-mix(in srgb, var(--brand-sand) 65%, #ffffff);
   padding: 0.125rem 0.25rem;
   border-radius: 0.25rem;
 }
 
 /* Placeholder */
 .tiptap-editor .ProseMirror p.is-editor-empty:first-child::before {
-  color: #9ca3af;
+  color: var(--ink-faint);
   content: attr(data-placeholder);
   float: left;
   height: 0;
@@ -171,7 +171,7 @@
 /* Text alignment */
 .tiptap-editor .ProseMirror .has-focus {
   border-radius: 3px;
-  box-shadow: 0 0 0 3px #68d39160;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-green) 35%, transparent);
 }
 
 /* Color styles */
@@ -181,7 +181,7 @@
 
 /* Selection styles */
 .tiptap-editor .ProseMirror ::selection {
-  background: #accef7;
+  background: color-mix(in srgb, var(--brand-sky) 45%, #ffffff);
 }
 
 .tiptap-editor .ProseMirror .tableWrapper {

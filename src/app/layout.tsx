@@ -3,8 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/layout/AppShell";
 import { Providers } from "./providers";
+import { LOGO_MAIN_SRC } from "@/lib/branding";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 const siteUrl = process.env.NEXTAUTH_URL || "http://62.72.56.143";
 
@@ -20,9 +21,9 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: "/logo-main.webp",
-    shortcut: "/logo-main.webp",
-    apple: "/logo-main.webp",
+    icon: LOGO_MAIN_SRC,
+    shortcut: LOGO_MAIN_SRC,
+    apple: LOGO_MAIN_SRC,
   },
 };
 
@@ -33,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${inter.className}`}>
         <Providers>
           <AppShell>{children}</AppShell>
         </Providers>

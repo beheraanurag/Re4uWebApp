@@ -190,7 +190,7 @@ export function UsersTable({ users }: UsersTableProps) {
                         variant="ghost"
                         size="sm"
                         onClick={() => handleDelete(user.id, user.email)}
-                        className="text-red-600 hover:text-red-700"
+                        className="text-[#1F3A5F] hover:text-[#3F7F72]"
                         title="Delete"
                       >
                         <Trash2 className="h-4 w-4" />

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import bcrypt from "bcryptjs";
+import { type Prisma, UserRole } from "@prisma/client";
 
 
 export async function GET(
@@ -57,7 +58,14 @@ export async function PUT(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const body = await request.json();
+    const body: {
+      name?: string | null;
+      email?: string;
+      password?: string;
+      role?: UserRole;
+      isActive?: boolean;
+      avatar?: string | null;
+    } = await request.json();
     const { name, email, password, role, isActive, avatar } = body;
 
     // Check if email already exists (excluding current user)
@@ -76,8 +84,8 @@ export async function PUT(
     }
 
     // Prepare update data
-    const updateData: any = {
-      name,
+    const updateData: Prisma.UserUpdateInput = {
+      name: name ?? null,
       email,
       role,
       isActive: isActive ?? true,
