@@ -766,16 +766,16 @@ export function CaseStoriesExperience() {
             </div>
           </article>
 
-          <article className="rounded-2xl border border-transparent bg-[linear-gradient(135deg,#1F3A5F,#3F7F72)] p-6 text-white shadow-[0_16px_34px_rgba(31,58,95,0.2)]">
-            <h2 className="text-3xl font-semibold">Need support on a live manuscript?</h2>
-            <p className="mt-3 text-sm leading-relaxed text-white/85">
+          <article className="rounded-2xl border border-[#A8C7E6]/60 bg-white/95 p-6 text-[#2A2E35] shadow-[0_10px_24px_rgba(20,35,45,0.08)]">
+            <h2 className="text-3xl font-semibold text-[#1F3A5F]">Need support on a live manuscript?</h2>
+            <p className="mt-3 text-sm leading-relaxed text-[#2A2E35]/78">
               Share your current stage and blockers. We will map the fastest ethical route from draft to reviewer-ready submission.
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
-              <Button asChild className="bg-white text-[#1F3A5F] hover:bg-white/90">
+              <Button asChild className="bg-[#1F3A5F] text-white hover:bg-[#3F7F72]">
                 <Link href="/contact">Book expert review</Link>
               </Button>
-              <Button asChild variant="outline" className="border-white/35 bg-white/10 text-white hover:bg-white/20">
+              <Button asChild variant="outline" className="border-[#A8C7E6]/60 bg-white text-[#1F3A5F] hover:bg-[#A8C7E6]/12">
                 <Link href="/services">Explore services</Link>
               </Button>
             </div>

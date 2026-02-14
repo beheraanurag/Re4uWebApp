@@ -113,6 +113,14 @@ function normalizeSearchText(value: string) {
     .trim();
 }
 
+function formatTurnaround(value: string) {
+  return value
+    .replace(/(\d)\s*-\s*(\d)\s*(business\s*)?days?/gi, "$1-$2 $3days")
+    .replace(/(\d)\s*(business\s*)?days?/gi, "$1 $2days")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 export default function PresentationsExperience({
   fontClassName,
 }: PresentationsExperienceProps) {
@@ -589,7 +597,7 @@ export default function PresentationsExperience({
                   Why researchers trust RE4U
                 </h2>
                 <p className={styles.sectionSub}>
-                  Front: title + 3 highlights + golden reviews + CTA. Flip: what
+                  Front: title + 3 highlights + CTA. Flip: what
                   you get.
                 </p>
               </div>
@@ -630,7 +638,6 @@ export default function PresentationsExperience({
                             {"\u2605\u2605\u2605\u2605\u2605"}
                           </span>
                           <span className={styles.trustScore}>{card.rating.toFixed(1)}</span>
-                          <span className={styles.trustReviews}>{card.reviews} reviews</span>
                           <span className={styles.trustCta}>See details</span>
                         </span>
 
@@ -768,20 +775,22 @@ export default function PresentationsExperience({
                     ))}
                   </ul>
 
-                  <p className={styles.planEta}>
-                    <strong>{plan.etaLabel}:</strong> {plan.eta}
-                  </p>
+                  <div className={styles.planFooter}>
+                    <p className={styles.planEta}>
+                      <strong>{plan.etaLabel}:</strong> {formatTurnaround(plan.eta)}
+                    </p>
 
-                  <Link
-                    href={buildContactHref({
-                      need,
-                      plan: plan.id,
-                      deadline,
-                    })}
-                    className={`${styles.btn} ${styles.btnPrimary} ${styles.planCta}`}
-                  >
-                    Get started
-                  </Link>
+                    <Link
+                      href={buildContactHref({
+                        need,
+                        plan: plan.id,
+                        deadline,
+                      })}
+                      className={`${styles.btn} ${styles.btnPrimary} ${styles.planCta}`}
+                    >
+                      Get started
+                    </Link>
+                  </div>
                 </article>
               ))}
             </div>
@@ -893,7 +902,7 @@ export default function PresentationsExperience({
                   {sample.deliverable} | {sample.format}
                 </p>
                 <p className={styles.recommendationMeta}>
-                  Turnaround: {sample.turnaround}
+                  Turnaround: {formatTurnaround(sample.turnaround)}
                 </p>
                 <div className={styles.sampleChanges}>
                   {sample.changes.map((change) => (
@@ -1144,7 +1153,7 @@ export default function PresentationsExperience({
                 <strong>Format:</strong> {activeSample.format}
               </p>
               <p>
-                <strong>Turnaround:</strong> {activeSample.turnaround}
+                <strong>Turnaround:</strong> {formatTurnaround(activeSample.turnaround)}
               </p>
               <div className={styles.modalPills}>
                 {activeSample.changes.map((item) => (

@@ -26,6 +26,34 @@
   color: var(--ink);
 }
 
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("/researchlogo.webp");
+  background-repeat: no-repeat;
+  background-position: center 32%;
+  background-size: min(680px, 62vw);
+  opacity: 0.14;
+  filter: saturate(0.95) contrast(1.02);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(233, 227, 213, 0.28) 0%,
+    rgba(233, 227, 213, 0.42) 40%,
+    rgba(233, 227, 213, 0.62) 100%
+  );
+  pointer-events: none;
+}
+
 .heroInner {
   width: 100%;
   max-width: 1140px;
@@ -170,6 +198,12 @@
 }
 
 @media (max-width: 680px) {
+  .hero::before {
+    background-size: min(460px, 86vw);
+    background-position: center 26%;
+    opacity: 0.12;
+  }
+
   .glass {
     padding: 28px 16px 20px;
   }
@@ -192,4 +226,3 @@
     opacity: 0.5;
   }
 }
-

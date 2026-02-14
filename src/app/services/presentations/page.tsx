@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import PresentationsExperience from "./PresentationsExperience";
-import { PublicPageFrame } from "@/components/layout/PublicPageFrame";
 
 export const metadata: Metadata = {
   title: "Academic Presentation | Researchedit4u",
@@ -9,9 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function PresentationsPage() {
-  return (
-    <PublicPageFrame>
-      <PresentationsExperience fontClassName="" />
-    </PublicPageFrame>
-  );
+  return <PresentationsExperience fontClassName="" />;
 }

@@ -1964,7 +1964,10 @@ export function PublicationSupportPage() {
                 Packages &amp; pricing{" "}
                 <span className={styles.pricingTitleMuted}>(starting at)</span>
               </h2>
-              <p className={styles.pricingSub}>Pick the level of publication support services you need - journal selection, pre-submission review, integrity safeguards, and submission pack planning.</p>
+              <p className={styles.pricingSub}>
+                Choose the publication support level you need: journal selection,
+                pre-submission review, integrity safeguards, and submission pack planning.
+              </p>
               <div className={styles.pricingTags}>
                 <span className={styles.pricingTag}>journal selection</span>
                 <span className={styles.pricingTag}>pre-submission review</span>
@@ -2099,7 +2102,7 @@ export function PublicationSupportPage() {
               ))}
             </div>
 
-            <div className={styles.pricingNote} style={{ marginTop: 12 }}>
+            <div className={`${styles.pricingNote} ${styles.stackGap12}`}>
               <b>Tip:</b> Click <b>Details</b> to see the exact problem this package solves and what
               you gain (in plain language).
             </div>
@@ -2118,8 +2121,8 @@ export function PublicationSupportPage() {
                 <span className={styles.addOnTitleMuted}>(by request only)</span>
               </h2>
               <p className={styles.addOnSub}>
-                Pick only what you need. Tap <b>Details</b> to see the problem it solves + benefits
-                (in a conversational tone).
+                Choose only what you need. Tap <b>Details</b> to see the exact problem solved and the
+                expected outcome.
               </p>
             </div>
             <div className={styles.addOnBtnRow}>
@@ -2151,7 +2154,7 @@ export function PublicationSupportPage() {
                       <div className={styles.addOnMeta}>
                         {addOn.intent} - {addOn.eta}
                       </div>
-                      <div className={styles.addOnMeta} style={{ marginTop: 8 }}>
+                      <div className={`${styles.addOnMeta} ${styles.stackGap8}`}>
                         {addOn.summary}
                       </div>
                     </div>
@@ -2205,7 +2208,7 @@ export function PublicationSupportPage() {
                 <span className={styles.eduTitleMuted}>(fast, practical)</span>
               </h2>
               <p className={styles.eduSub}>
-                Click a topic chip {"->"} the left guide opens and the right scan updates to match.
+                Click a topic chip - the left guide opens and the right scan updates to match.
               </p>
               <div className={styles.eduChipsNav} aria-label="Education topics">
                 {EDUCATION_TOPICS.map((topic) => (
@@ -2392,7 +2395,10 @@ export function PublicationSupportPage() {
                 <span className={styles.sectionLabel}>Integrity pledge</span>
               </div>
               <h2 className={styles.integrityTitle}>Our Integrity Pledge</h2>
-              <p className={styles.integritySub}>A clear contract between you and us: we help you publish responsibly, and we do not touch anything that can backfire later.</p>
+              <p className={styles.integritySub}>
+                A clear contract between you and us: we help you publish responsibly, and we avoid
+                anything that could create future risk.
+              </p>
             </div>
             <div className={styles.integrityBtnRow}>
               <button
@@ -2518,7 +2524,7 @@ export function PublicationSupportPage() {
               </div>
               <h2 className={styles.faqTitle}>FAQs</h2>
               <p className={styles.faqSub}>
-                Quick answers in a client tone. Search your question - or just tap to expand.
+                Find quick answers. Search by keyword, or tap any question to expand.
               </p>
             </div>
           </div>
@@ -3202,7 +3208,7 @@ export function PublicationSupportPage() {
                 </div>
               </div>
 
-              <div className={styles.grid2} style={{ marginTop: 12 }}>
+              <div className={`${styles.grid2} ${styles.stackGap12}`}>
                 <div>
                   <label htmlFor="email">Email (optional)</label>
                   <input
@@ -3226,7 +3232,7 @@ export function PublicationSupportPage() {
                 </div>
               </div>
 
-              <div className={styles.grid2} style={{ marginTop: 12 }}>
+              <div className={`${styles.grid2} ${styles.stackGap12}`}>
                 <div>
                   <label htmlFor="manuscriptType">Manuscript type</label>
                   <select
@@ -3261,7 +3267,7 @@ export function PublicationSupportPage() {
                 </div>
               </div>
 
-              <div className={styles.grid2} style={{ marginTop: 12 }}>
+              <div className={`${styles.grid2} ${styles.stackGap12}`}>
                 <div>
                   <label htmlFor="indexing">Indexing need</label>
                   <select

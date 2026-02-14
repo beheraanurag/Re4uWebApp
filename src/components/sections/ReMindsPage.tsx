@@ -12,6 +12,7 @@ type PostItem = {
   id: string;
   title: string;
   desc: string;
+  coverImage?: string | null;
   format: "Series" | "Guide";
   readMin: number;
   stage: string;
@@ -284,6 +285,15 @@ function inferType(tags: string[], title: string): string {
   return "Guide";
 }
 
+function normalizeCoverImageUrl(value: string | null | undefined) {
+  if (!value) return null;
+  const src = value.trim();
+  if (!src) return null;
+  if (/^https?:\/\//i.test(src)) return src;
+  if (src.startsWith("/")) return src;
+  return `/${src}`;
+}
+
 function toPostItems(posts: Post[]): PostItem[] {
   if (!posts.length) return FALLBACK_POSTS;
   return posts.map((post, index) => {
@@ -296,6 +306,7 @@ function toPostItems(posts: Post[]): PostItem[] {
       id: String(post.id),
       title: post.title,
       desc: post.excerpt || "Read more.",
+      coverImage: normalizeCoverImageUrl(post.cover_image),
       format,
       readMin: 5 + (index % 4),
       stage,
@@ -646,8 +657,28 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
                         <span className="h-2 w-2 rounded-full bg-[#1F3A5F]" />
                         {item.category}
                       </span>
-                      <h3 className="mt-2 text-sm font-extrabold text-[#2A2E35]">{item.title}</h3>
-                      <p className="mt-1 text-xs text-[rgba(42,46,53,.70)]">{item.desc}</p>
+                      <h3
+                        className="mt-2 text-sm font-extrabold text-[#2A2E35]"
+                        style={{
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {item.title}
+                      </h3>
+                      <p
+                        className="mt-1 text-xs text-[rgba(42,46,53,.70)]"
+                        style={{
+                          display: "-webkit-box",
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {item.desc}
+                      </p>
                       <div className="mt-3 flex flex-wrap gap-2">
                         <span className="rounded-full border border-[rgba(42,46,53,.12)] bg-white/70 px-2 py-1 text-[11px] font-extrabold text-[rgba(42,46,53,.70)]">
                           {item.filetype}
@@ -679,7 +710,18 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
                     key={item.id}
                     className="rounded-2xl border border-[rgba(42,46,53,.12)] bg-white shadow-[0_12px_22px_rgba(42,46,53,.07)]"
                   >
-                    <div className="h-[104px] rounded-t-[20px] bg-[rgba(42,46,53,.04)]" />
+                    {item.coverImage ? (
+                      <div className="h-[104px] overflow-hidden rounded-t-[20px] bg-[rgba(42,46,53,.04)]">
+                        <img
+                          src={item.coverImage}
+                          alt={item.title}
+                          className="h-full w-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                    ) : (
+                      <div className="h-[104px] rounded-t-[20px] bg-[rgba(42,46,53,.04)]" />
+                    )}
                     <div className="p-3">
                       <span
                         className={`inline-flex items-center gap-2 rounded-full border border-[rgba(42,46,53,.12)] bg-white/70 px-2.5 py-1 text-xs font-extrabold text-[rgba(42,46,53,.80)] ${
@@ -689,8 +731,28 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
                         <span className="h-2 w-2 rounded-full bg-[#1F3A5F]" />
                         {item.format}
                       </span>
-                      <h3 className="mt-2 text-sm font-extrabold text-[#2A2E35]">{item.title}</h3>
-                      <p className="mt-1 text-xs text-[rgba(42,46,53,.70)]">{item.desc}</p>
+                      <h3
+                        className="mt-2 text-sm font-extrabold text-[#2A2E35]"
+                        style={{
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {item.title}
+                      </h3>
+                      <p
+                        className="mt-1 text-xs text-[rgba(42,46,53,.70)]"
+                        style={{
+                          display: "-webkit-box",
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {item.desc}
+                      </p>
                       <div className="mt-3 flex flex-wrap gap-2">
                         <span className="rounded-full border border-[rgba(42,46,53,.12)] bg-white/70 px-2 py-1 text-[11px] font-extrabold text-[rgba(42,46,53,.70)]">
                           {item.stage}

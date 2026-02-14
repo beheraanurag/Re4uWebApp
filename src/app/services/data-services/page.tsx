@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import DataServicesExperience from "./DataServicesExperience";
-import { PublicPageFrame } from "@/components/layout/PublicPageFrame";
 
 export const metadata: Metadata = {
   title: "Data Services | Researchedit4u",
@@ -9,9 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function DataServicesPage() {
-  return (
-    <PublicPageFrame>
-      <DataServicesExperience fontClassName="" />
-    </PublicPageFrame>
-  );
+  return <DataServicesExperience fontClassName="" />;
 }

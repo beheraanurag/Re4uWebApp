@@ -354,8 +354,8 @@ export const plans: Plan[] = [
     name: "Thesis PPT Essentials",
     whoFor:
       "Quick polish for a thesis proposal, viva, or internal review.",
-    price: "$179",
-    priceMeta: "USD \u00b7 one-time",
+    price: "INR 3,500",
+    priceMeta: "one-time",
     etaLabel: "First draft",
     eta: "4 business days",
     points: [
@@ -372,8 +372,8 @@ export const plans: Plan[] = [
     name: "Defence Deck Pro",
     whoFor:
       "Final PhD thesis defence presentation with strong flow and visuals.",
-    price: "$349",
-    priceMeta: "USD \u00b7 one-time",
+    price: "INR 5,500",
+    priceMeta: "one-time",
     etaLabel: "First draft",
     eta: "5 business days",
     points: [
@@ -391,8 +391,8 @@ export const plans: Plan[] = [
     name: "Poster Impact",
     whoFor:
       "Conferences and exhibitions needing a print-ready poster.",
-    price: "$229",
-    priceMeta: "USD \u00b7 one-time",
+    price: "INR 2,500",
+    priceMeta: "one-time",
     etaLabel: "First draft",
     eta: "5 business days",
     points: [
@@ -409,8 +409,8 @@ export const plans: Plan[] = [
     name: "Presentation + Poster Bundle",
     whoFor:
       "Defence + conference-ready package (best value).",
-    price: "$499",
-    priceMeta: "USD \u00b7 one-time",
+    price: "INR 7,500",
+    priceMeta: "one-time",
     etaLabel: "Delivery",
     eta: "8-10 business days",
     points: [

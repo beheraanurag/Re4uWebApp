@@ -676,6 +676,12 @@
   padding: 14px;
 }
 
+.sampleCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .packageTop,
 .sampleTop {
   display: flex;
@@ -707,6 +713,33 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.packageActions .btn {
+  width: auto;
+  flex: 1 1 0;
+  min-width: 0;
+  justify-content: center;
+}
+
+.packageActions {
+  flex-wrap: nowrap;
+}
+
+.sampleActions {
+  margin-top: auto;
+  padding-top: 11px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sampleActions .btn {
+  width: auto;
+  flex: 1 1 0;
+  min-width: 0;
+  justify-content: center;
+  white-space: nowrap;
 }
 
 .integrityNote {
@@ -1112,4 +1145,3 @@
     grid-template-columns: 1fr;
   }
 }
-

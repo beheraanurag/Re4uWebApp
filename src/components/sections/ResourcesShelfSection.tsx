@@ -216,11 +216,11 @@ export function ResourcesShelfSection({ posts }: { posts: ResourcePost[] }) {
           </div>
 
           {filtered.length > 0 ? (
-            <div className="grid auto-cols-[minmax(300px,1fr)] grid-flow-col gap-4 overflow-x-auto pb-4">
+            <div className="grid grid-cols-1 gap-4 pb-1 sm:grid-cols-2 xl:grid-cols-4">
               {filtered.slice(0, 4).map((item) => (
                 <article
                   key={item.id}
-                  className="flex min-h-[240px] flex-col overflow-hidden rounded-2xl border border-[#A8C7E6]/60 bg-white shadow-md"
+                  className="flex h-full min-h-[240px] flex-col overflow-hidden rounded-2xl border border-[#A8C7E6]/60 bg-white shadow-md"
                 >
                   <div className="relative h-[120px] bg-[#1F3A5F]">
                     <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-[rgba(255,255,255,.18)] bg-white/10 px-3 py-1 text-[11px] font-extrabold text-white/90">
@@ -229,8 +229,28 @@ export function ResourcesShelfSection({ posts }: { posts: ResourcePost[] }) {
                     </span>
                   </div>
                   <div className="px-4 pb-3 pt-3">
-                    <h3 className="text-[17px] font-semibold text-[#2A2E35]">{item.title}</h3>
-                    <p className="mt-2 text-sm text-[#2A2E35]/75">{item.excerpt}</p>
+                    <h3
+                      className="text-[17px] font-semibold text-[#2A2E35]"
+                      style={{
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                      }}
+                    >
+                      {item.title}
+                    </h3>
+                    <p
+                      className="mt-2 text-sm text-[#2A2E35]/75"
+                      style={{
+                        display: "-webkit-box",
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                      }}
+                    >
+                      {item.excerpt}
+                    </p>
                   </div>
                   <div className="mt-auto flex flex-wrap items-center justify-between gap-2 border-t border-[#A8C7E6]/45 bg-[#A8C7E6]/15 px-4 py-3 text-xs text-[#2A2E35]/75">
                     <div className="flex flex-wrap gap-2">

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import styles from "./page.module.css";
-import { PublicPageFrame } from "@/components/layout/PublicPageFrame";
 
 const heroBullets = [
   "Research proposal outline aligned to your university or funder format",
@@ -294,8 +293,7 @@ export default function ResearchPlanningPage() {
   ];
 
   return (
-    <PublicPageFrame>
-      <div className={styles.page}>
+    <>
       <section className={styles.heroSection}>
         <div className={styles.container}>
           <div className={styles.heroGrid}>
@@ -1015,9 +1013,7 @@ export default function ResearchPlanningPage() {
           </div>
         </div>
       </section>
-      </div>
-    </PublicPageFrame>
+    </>
   );
 }
-
 

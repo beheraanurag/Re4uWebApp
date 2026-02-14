@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { CaseStoriesExperience } from "@/components/sections/CaseStoriesExperience";
-import { PublicPageFrame } from "@/components/layout/PublicPageFrame";
 
 export const metadata: Metadata = {
   title: "Case Stories - Researchedit4u",
@@ -9,9 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function CaseStudiesPage() {
-  return (
-    <PublicPageFrame>
-      <CaseStoriesExperience />
-    </PublicPageFrame>
-  );
+  return <CaseStoriesExperience />;
 }

@@ -14,6 +14,20 @@
   padding: 20px 0 72px;
 }
 
+.page :where(h1, h2, h3) {
+  font-family: var(--font-manrope), "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.page :where(p, li, a, button, span) {
+  font-family: var(--font-inter), "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.dsSectionTitle {
+  font-family: var(--font-manrope), "Avenir Next", "Segoe UI", sans-serif !important;
+  letter-spacing: -0.015em !important;
+  font-weight: 780 !important;
+}
+
 .container {
   max-width: 1180px;
   margin: 0 auto;

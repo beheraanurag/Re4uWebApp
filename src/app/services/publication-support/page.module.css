@@ -1267,23 +1267,29 @@
 .pricingBtnRow {
   display: flex;
   gap: 10px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   margin-top: 10px;
+  align-items: center;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
 }
 
 .pricingBtn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 11px 13px;
-  border-radius: 14px;
+  padding: 8px 12px;
+  border-radius: 10px;
   border: 1px solid rgba(15, 23, 42, 0.1);
   background: rgba(15, 23, 42, 0.03);
-  font-weight: 900;
-  font-size: 13.5px;
+  font-weight: 700;
+  font-size: 12.5px;
   cursor: pointer;
   user-select: none;
   color: rgba(15, 23, 42, 0.9);
+  white-space: nowrap;
+  flex: 0 0 auto;
 }
 
 .pricingBtn:hover {
@@ -1298,8 +1304,8 @@
 }
 
 .pricingBtn svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   opacity: 0.95;
 }
 
@@ -4274,12 +4280,14 @@
 
 /* Publication support spacing system (single source of truth) */
 .page {
-  --pub-section-gap: clamp(8px, 1.3vw, 14px);
+  --pub-section-gap: clamp(10px, 1.6vw, 16px);
   --pub-pad-x: clamp(12px, 1.9vw, 18px);
   --pub-head-top: clamp(10px, 1.5vw, 14px);
   --pub-head-bottom: clamp(8px, 1.1vw, 10px);
   --pub-content-top: clamp(8px, 1.2vw, 12px);
   --pub-content-bottom: clamp(10px, 1.5vw, 14px);
+  --pub-title-sub-gap: clamp(3px, 0.5vw, 6px);
+  --pub-copy-max: 92ch;
 }
 
 .wrap {
@@ -4308,6 +4316,18 @@
 
 .audienceSection {
   padding: clamp(10px, 1.8vw, 16px) !important;
+}
+
+.deliverSection {
+  padding: 0 !important;
+}
+
+.pricingSection,
+.addOnSection,
+.eduSection,
+.integritySection,
+.faqSection {
+  padding: 0 !important;
 }
 
 .audienceHeader {
@@ -4341,12 +4361,13 @@
 }
 
 .deliverTitle,
+.audienceTitle,
 .pricingTitle,
 .addOnTitle,
 .eduTitle,
 .integrityTitle,
 .faqTitle {
-  margin: 4px 0 3px !important;
+  margin: 0 !important;
 }
 
 .audienceSub,
@@ -4356,6 +4377,31 @@
 .eduSub,
 .integritySub,
 .faqSub {
+  margin: 0 !important;
+  max-width: var(--pub-copy-max) !important;
+  line-height: 1.55 !important;
+}
+
+.audienceHeader > div:first-child,
+.deliverHeader > div:first-child,
+.pricingHeader > div:first-child,
+.addOnHeader > div:first-child,
+.eduHeader > div:first-child,
+.integrityHeader > div:first-child,
+.faqHeader > div:first-child {
+  display: grid !important;
+  align-content: start !important;
+  row-gap: var(--pub-title-sub-gap) !important;
+  max-width: min(var(--pub-copy-max), 100%) !important;
+}
+
+.audienceKicker,
+.deliverKicker,
+.pricingKicker,
+.addOnKicker,
+.eduKicker,
+.integrityKicker,
+.faqKicker {
   margin: 0 !important;
 }
 
@@ -4395,14 +4441,23 @@
   margin-bottom: 0 !important;
 }
 
+.stackGap8 {
+  margin-top: 8px !important;
+}
+
+.stackGap12 {
+  margin-top: 12px !important;
+}
+
 @media (max-width: 980px) {
   .page {
-    --pub-section-gap: 8px;
+    --pub-section-gap: 9px;
     --pub-pad-x: 13px;
     --pub-head-top: 9px;
     --pub-head-bottom: 7px;
     --pub-content-top: 7px;
     --pub-content-bottom: 10px;
+    --pub-title-sub-gap: 3px;
   }
 
   .wrap {
@@ -4438,12 +4493,13 @@
 
 @media (max-width: 720px) {
   .page {
-    --pub-section-gap: 7px;
+    --pub-section-gap: 8px;
     --pub-pad-x: 11px;
     --pub-head-top: 8px;
     --pub-head-bottom: 6px;
     --pub-content-top: 6px;
     --pub-content-bottom: 9px;
+    --pub-title-sub-gap: 2px;
   }
 
   .wrap {
