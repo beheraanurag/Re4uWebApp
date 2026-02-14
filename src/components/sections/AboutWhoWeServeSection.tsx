@@ -202,12 +202,12 @@ export function AboutWhoWeServeSection() {
                               : "rgba(168,199,230,0.55)"
                           }
                         />
-                        <stop offset="1" stopColor="rgba(255,255,255,0.34)" />
+                        <stop offset="1" stopColor="rgba(233, 227, 213,0.34)" />
                       </linearGradient>
                     </defs>
                     <circle cx="32" cy="32" r="31" fill={`url(#who-serve-${idx})`} />
                     <circle cx="32" cy="28" r="12" fill={persona.skin} />
-                    <path d="M14 58c3-12 14-18 18-18s15 6 18 18" fill="#fff" opacity="0.8" />
+                    <path d="M14 58c3-12 14-18 18-18s15 6 18 18" fill="#e9e3d5" opacity="0.8" />
                     <path
                       d="M18 24c3-8 9-12 14-12s11 4 14 12"
                       fill={persona.hair}
@@ -245,3 +245,4 @@ export function AboutWhoWeServeSection() {
     </section>
   );
 }
+

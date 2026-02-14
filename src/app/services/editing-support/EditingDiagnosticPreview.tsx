@@ -444,14 +444,14 @@ export function EditingDiagnosticPreview({ titleClassName }: { titleClassName?: 
                     <tbody>
                       {actionRows.length === 0 ? (
                         <tr>
-                          <td colSpan={4} className={styles.diagnosticEmptyRow}>
+                          <td data-label="" colSpan={4} className={styles.diagnosticEmptyRow}>
                             Paste text and click Check to generate your action table.
                           </td>
                         </tr>
                       ) : (
                         actionRows.map((row) => (
                           <tr key={row.title}>
-                            <td>
+                            <td data-label="Priority">
                               <span
                                 className={`${styles.diagnosticTag} ${
                                   row.priority === "High"
@@ -466,11 +466,11 @@ export function EditingDiagnosticPreview({ titleClassName }: { titleClassName?: 
                                 {row.priority}
                               </span>
                             </td>
-                            <td>
+                            <td data-label="What we noticed">
                               <strong>{row.title}</strong>
                             </td>
-                            <td>{row.why}</td>
-                            <td>{row.next}</td>
+                            <td data-label="Why it matters">{row.why}</td>
+                            <td data-label="What to do next">{row.next}</td>
                           </tr>
                         ))
                       )}
@@ -533,10 +533,10 @@ export function EditingDiagnosticPreview({ titleClassName }: { titleClassName?: 
                             const potential = diagnostic.potential[key as keyof Score];
                             return (
                               <tr key={label}>
-                                <td>{label}</td>
-                                <td>{current}</td>
-                                <td>{potential}</td>
-                                <td>+{Math.max(0, potential - current)}</td>
+                                <td data-label="Metric">{label}</td>
+                                <td data-label="Current">{current}</td>
+                                <td data-label="Potential">{potential}</td>
+                                <td data-label="Change">+{Math.max(0, potential - current)}</td>
                               </tr>
                             );
                           })}

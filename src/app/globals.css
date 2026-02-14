@@ -392,6 +392,14 @@
   }
 
   .about-page {
+    --about-lapis: #1f3a5f;
+    --about-green: #3f7f72;
+    --about-ink: #2a2e35;
+    --about-sky: #a8c7e6;
+    --about-sand: #e9e3d5;
+    --about-surface-a: color-mix(in srgb, var(--about-sky) 28%, transparent);
+    --about-surface-b: color-mix(in srgb, var(--about-sand) 40%, transparent);
+    --about-stroke: color-mix(in srgb, var(--about-lapis) 18%, transparent);
     position: relative;
     padding-bottom: clamp(2.25rem, 4vw, 4rem);
   }
@@ -415,31 +423,28 @@
   .about-stack {
     position: relative;
     display: grid;
-    gap: clamp(1rem, 2vw, 1.75rem);
+    gap: clamp(0.9rem, 1.8vw, 1.4rem);
   }
 
   .about-section-shell {
     position: relative;
-    border-radius: 28px;
-    border: 1px solid rgba(47, 85, 143, 0.14);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.56));
-    box-shadow: 0 18px 42px rgba(31, 58, 95, 0.08);
+    border-radius: 24px;
+    border: none;
+    background:
+      radial-gradient(700px 220px at 12% 0%, color-mix(in srgb, var(--about-sky) 32%, transparent), transparent 62%),
+      radial-gradient(560px 220px at 90% 0%, color-mix(in srgb, var(--about-green) 16%, transparent), transparent 64%),
+      linear-gradient(180deg, var(--about-surface-a), var(--about-surface-b));
+    box-shadow: 0 12px 28px rgba(31, 58, 95, 0.09);
     overflow: hidden;
   }
 
   .about-section-shell::before {
-    content: "";
-    position: absolute;
-    inset: 0 auto auto 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, rgba(47, 85, 143, 0.45), rgba(168, 199, 230, 0.5), rgba(63, 127, 114, 0.35));
-    pointer-events: none;
+    content: none;
   }
 
   .about-section-shell section {
     margin: 0 !important;
-    padding-block: clamp(2rem, 4vw, 3.5rem);
+    padding-block: clamp(1.7rem, 3.6vw, 3rem);
   }
 
   .about-page section h1 {
@@ -466,7 +471,7 @@
 
   @media (max-width: 860px) {
     .about-section-shell {
-      border-radius: 22px;
+      border-radius: 20px;
     }
   }
 
@@ -480,7 +485,11 @@
     }
 
     .about-section-shell {
-      border-radius: 18px;
+      border-radius: 16px;
+    }
+
+    .about-section-shell section {
+      padding-block: 1.25rem;
     }
   }
 }

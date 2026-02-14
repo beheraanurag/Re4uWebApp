@@ -177,8 +177,8 @@ export function AboutWhyWeExistSection() {
       ctx.clearRect(0, 0, w, h);
 
       const grad = ctx.createLinearGradient(0, 0, 0, h);
-      grad.addColorStop(0, "rgba(255,255,255,0.18)");
-      grad.addColorStop(1, "rgba(255,255,255,0.10)");
+      grad.addColorStop(0, "rgba(233, 227, 213,0.18)");
+      grad.addColorStop(1, "rgba(233, 227, 213,0.10)");
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, w, h);
 
@@ -251,7 +251,7 @@ export function AboutWhyWeExistSection() {
         if (i === 4) lx = px - 18;
 
         roundRect(lx - chipW / 2, ly - chipH / 2, chipW, chipH, 13);
-        ctx.fillStyle = "rgba(255,255,255,0.62)";
+        ctx.fillStyle = "rgba(233, 227, 213,0.62)";
         ctx.fill();
         ctx.lineWidth = 1;
         ctx.strokeStyle = "rgba(31,58,95,0.12)";
@@ -317,7 +317,7 @@ export function AboutWhyWeExistSection() {
           <path d="M150 430 C300 340, 460 320, 620 342 C800 368, 940 412, 1100 480" />
           <path d="M90 330 C220 230, 390 205, 540 226 C730 252, 880 312, 1080 386" />
         </g>
-        <g fill="rgba(255,255,255,.22)" stroke="rgba(31,58,95,.07)" strokeWidth="1">
+        <g fill="rgba(233, 227, 213,.22)" stroke="rgba(31,58,95,.07)" strokeWidth="1">
           <circle cx="280" cy="300" r="10" />
           <circle cx="560" cy="260" r="12" />
           <circle cx="840" cy="332" r="10" />
@@ -399,3 +399,4 @@ export function AboutWhyWeExistSection() {
     </section>
   );
 }
+

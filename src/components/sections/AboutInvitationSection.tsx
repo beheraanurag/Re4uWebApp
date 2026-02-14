@@ -127,21 +127,21 @@ export function AboutInvitationSection() {
               <g opacity="0.96">
                 <path
                   d="M170 330 h220 a24 24 0 0 1 24 24 v14 a18 18 0 0 1-18 18 H188 a18 18 0 0 1-18-18 v-14 a24 24 0 0 1 24-24z"
-                  fill="rgba(255,255,255,.04)"
-                  stroke="rgba(255,255,255,.12)"
+                  fill="rgba(233, 227, 213,.72)"
+                  stroke="rgba(31,58,95,.14)"
                   strokeWidth="2"
                 />
                 <path
                   d="M414 345 h44 a30 30 0 0 1 0 60 h-44"
                   fill="none"
-                  stroke="rgba(255,255,255,.14)"
+                  stroke="rgba(31,58,95,.2)"
                   strokeWidth="3"
                   strokeLinecap="round"
                 />
                 <path
                   d="M140 408c85-18 240-18 325 0"
                   fill="none"
-                  stroke="rgba(255,255,255,.10)"
+                  stroke="rgba(31,58,95,.16)"
                   strokeWidth="3"
                   strokeLinecap="round"
                 />
@@ -185,8 +185,8 @@ export function AboutInvitationSection() {
                         cy="210"
                         rx="88"
                         ry="44"
-                        fill="rgba(255,255,255,.06)"
-                        stroke="rgba(255,255,255,.14)"
+                        fill="rgba(233, 227, 213,.86)"
+                        stroke="rgba(31,58,95,.14)"
                         strokeWidth="2"
                       />
                       <circle cx="130" cy="202" r="6" fill="rgba(168,199,230,.55)" />
@@ -197,7 +197,7 @@ export function AboutInvitationSection() {
                         fontFamily="Inter, system-ui, sans-serif"
                         fontSize="16"
                         fontWeight="950"
-                        fill="rgba(234,240,255,.92)"
+                        fill="rgba(31,58,95,.92)"
                       >
                         Learn
                       </text>
@@ -207,7 +207,7 @@ export function AboutInvitationSection() {
                         textAnchor="middle"
                         fontFamily="Inter, system-ui, sans-serif"
                         fontSize="11.8"
-                        fill="rgba(234,240,255,.66)"
+                        fill="rgba(42,46,53,.66)"
                       >
                         resources - templates - workshops
                       </text>
@@ -227,8 +227,8 @@ export function AboutInvitationSection() {
                         cy="170"
                         rx="98"
                         ry="48"
-                        fill="rgba(255,255,255,.06)"
-                        stroke="rgba(255,255,255,.14)"
+                        fill="rgba(233, 227, 213,.86)"
+                        stroke="rgba(31,58,95,.14)"
                         strokeWidth="2"
                       />
                       <circle cx="315" cy="160" r="6" fill="rgba(63,127,114,.56)" />
@@ -239,7 +239,7 @@ export function AboutInvitationSection() {
                         fontFamily="Inter, system-ui, sans-serif"
                         fontSize="16"
                         fontWeight="950"
-                        fill="rgba(234,240,255,.92)"
+                        fill="rgba(31,58,95,.92)"
                       >
                         Improve
                       </text>
@@ -249,7 +249,7 @@ export function AboutInvitationSection() {
                         textAnchor="middle"
                         fontFamily="Inter, system-ui, sans-serif"
                         fontSize="11.8"
-                        fill="rgba(234,240,255,.66)"
+                        fill="rgba(42,46,53,.66)"
                       >
                         structured feedback - optimisation
                       </text>
@@ -269,8 +269,8 @@ export function AboutInvitationSection() {
                         cy="95"
                         rx="110"
                         ry="50"
-                        fill="rgba(255,255,255,.06)"
-                        stroke="rgba(255,255,255,.14)"
+                        fill="rgba(233, 227, 213,.86)"
+                        stroke="rgba(31,58,95,.14)"
                         strokeWidth="2"
                       />
                       <circle cx="230" cy="85" r="6" fill="rgba(233,227,213,.55)" />
@@ -281,7 +281,7 @@ export function AboutInvitationSection() {
                         fontFamily="Inter, system-ui, sans-serif"
                         fontSize="16"
                         fontWeight="950"
-                        fill="rgba(234,240,255,.92)"
+                        fill="rgba(31,58,95,.92)"
                       >
                         Collaborate
                       </text>
@@ -291,7 +291,7 @@ export function AboutInvitationSection() {
                         textAnchor="middle"
                         fontFamily="Inter, system-ui, sans-serif"
                         fontSize="11.8"
-                        fill="rgba(234,240,255,.66)"
+                        fill="rgba(42,46,53,.66)"
                       >
                         labs - groups - institutions
                       </text>
@@ -309,7 +309,7 @@ export function AboutInvitationSection() {
 
               <g className={styles.pulse} style={{ transform: pulseTranslate }}>
                 <circle cx="120" cy="205" r="14" fill="rgba(63,127,114,.28)" />
-                <circle cx="120" cy="205" r="6" fill="rgba(234,240,255,.92)" />
+                <circle cx="120" cy="205" r="6" fill="rgba(233, 227, 213,.95)" />
               </g>
             </svg>
 
@@ -384,3 +384,4 @@ export function AboutInvitationSection() {
     </section>
   );
 }
+

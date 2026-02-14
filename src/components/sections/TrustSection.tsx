@@ -37,14 +37,7 @@ const ASSURANCES = [
 
 export function TrustSection() {
   return (
-    <section
-      id="sec-trustband"
-      className="section-pad"
-      style={{
-        background:
-          "radial-gradient(1100px 520px at 20% -10%, rgba(168,199,230,.20), transparent 60%), radial-gradient(900px 520px at 90% -10%, rgba(63,127,114,.16), transparent 55%), linear-gradient(180deg, rgba(255,255,255,.98), rgba(233,227,213,.45))",
-      }}
-    >
+    <section id="sec-trustband" className="section-pad">
       <div className="mx-auto max-w-7xl px-6">
         <div className="rounded-2xl border border-[#A8C7E6]/45 bg-[#1F3A5F] p-5 text-white shadow-xl sm:p-6">
           <p className="mb-2 text-xs uppercase tracking-[0.2em] text-[#A8C7E6]">
@@ -54,7 +47,7 @@ export function TrustSection() {
             Trusted partner from first draft to final submission.
           </h2>
           <div className={`mt-3 rounded-full border border-white/20 bg-white/10 ${styles.offerMarqueeWrap}`}>
-            <div className={`${styles.offerMarquee} px-6 py-2 text-sm font-semibold text-white/90`}>
+            <div className={`${styles.offerMarquee} px-6 py-2 text-lg font-semibold text-white/90 md:text-xl`}>
               Expert academic editing for publication success &mdash; enjoy up to 50% OFF for a limited time
               &#128218;&#10024; Book Now!
             </div>

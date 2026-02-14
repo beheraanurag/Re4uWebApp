@@ -19,7 +19,7 @@ export function AboutMissionSection() {
             <path d="M150 430 C300 340, 460 320, 620 342 C800 368, 940 412, 1100 480" />
             <path d="M90 330 C220 230, 390 205, 540 226 C730 252, 880 312, 1080 386" />
           </g>
-          <g fill="rgba(255,255,255,.22)" stroke="rgba(31,58,95,.07)" strokeWidth="1">
+          <g fill="rgba(233, 227, 213,.22)" stroke="rgba(31,58,95,.07)" strokeWidth="1">
             <circle cx="280" cy="300" r="10" />
             <circle cx="560" cy="260" r="12" />
             <circle cx="840" cy="332" r="10" />
@@ -57,7 +57,7 @@ export function AboutMissionSection() {
             strokeWidth="2"
             opacity="0.9"
           />
-          <circle cx="150" cy="34" r="8" fill="rgba(255,255,255,.60)" stroke="rgba(31,58,95,.14)" />
+          <circle cx="150" cy="34" r="8" fill="rgba(233, 227, 213,.60)" stroke="rgba(31,58,95,.14)" />
           <circle cx="300" cy="60" r="10" fill="rgba(168,199,230,.28)" stroke="rgba(31,58,95,.14)" />
           <circle cx="450" cy="90" r="8" fill="rgba(63,127,114,.22)" stroke="rgba(63,127,114,.38)" />
         </svg>
@@ -212,3 +212,4 @@ export function AboutMissionSection() {
     </section>
   );
 }
+

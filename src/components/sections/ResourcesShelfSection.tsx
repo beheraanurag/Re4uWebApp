@@ -163,14 +163,7 @@ export function ResourcesShelfSection({ posts }: { posts: ResourcePost[] }) {
     .slice(0, 2);
 
   return (
-    <section
-      id="sec-reminds"
-      className="section-pad"
-      style={{
-        background:
-          "radial-gradient(1100px 520px at 20% -10%, rgba(168,199,230,.24), transparent 60%), radial-gradient(900px 520px at 90% -10%, rgba(63,127,114,.16), transparent 55%), linear-gradient(180deg, rgba(255,255,255,.98), rgba(233,227,213,.45))",
-      }}
-    >
+    <section id="sec-reminds" className="section-pad">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid gap-6 lg:grid-cols-[1.1fr_.9fr]">
           <div>

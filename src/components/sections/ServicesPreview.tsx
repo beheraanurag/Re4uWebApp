@@ -135,14 +135,7 @@ export function ServicesPreview({ services: _services }: { services: Service[] }
   }
 
   return (
-    <section
-      id="sec-offers"
-      className="py-8 md:py-10"
-      style={{
-        background:
-          "radial-gradient(900px 450px at 20% -10%, rgba(168,199,230,.24), transparent 60%), radial-gradient(900px 450px at 85% 0%, rgba(63,127,114,.15), transparent 55%), linear-gradient(180deg, rgba(255,255,255,.98), rgba(233,227,213,.44))",
-      }}
-    >
+    <section id="sec-offers" className="py-8 md:py-10">
       <div className="mx-auto max-w-7xl px-6">
         <div className="overflow-hidden rounded-2xl border border-[#A8C7E6]/60 bg-white/90 shadow-md">
           <header className="px-6 pb-2 pt-0">
@@ -184,26 +177,25 @@ export function ServicesPreview({ services: _services }: { services: Service[] }
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
-                <div className="mt-auto flex flex-wrap items-center gap-2 border-t border-dashed border-[#A8C7E6]/55 pt-4">
+                <div className="mt-auto flex flex-wrap items-center gap-2 border-t border-dashed border-[#A8C7E6]/55 pt-4 sm:flex-nowrap">
                   <Link
                     href={offer.primary.href}
-                    className="inline-flex items-center gap-2 rounded-full border border-[#A8C7E6]/60 bg-[#1F3A5F] px-4 py-2 text-sm font-bold text-white shadow-md"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-[#A8C7E6]/60 bg-[#1F3A5F] px-3 py-2 text-[13px] font-bold text-white shadow-md sm:whitespace-nowrap"
                   >
-                    <span aria-hidden>{"->"}</span>
                     {offer.primary.label}
                   </Link>
                   {offer.secondary.opensGuide ? (
                     <button
                       type="button"
                       onClick={openModal}
-                      className="rounded-full border border-[#A8C7E6]/60 bg-white px-4 py-2 text-sm font-bold text-[#1F3A5F]"
+                      className="rounded-full border border-[#A8C7E6]/60 bg-white px-3 py-2 text-center text-[13px] font-bold text-[#1F3A5F] sm:whitespace-nowrap"
                     >
                       {offer.secondary.label}
                     </button>
                   ) : (
                     <Link
                       href={offer.secondary.href}
-                      className="rounded-full border border-[#A8C7E6]/60 bg-white px-4 py-2 text-sm font-bold text-[#1F3A5F]"
+                      className="rounded-full border border-[#A8C7E6]/60 bg-white px-3 py-2 text-center text-[13px] font-bold text-[#1F3A5F] sm:whitespace-nowrap"
                     >
                       {offer.secondary.label}
                     </Link>
@@ -243,26 +235,22 @@ export function ServicesPreview({ services: _services }: { services: Service[] }
                   className="w-full rounded-full border border-[#A8C7E6]/60 bg-white/90 px-4 py-2 text-sm"
                 />
               </div>
-              <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-dashed border-[#A8C7E6]/55 pt-4">
+              <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-dashed border-[#A8C7E6]/55 pt-4 sm:flex-nowrap">
                 <button
                   type="button"
                   onClick={openModal}
-                  className="inline-flex items-center gap-2 rounded-full border border-[#A8C7E6]/60 bg-[#1F3A5F] px-4 py-2 text-sm font-bold text-white shadow-md"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[#A8C7E6]/60 bg-[#1F3A5F] px-3 py-2 text-[13px] font-bold text-white shadow-md sm:whitespace-nowrap"
                 >
-                  <span aria-hidden>{"->"}</span>
                   Get the free guide
                 </button>
                 <button
                   type="button"
                   onClick={openModal}
-                  className="rounded-full border border-transparent bg-transparent px-2 text-sm font-bold text-[#1F3A5F] hover:text-[#3F7F72] hover:underline"
+                  className="rounded-full border border-[#A8C7E6]/60 bg-white px-3 py-2 text-center text-[13px] font-bold text-[#1F3A5F] sm:whitespace-nowrap hover:bg-[#E9E3D5]"
                 >
                   What is inside?
                 </button>
               </div>
-              <p className="mt-3 text-[12px] text-[#2A2E35]/75">
-                We will email you the PDF download link. Ethical, COPE-aligned support.
-              </p>
             </article>
           </div>
         </div>

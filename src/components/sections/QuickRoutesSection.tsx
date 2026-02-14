@@ -51,14 +51,7 @@ export function QuickRoutesSection() {
   }
 
   return (
-    <section
-      id="sec-router"
-      className="section-pad"
-      style={{
-        background:
-          "radial-gradient(1200px 600px at 20% -10%, rgba(168,199,230,.26), transparent 60%), radial-gradient(1200px 700px at 90% 0%, rgba(63,127,114,.14), transparent 55%), linear-gradient(180deg, rgba(255,255,255,.98), rgba(233,227,213,.44))",
-      }}
-    >
+    <section id="sec-router" className="section-pad">
       <div className="mx-auto max-w-7xl px-6">
         <section
           className="relative overflow-hidden rounded-2xl border border-[#A8C7E6]/60 bg-white/80 p-6 shadow-md"

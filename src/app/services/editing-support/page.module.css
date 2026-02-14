@@ -10,15 +10,7 @@
   --shadow: 0 22px 52px rgba(31, 58, 95, 0.12);
 
   color: var(--ink);
-  background:
-    radial-gradient(circle at 10% 0%, rgba(63, 127, 114, 0.18) 0%, transparent 36%),
-    radial-gradient(circle at 92% 10%, rgba(233, 227, 213, 0.8) 0%, transparent 40%),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--brand-sky) 18%, #ffffff) 0%,
-      var(--background) 44%,
-      color-mix(in srgb, var(--brand-sand) 30%, #ffffff) 100%
-    );
+  background: transparent;
   padding: 20px 0 72px;
 }
 
@@ -33,21 +25,17 @@
 }
 
 .heroCard {
-  border: 1px solid var(--line);
+  border: 0;
   border-radius: 26px;
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.68));
-  box-shadow: var(--shadow);
+  background: transparent;
+  box-shadow: none;
   padding: clamp(20px, 4vw, 40px);
   position: relative;
   overflow: hidden;
 }
 
 .heroCard::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(115deg, rgba(31, 58, 95, 0.08), rgba(15, 51, 87, 0));
-  pointer-events: none;
+  content: none;
 }
 
 .heroCenter {
@@ -55,16 +43,7 @@
 }
 
 .heroCenter::before {
-  content: "";
-  position: absolute;
-  inset: -60%;
-  background:
-    radial-gradient(circle at 28% 18%, rgba(168, 199, 230, 0.28), transparent 55%),
-    radial-gradient(circle at 72% 22%, rgba(63, 127, 114, 0.12), transparent 60%),
-    radial-gradient(circle at 55% 85%, rgba(233, 227, 213, 0.18), transparent 62%);
-  transform: rotate(10deg);
-  opacity: 0.85;
-  pointer-events: none;
+  content: none;
 }
 
 .heroInner {
@@ -768,15 +747,7 @@
 .page {
   --teal: var(--brand-green);
   --teal-soft: color-mix(in srgb, var(--brand-green) 12%, #ffffff);
-  background:
-    radial-gradient(circle at 10% 0%, rgba(168, 199, 230, 0.26) 0%, transparent 38%),
-    radial-gradient(circle at 92% 8%, rgba(63, 127, 114, 0.09) 0%, transparent 40%),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--brand-sky) 14%, #ffffff) 0%,
-      #ffffff 50%,
-      color-mix(in srgb, var(--brand-sky) 12%, #ffffff) 100%
-    );
+  background: transparent;
 }
 
 .heroCard {
@@ -952,6 +923,7 @@
   background: #ffffff;
   padding: 6px 10px;
   font-size: 0.8rem;
+  line-height: 1.3;
   color: var(--ink-soft);
 }
 
@@ -962,6 +934,9 @@
 }
 
 .diagnosticPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   border: 1px solid rgba(31, 58, 95, 0.2);
   border-radius: 999px;
   padding: 6px 10px;
@@ -969,6 +944,7 @@
   color: rgba(15, 51, 87, 0.86);
   background: rgba(255, 255, 255, 0.9);
   font-weight: 700;
+  max-width: 100%;
 }
 
 .diagnosticFooter {
@@ -1065,6 +1041,7 @@
   vertical-align: top;
   font-size: 0.86rem;
   line-height: 1.5;
+  word-break: break-word;
 }
 
 .diagnosticTable th {
@@ -1248,9 +1225,10 @@
 
 .pricingCtaRow {
   margin-top: 16px;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
-  flex-wrap: wrap;
+  align-items: center;
 }
 
 .pricingGrid {
@@ -1258,6 +1236,7 @@
   display: grid;
   gap: 14px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
 }
 
 .pricingPlan {
@@ -1268,6 +1247,10 @@
   padding: 18px;
   position: relative;
   overflow: hidden;
+  display: grid;
+  grid-template-rows: auto minmax(76px, auto) minmax(62px, auto) minmax(74px, auto) auto 1fr auto;
+  row-gap: 10px;
+  height: 100%;
 }
 
 .pricingPlan::before {
@@ -1307,30 +1290,35 @@
 }
 
 .pricingPlanTitle {
-  margin-top: 10px;
+  margin-top: 0;
   font-size: 1.05rem;
   font-weight: 900;
   color: var(--brand-lapis);
+  line-height: 1.25;
+  margin-bottom: 0;
 }
 
 .pricingPromise {
-  margin-top: 6px;
+  margin-top: 0;
   color: var(--brand-ink);
   font-weight: 700;
+  line-height: 1.45;
+  margin-bottom: 0;
 }
 
 .pricingBestFor {
-  margin-top: 8px;
+  margin-top: 0;
   padding: 10px 12px;
   border-radius: 14px;
   border: 1px solid rgba(31, 58, 95, 0.12);
   background: rgba(255, 255, 255, 0.75);
   color: var(--ink-soft);
   font-size: 0.85rem;
+  margin-bottom: 0;
 }
 
 .pricingPriceBox {
-  margin-top: 12px;
+  margin-top: 0;
   border-radius: 16px;
   border: 1px solid rgba(31, 58, 95, 0.18);
   background: rgba(255, 255, 255, 0.85);
@@ -1381,7 +1369,7 @@
 }
 
 .pricingList {
-  margin: 12px 0 0 18px;
+  margin: 0 0 0 18px;
   color: var(--ink-soft);
   line-height: 1.6;
   display: grid;
@@ -1389,20 +1377,39 @@
 }
 
 .pricingActions {
-  margin-top: 14px;
-  display: flex;
+  margin-top: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 10px;
-  flex-wrap: wrap;
   align-items: center;
 }
 
+.pricingActions .btn {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.pricingCtaRow .btn {
+  width: 100%;
+  min-width: 0;
+  white-space: nowrap;
+}
+
 .pricingLink {
-  border: none;
-  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  flex: 0 0 auto;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(31, 58, 95, 0.2);
+  background: rgba(255, 255, 255, 0.84);
   color: var(--brand-lapis);
   font-weight: 800;
   cursor: pointer;
-  padding: 0;
 }
 
 .pricingCompare {
@@ -2095,6 +2102,17 @@
 
   .pricingGrid {
     grid-template-columns: 1fr;
+  }
+
+  .pricingPlan {
+    grid-template-rows: auto;
+    row-gap: 10px;
+  }
+
+  .pricingPlanTitle,
+  .pricingPromise,
+  .pricingBestFor {
+    min-height: 0;
   }
 
   .pricingFormGrid {
@@ -3697,5 +3715,471 @@
   .proofRowHead,
   .proofRow {
     grid-template-columns: 110px 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .heroInner {
+    max-width: 100%;
+  }
+
+  .kicker {
+    width: fit-content;
+    max-width: 100%;
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .heroTitle {
+    font-size: clamp(1.75rem, 6vw, 2.3rem);
+    line-height: 1.15;
+  }
+
+  .sectionTitle {
+    font-size: clamp(1.4rem, 4.9vw, 2rem);
+    line-height: 1.2;
+  }
+
+  .heroSub,
+  .sectionSub {
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+
+  .heroActions {
+    justify-content: stretch;
+  }
+
+  .pillRow {
+    justify-content: flex-start;
+  }
+
+  .diagnosticTableWrap,
+  .pricingTableWrap {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .diagnosticTable {
+    min-width: 620px;
+  }
+
+  .pricingTable {
+    min-width: 700px;
+  }
+
+  .diagnosticActions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .diagnosticActions .btn {
+    flex: 1 1 0;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .diagnosticPanel {
+    padding: 14px;
+  }
+
+  .diagnosticOptions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+
+  .diagnosticOption,
+  .diagnosticOptions .diagnosticPill {
+    width: 100%;
+  }
+
+  .diagnosticOptions > .diagnosticPill {
+    grid-column: 1 / -1;
+  }
+
+  .diagnosticTableHeader {
+    align-items: stretch;
+  }
+
+  .diagnosticTableHeader .btn,
+  .diagnosticCta .btn {
+    width: 100%;
+  }
+
+  .diagnosticCta {
+    justify-content: stretch;
+  }
+
+  .diagnosticScoreCard {
+    align-items: flex-start;
+  }
+
+  .pricingCtaRow {
+    grid-template-columns: 1fr;
+  }
+
+  .pricingActions {
+    grid-template-columns: 1fr;
+  }
+
+  .pricingActions .btn,
+  .pricingCtaRow .btn,
+  .pricingLink {
+    white-space: normal;
+  }
+
+  .pricingLink {
+    width: 100%;
+  }
+
+  .selfCheckLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .selfCheckHeader {
+    flex-wrap: wrap;
+  }
+
+  .selfCheckRow {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .selfCheckToggle {
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .selfCheckSegment {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .selfCheckSegment button {
+    width: 100%;
+  }
+
+  .researchStyleTopRow {
+    display: grid;
+    gap: 10px;
+  }
+
+  .researchStyleBest {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .researchStyleModalGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .researchStyleChecksGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .researchStyleCtaRow,
+  .researchStyleStrip {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .researchStyleCtaRow .btn {
+    width: 100%;
+  }
+
+  .researchStyleTag {
+    justify-content: center;
+  }
+
+  .pricingModal,
+  .researchStyleModal,
+  .faqModal {
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
+    border-radius: 18px;
+  }
+
+  .pricingOverlay,
+  .researchStyleOverlay,
+  .faqModalOverlay {
+    padding: 12px;
+  }
+
+  .pricingModalHeader,
+  .researchStyleModalHeader,
+  .faqModalHeader {
+    flex-wrap: wrap;
+  }
+
+  .pricingModalActions,
+  .researchStyleModalActions,
+  .faqsModalActions {
+    justify-content: stretch;
+  }
+
+  .pricingModalActions .btn,
+  .researchStyleModalActions .btn,
+  .faqsModalActions .btn {
+    width: 100%;
+  }
+
+  .faqModalFormGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .faqsChecksGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .faqsButtons .btn {
+    width: 100%;
+  }
+
+  .faqsPanelSticky {
+    position: static;
+  }
+
+  .howItWorksHeader {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .howItWorksBadge {
+    white-space: normal;
+  }
+
+  .howItWorksLinkRow {
+    align-items: stretch;
+  }
+
+  .howItWorksKw {
+    max-width: none;
+  }
+
+  .proofTag {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 12px;
+  }
+
+  .section {
+    padding: 16px 0;
+  }
+
+  .heroCard,
+  .diagnosticCard,
+  .pricingCard,
+  .howItWorksCard,
+  .stagePreviewCard,
+  .selfCheckCard,
+  .researchStyleCard,
+  .proofCard,
+  .freeToolsCard,
+  .faqsCard,
+  .finalCard {
+    border-radius: 18px;
+    padding: 14px;
+  }
+
+  .kicker {
+    font-size: 0.68rem;
+    letter-spacing: 0.02em;
+  }
+
+  .heroActions .btn,
+  .diagnosticActions .btn,
+  .faqsButtons .btn,
+  .pricingCtaRow .btn {
+    width: 100%;
+  }
+
+  .diagnosticFooter {
+    align-items: stretch;
+  }
+
+  .diagnosticProgress {
+    min-width: 0;
+  }
+
+  .diagnosticPanel {
+    padding: 12px;
+  }
+
+  .diagnosticOptions {
+    grid-template-columns: 1fr;
+  }
+
+  .diagnosticOptions > .diagnosticPill {
+    grid-column: auto;
+  }
+
+  .diagnosticActions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .diagnosticTable {
+    min-width: 560px;
+  }
+
+  .diagnosticTable th,
+  .diagnosticTable td {
+    padding: 8px 10px;
+  }
+
+  .diagnosticTableWrap {
+    overflow: visible;
+  }
+
+  .diagnosticTable {
+    min-width: 0;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+  }
+
+  .diagnosticTable thead {
+    display: none;
+  }
+
+  .diagnosticTable tbody {
+    display: grid;
+    gap: 8px;
+  }
+
+  .diagnosticTable tbody tr {
+    display: block;
+    border: 1px solid rgba(31, 58, 95, 0.12);
+    border-radius: 12px;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .diagnosticTable td {
+    display: grid;
+    grid-template-columns: minmax(96px, 0.8fr) minmax(0, 1fr);
+    gap: 8px;
+    align-items: start;
+    border-bottom: 1px solid rgba(31, 58, 95, 0.08);
+  }
+
+  .diagnosticTable td::before {
+    content: attr(data-label);
+    font-size: 0.68rem;
+    line-height: 1.3;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--brand-lapis);
+  }
+
+  .diagnosticTable tbody tr td:last-child {
+    border-bottom: none;
+  }
+
+  .diagnosticEmptyRow {
+    display: block;
+    border-bottom: none;
+  }
+
+  .diagnosticEmptyRow::before {
+    content: none;
+  }
+
+  .diagnosticHint,
+  .diagnosticHelp {
+    font-size: 0.8rem;
+  }
+
+  .diagnosticScoreCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .scoreValue {
+    font-size: 1.35rem;
+  }
+
+  .pricingPlan {
+    padding: 14px;
+  }
+
+  .pricingPlanTitle {
+    font-size: 1rem;
+  }
+
+  .pricingActions .btn,
+  .pricingCtaRow .btn,
+  .pricingLink {
+    white-space: normal;
+  }
+
+  .stagePreviewPaneHead {
+    flex-wrap: wrap;
+  }
+
+  .stagePreviewCopy {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .stagePreviewTextarea {
+    min-height: 180px;
+    font-size: 0.8rem;
+  }
+
+  .researchStyleSelector {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .researchStyleButton {
+    width: 100%;
+    text-align: center;
+    padding: 9px 10px;
+  }
+
+  .freeToolsHead,
+  .freeToolsExampleTop,
+  .proofHead {
+    align-items: flex-start;
+  }
+
+  .proofRowHead {
+    display: none;
+  }
+
+  .proofRow {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .proofKey {
+    font-size: 0.78rem;
+  }
+
+  .faqQuestion {
+    padding: 12px;
+    align-items: flex-start;
+  }
+
+  .faqQuestionTitle {
+    font-size: 0.9rem;
+  }
+
+  .faqChevron {
+    width: 30px;
+    height: 30px;
+  }
+
+  .faqAnswerInner {
+    font-size: 0.82rem;
   }
 }

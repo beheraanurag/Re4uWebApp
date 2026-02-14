@@ -43,7 +43,7 @@ export function TrustControlsSection() {
   return (
     <section id="sec-trust" className="section-pad">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="rounded-2xl border border-[#A8C7E6]/60 bg-white p-5 shadow-md sm:p-6">
+        <div className="rounded-2xl border border-[#A8C7E6]/60 p-5 shadow-md sm:p-6">
           <div className="mb-6">
             <p className="mb-2 text-xs uppercase tracking-[0.2em] text-[#2A2E35]/75">
               WHY RESEARCHERS TRUST RESEARCHEDIT4U

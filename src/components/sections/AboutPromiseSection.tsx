@@ -127,7 +127,7 @@ export function AboutPromiseSection() {
             <svg viewBox="0 0 980 650" width="100%" height="100%" role="img" aria-label="Signal path">
               <defs>
                 <filter id="promiseShadow" x="-40%" y="-40%" width="180%" height="180%">
-                  <feDropShadow dx="0" dy="22" stdDeviation="18" floodColor="rgba(0,0,0,.65)" />
+                  <feDropShadow dx="0" dy="12" stdDeviation="10" floodColor="rgba(17,24,39,.18)" />
                 </filter>
               </defs>
 
@@ -180,8 +180,8 @@ export function AboutPromiseSection() {
                     cx={node === 1 ? 120 : node === 2 ? 360 : node === 3 ? 430 : node === 4 ? 720 : 860}
                     cy={node === 1 ? 520 : node === 2 ? 460 : node === 3 ? 260 : node === 4 ? 200 : 90}
                     r="28"
-                    fill="rgba(255,255,255,.06)"
-                    stroke="rgba(255,255,255,.16)"
+                    fill="rgba(233, 227, 213,.86)"
+                    stroke="rgba(31,58,95,.16)"
                     strokeWidth="2"
                   />
                   <circle
@@ -206,7 +206,7 @@ export function AboutPromiseSection() {
                     textAnchor="middle"
                     fontSize="14"
                     fontWeight="900"
-                    fill="rgba(234,240,255,.92)"
+                    fill="rgba(31,58,95,.92)"
                   >
                     {node}
                   </text>
@@ -227,13 +227,13 @@ export function AboutPromiseSection() {
                     width={lab.w}
                     height={lab.h}
                     rx="16"
-                    fill="rgba(255,255,255,.05)"
-                    stroke="rgba(255,255,255,.10)"
+                    fill="rgba(233, 227, 213,.86)"
+                    stroke="rgba(31,58,95,.14)"
                   />
                   <text x={lab.x + 20} y={lab.y + 32} fontSize="15" fontWeight="900" fill={lab.color}>
                     {lab.title}
                   </text>
-                  <text x={lab.x + 20} y={lab.y + 57} fontSize="12.8" fill="rgba(234,240,255,.65)">
+                  <text x={lab.x + 20} y={lab.y + 57} fontSize="12.8" fill="rgba(42,46,53,.72)">
                     {lab.desc}
                   </text>
                 </g>
@@ -241,7 +241,7 @@ export function AboutPromiseSection() {
 
               <g className={styles.pulse} style={{ transform: pulseTranslate }}>
                 <circle cx="120" cy="520" r="18" fill="rgba(63,127,114,.32)" />
-                <circle cx="120" cy="520" r="8" fill="rgba(234,240,255,.88)" />
+                <circle cx="120" cy="520" r="8" fill="rgba(233, 227, 213,.95)" />
               </g>
             </svg>
           </div>
@@ -317,3 +317,4 @@ export function AboutPromiseSection() {
     </section>
   );
 }
+

@@ -217,7 +217,7 @@ export function AboutPrinciplesSection() {
                 cx={wireDotB.x}
                 cy={wireDotB.y}
                 r="3"
-                fill="rgba(255,255,255,.70)"
+                fill="rgba(233, 227, 213,.70)"
                 stroke="rgba(31,58,95,.18)"
                 strokeWidth="0.8"
               />
@@ -230,15 +230,15 @@ export function AboutPrinciplesSection() {
                     <feDropShadow dx="0" dy="12" stdDeviation="10" floodColor="rgba(17,24,39,0.10)" />
                   </filter>
                   <linearGradient id="segSky" x1="0" x2="1">
-                    <stop offset="0" stopColor="rgba(255,255,255,0.55)" />
+                    <stop offset="0" stopColor="rgba(233, 227, 213,0.55)" />
                     <stop offset="1" stopColor="rgba(168,199,230,0.25)" />
                   </linearGradient>
                   <linearGradient id="segSky2" x1="0" x2="1">
-                    <stop offset="0" stopColor="rgba(255,255,255,0.52)" />
+                    <stop offset="0" stopColor="rgba(233, 227, 213,0.52)" />
                     <stop offset="1" stopColor="rgba(168,199,230,0.22)" />
                   </linearGradient>
                   <linearGradient id="segGreen" x1="0" x2="1">
-                    <stop offset="0" stopColor="rgba(255,255,255,0.52)" />
+                    <stop offset="0" stopColor="rgba(233, 227, 213,0.52)" />
                     <stop offset="1" stopColor="rgba(63,127,114,0.22)" />
                   </linearGradient>
                 </defs>
@@ -349,3 +349,4 @@ export function AboutPrinciplesSection() {
     </section>
   );
 }
+

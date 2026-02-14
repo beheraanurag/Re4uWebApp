@@ -46,7 +46,7 @@ const SUBJECTS: SubjectScorecard[] = [
       "Robotics",
       "Chemical Eng",
     ],
-    icon: <Wrench className="h-4 w-4" aria-hidden />,
+    icon: <Wrench className="h-5 w-5" aria-hidden />,
   },
   {
     key: "med-health",
@@ -63,7 +63,7 @@ const SUBJECTS: SubjectScorecard[] = [
       "Allied Health",
       "Epidemiology",
     ],
-    icon: <HeartPulse className="h-4 w-4" aria-hidden />,
+    icon: <HeartPulse className="h-5 w-5" aria-hidden />,
   },
   {
     key: "life-bio",
@@ -80,7 +80,7 @@ const SUBJECTS: SubjectScorecard[] = [
       "Neuroscience",
       "Agriculture",
     ],
-    icon: <Leaf className="h-4 w-4" aria-hidden />,
+    icon: <Leaf className="h-5 w-5" aria-hidden />,
   },
   {
     key: "cs-ai",
@@ -97,7 +97,7 @@ const SUBJECTS: SubjectScorecard[] = [
       "HCI",
       "Cybersecurity",
     ],
-    icon: <Cpu className="h-4 w-4" aria-hidden />,
+    icon: <Cpu className="h-5 w-5" aria-hidden />,
   },
   {
     key: "chem",
@@ -115,7 +115,7 @@ const SUBJECTS: SubjectScorecard[] = [
       "Materials Chemistry",
       "Spectroscopy",
     ],
-    icon: <FlaskConical className="h-4 w-4" aria-hidden />,
+    icon: <FlaskConical className="h-5 w-5" aria-hidden />,
   },
   {
     key: "env-earth",
@@ -132,7 +132,7 @@ const SUBJECTS: SubjectScorecard[] = [
       "Geochemistry",
       "GIS/Remote Sensing",
     ],
-    icon: <Globe2 className="h-4 w-4" aria-hidden />,
+    icon: <Globe2 className="h-5 w-5" aria-hidden />,
   },
   {
     key: "biz-econ",
@@ -150,7 +150,7 @@ const SUBJECTS: SubjectScorecard[] = [
       "Econometrics",
       "Policy",
     ],
-    icon: <Briefcase className="h-4 w-4" aria-hidden />,
+    icon: <Briefcase className="h-5 w-5" aria-hidden />,
   },
   {
     key: "soc-edu",
@@ -167,7 +167,7 @@ const SUBJECTS: SubjectScorecard[] = [
       "Communication",
       "Methods/Statistics",
     ],
-    icon: <Users className="h-4 w-4" aria-hidden />,
+    icon: <Users className="h-5 w-5" aria-hidden />,
   },
   {
     key: "arts-hum",
@@ -184,7 +184,7 @@ const SUBJECTS: SubjectScorecard[] = [
       "Cultural Studies",
       "Ethics",
     ],
-    icon: <BookOpen className="h-4 w-4" aria-hidden />,
+    icon: <BookOpen className="h-5 w-5" aria-hidden />,
   },
 ];
 
@@ -229,16 +229,9 @@ Note: This is a front-end demo sample file. Replace with your real PDF sample li
   }
 
   return (
-    <section
-      id="sec-subjects"
-      className="section-pad"
-      style={{
-        background:
-          "radial-gradient(900px 420px at 18% 10%, rgba(168,199,230,.26), transparent 60%), radial-gradient(820px 420px at 85% 25%, rgba(63,127,114,.14), transparent 65%), linear-gradient(180deg, rgba(255,255,255,.98), rgba(233,227,213,.5))",
-      }}
-    >
+    <section id="sec-subjects" className="section-pad">
       <div className="mx-auto max-w-7xl px-6">
-        <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-[#3F7F72]">
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-gray-500">
           Subjects We Handle
         </p>
         <h2 className="m-0 text-3xl font-bold tracking-[-0.02em] text-[#1F3A5F] md:text-[34px]">
@@ -282,39 +275,52 @@ Note: This is a front-end demo sample file. Replace with your real PDF sample li
             </span>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="flex gap-3 overflow-x-auto pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-3">
             {SUBJECTS.map((subject) => {
               const isActive = subject.key === activeSubject.key;
               return (
-                <button
+                <div
                   key={subject.key}
-                  type="button"
-                  onClick={() => setActiveKey(subject.key)}
-                  aria-pressed={isActive}
-                  className={`flex w-full items-start justify-between gap-3 rounded-xl border p-3 text-left shadow-md transition ${
+                  className={`min-w-[220px] rounded-xl border p-3 shadow-md transition sm:min-w-0 ${
                     isActive
                       ? "border-[#3F7F72]/45 bg-[#3F7F72]/10 shadow-md"
                       : "border-[#A8C7E6]/60 bg-white/90 hover:-translate-y-0.5"
                   }`}
                 >
-                  <div className="flex items-start gap-2.5">
-                    <span className="grid h-8 w-8 place-items-center rounded-[10px] border border-[#A8C7E6]/60 bg-[#A8C7E6]/20 text-[#3F7F72]">
-                      {subject.icon}
+                  <button
+                    type="button"
+                    onClick={() => setActiveKey(subject.key)}
+                    aria-pressed={isActive}
+                    className="flex w-full items-start justify-between gap-3 text-left"
+                  >
+                    <div className="flex items-start gap-2.5">
+                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[12px] border border-[#A8C7E6]/60 bg-[#A8C7E6]/20 text-[#3F7F72]">
+                        {subject.icon}
+                      </span>
+                      <span className="text-sm font-extrabold leading-tight text-[#1F3A5F]">
+                        {subject.title}
+                      </span>
+                    </div>
+                    <span className="max-w-[150px] text-right text-[10.5px] font-semibold text-[#2A2E35]/75 sm:text-[11.5px]">
+                      {subject.tag}
                     </span>
-                    <span className="text-sm font-extrabold leading-tight text-[#1F3A5F]">
-                      {subject.title}
-                    </span>
-                  </div>
-                  <span className="max-w-[160px] text-right text-[11.5px] font-semibold text-[#2A2E35]/75">
-                    {subject.tag}
-                  </span>
-                </button>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => downloadSample(subject)}
+                    className="mt-3 inline-flex items-center gap-2 rounded-full border border-[#A8C7E6]/60 bg-white px-3 py-1.5 text-xs font-extrabold text-[#1F3A5F] transition hover:bg-[#E9E3D5]"
+                  >
+                    <Download className="h-3.5 w-3.5" aria-hidden />
+                    Download sample
+                  </button>
+                </div>
               );
             })}
           </div>
 
-          <div className="mt-4 rounded-2xl border border-[#A8C7E6]/60 bg-white/92 p-4 shadow-[0_12px_26px_rgba(10,20,30,.08)]">
-            <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="mt-4 rounded-2xl border border-[#A8C7E6]/60 bg-white/92 p-3 shadow-[0_12px_26px_rgba(10,20,30,.08)] sm:p-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex items-start gap-3">
                 <span className="grid h-9 w-9 place-items-center rounded-xl border border-[#A8C7E6]/60 bg-[#A8C7E6]/20 text-[#3F7F72]">
                   {activeSubject.icon}
@@ -335,7 +341,7 @@ Note: This is a front-end demo sample file. Replace with your real PDF sample li
               </div>
             </div>
 
-            <div className="mt-4 grid gap-3 md:grid-cols-3">
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               <div className="rounded-xl border border-[#A8C7E6]/60 bg-white/90 p-3">
                 <small className="block text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#2A2E35]/70">
                   Edited

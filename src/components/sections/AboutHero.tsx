@@ -1,4 +1,4 @@
-﻿import styles from "./AboutHero.module.css";
+import styles from "./AboutHero.module.css";
 
 export function AboutHero() {
   return (
@@ -18,7 +18,7 @@ export function AboutHero() {
 
           <path
             d="M120,360 C240,240 360,180 520,170 C650,160 740,220 780,290 C720,250 640,250 560,270 C470,295 380,350 280,420 C210,470 130,460 90,430 C70,415 68,385 120,360 Z"
-            fill="rgba(255,255,255,.28)"
+            fill="rgba(233, 227, 213,.28)"
             stroke="rgba(31,58,95,.08)"
             strokeWidth="2"
           />
@@ -32,30 +32,30 @@ export function AboutHero() {
           <g filter="url(#wblur)">
             <g>
               <circle cx="165" cy="395" r="10" fill="url(#wg)" stroke="rgba(31,58,95,.10)" />
-              <circle cx="260" cy="320" r="8" fill="rgba(255,255,255,.50)" stroke="rgba(31,58,95,.10)" />
-              <circle cx="340" cy="280" r="7" fill="rgba(255,255,255,.46)" stroke="rgba(31,58,95,.10)" />
-              <circle cx="430" cy="265" r="9" fill="rgba(255,255,255,.50)" stroke="rgba(31,58,95,.10)" />
-              <circle cx="540" cy="245" r="7" fill="rgba(255,255,255,.46)" stroke="rgba(31,58,95,.10)" />
-              <circle cx="650" cy="265" r="8" fill="rgba(255,255,255,.48)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="260" cy="320" r="8" fill="rgba(233, 227, 213,.50)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="340" cy="280" r="7" fill="rgba(233, 227, 213,.46)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="430" cy="265" r="9" fill="rgba(233, 227, 213,.50)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="540" cy="245" r="7" fill="rgba(233, 227, 213,.46)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="650" cy="265" r="8" fill="rgba(233, 227, 213,.48)" stroke="rgba(31,58,95,.10)" />
               <circle cx="740" cy="315" r="10" fill="url(#wg)" stroke="rgba(31,58,95,.10)" />
             </g>
             <g>
-              <circle cx="185" cy="420" r="8" fill="rgba(255,255,255,.48)" stroke="rgba(31,58,95,.10)" />
-              <circle cx="280" cy="355" r="7" fill="rgba(255,255,255,.48)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="185" cy="420" r="8" fill="rgba(233, 227, 213,.48)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="280" cy="355" r="7" fill="rgba(233, 227, 213,.48)" stroke="rgba(31,58,95,.10)" />
               <circle cx="360" cy="320" r="9" fill="url(#wg)" stroke="rgba(31,58,95,.10)" />
-              <circle cx="460" cy="305" r="7" fill="rgba(255,255,255,.50)" stroke="rgba(31,58,95,.10)" />
-              <circle cx="565" cy="288" r="7" fill="rgba(255,255,255,.46)" stroke="rgba(31,58,95,.10)" />
-              <circle cx="660" cy="305" r="8" fill="rgba(255,255,255,.46)" stroke="rgba(31,58,95,.10)" />
-              <circle cx="760" cy="350" r="9" fill="rgba(255,255,255,.50)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="460" cy="305" r="7" fill="rgba(233, 227, 213,.50)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="565" cy="288" r="7" fill="rgba(233, 227, 213,.46)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="660" cy="305" r="8" fill="rgba(233, 227, 213,.46)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="760" cy="350" r="9" fill="rgba(233, 227, 213,.50)" stroke="rgba(31,58,95,.10)" />
             </g>
             <g>
-              <circle cx="210" cy="445" r="7" fill="rgba(255,255,255,.46)" stroke="rgba(31,58,95,.10)" />
-              <circle cx="310" cy="395" r="8" fill="rgba(255,255,255,.46)" stroke="rgba(31,58,95,.10)" />
-              <circle cx="400" cy="360" r="7" fill="rgba(255,255,255,.46)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="210" cy="445" r="7" fill="rgba(233, 227, 213,.46)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="310" cy="395" r="8" fill="rgba(233, 227, 213,.46)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="400" cy="360" r="7" fill="rgba(233, 227, 213,.46)" stroke="rgba(31,58,95,.10)" />
               <circle cx="510" cy="348" r="9" fill="url(#wg)" stroke="rgba(31,58,95,.10)" />
-              <circle cx="620" cy="335" r="7" fill="rgba(255,255,255,.46)" stroke="rgba(31,58,95,.10)" />
-              <circle cx="700" cy="348" r="8" fill="rgba(255,255,255,.46)" stroke="rgba(31,58,95,.10)" />
-              <circle cx="780" cy="382" r="7" fill="rgba(255,255,255,.46)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="620" cy="335" r="7" fill="rgba(233, 227, 213,.46)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="700" cy="348" r="8" fill="rgba(233, 227, 213,.46)" stroke="rgba(31,58,95,.10)" />
+              <circle cx="780" cy="382" r="7" fill="rgba(233, 227, 213,.46)" stroke="rgba(31,58,95,.10)" />
             </g>
           </g>
         </svg>
@@ -72,7 +72,7 @@ export function AboutHero() {
             <path d="M90 360 C210 295, 350 275, 500 290 C645 305, 780 345, 940 392" />
             <path d="M40 290 C160 205, 300 160, 450 170 C620 182, 760 240, 920 315" />
           </g>
-          <g fill="rgba(255,255,255,.26)" stroke="rgba(31,58,95,.07)" strokeWidth="1">
+          <g fill="rgba(233, 227, 213,.26)" stroke="rgba(31,58,95,.07)" strokeWidth="1">
             <circle cx="220" cy="250" r="10" />
             <circle cx="470" cy="195" r="12" />
             <circle cx="690" cy="290" r="10" />
@@ -115,3 +115,4 @@ export function AboutHero() {
     </section>
   );
 }
+

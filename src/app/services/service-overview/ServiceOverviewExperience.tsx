@@ -152,9 +152,7 @@ export default function ServiceOverviewExperience({
     note: "",
   });
 
-  const [expandedTestimonials, setExpandedTestimonials] = useState<string[]>([
-    testimonials[0]?.id ?? "",
-  ]);
+  const [expandedTestimonials, setExpandedTestimonials] = useState<string[]>([]);
   const [testimonialModalOpen, setTestimonialModalOpen] = useState(false);
   const [testimonialLeadError, setTestimonialLeadError] = useState("");
   const [testimonialLeadForm, setTestimonialLeadForm] =
@@ -959,7 +957,7 @@ export default function ServiceOverviewExperience({
                     <li key={`${plan.id}-${point}`}>{point}</li>
                   ))}
                 </ul>
-                <div className={styles.cardActions}>
+                <div className={`${styles.cardActions} ${styles.pricingActions}`}>
                   <Link
                     href={buildContactHref({
                       source: "service-overview-pricing",
@@ -1139,13 +1137,13 @@ export default function ServiceOverviewExperience({
         </div>
       </section>
 
-      <section className={styles.section} id="overview-trust">
+      <section className={`${styles.section} ${styles.trustSection}`} id="overview-trust">
         <div className={styles.container}>
-          <div className={styles.sectionKicker}>WHY RESEARCHERS TRUST US</div>
-          <h2 className={`${styles.sectionTitle} ${fontClassName}`}>
+          <div className={`${styles.sectionKicker} ${styles.trustSectionKicker}`}>WHY RESEARCHERS TRUST US</div>
+          <h2 className={`${styles.sectionTitle} ${styles.trustSectionTitle} ${fontClassName}`}>
             Trusted because we reduce confusion, not because we sell packages
           </h2>
-          <p className={styles.sectionSub}>
+          <p className={`${styles.sectionSub} ${styles.trustSectionSub}`}>
             Real blockers, real outcomes, and the exact change made after support.
           </p>
 
@@ -1155,23 +1153,32 @@ export default function ServiceOverviewExperience({
                 const expanded = expandedTestimonials.includes(item.id);
 
                 return (
-                  <article key={item.id} className={`${styles.testimonialCard} ${expanded ? styles.expanded : ""}`}>
+                  <article
+                    key={item.id}
+                    className={`${styles.testimonialCard} ${styles.trustTestimonialCard} ${
+                      expanded ? styles.expanded : ""
+                    }`}
+                  >
                     <div className={styles.testimonialTop}>
-                      <div className={styles.avatar}>{item.initials}</div>
-                      <div>
+                      <div className={styles.testimonialIdentity}>
                         <h3>{item.author}</h3>
-                        <p>{item.stage}</p>
-                        <div className={styles.badgeRow}>
-                          <span>{item.country}</span>
-                          <span>{item.category}</span>
-                          <span>{item.service}</span>
+                        <p className={styles.testimonialStage}>{item.stage}</p>
+                        <div className={`${styles.badgeRow} ${styles.trustBadgeRow}`}>
+                          <span className={styles.trustBadge}>{item.country}</span>
+                          <span className={styles.trustBadge}>{item.category}</span>
+                          <span className={styles.trustBadge}>{item.service}</span>
                         </div>
                       </div>
                     </div>
 
                     <blockquote>{item.quote}</blockquote>
 
-                    <div className={styles.cardActions}>
+                    <p className={styles.outcomeLine}>
+                      <span className={styles.outcomeLabel}>Outcome</span>
+                      <span>{item.outcome}</span>
+                    </p>
+
+                    <div className={`${styles.cardActions} ${styles.trustCardActions}`}>
                       <button
                         type="button"
                         className={`${styles.btn} ${styles.btnGhost}`}
@@ -1188,8 +1195,6 @@ export default function ServiceOverviewExperience({
                         Request scope
                       </button>
                     </div>
-
-                    <p className={styles.outcomeLine}>Outcome: {item.outcome}</p>
 
                     {expanded ? (
                       <div className={styles.detailBox}>

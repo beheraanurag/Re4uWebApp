@@ -84,13 +84,7 @@ export function FaqSection() {
   };
 
   return (
-    <section
-      className="section-pad"
-      style={{
-        background:
-          "radial-gradient(1100px 520px at 20% -10%, rgba(168,199,230,.26), transparent 60%), radial-gradient(900px 520px at 90% -10%, rgba(63,127,114,.14), transparent 55%), linear-gradient(180deg, rgba(255,255,255,.98), rgba(233,227,213,.45))",
-      }}
-    >
+    <section className="section-pad">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-8">
           <div className="mb-2.5 text-xs uppercase tracking-[0.22em] text-[#2A2E35]/70">

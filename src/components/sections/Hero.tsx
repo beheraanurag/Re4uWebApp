@@ -34,7 +34,7 @@ const HERO_SLIDES: HeroSlide[] = [
     copy:
       "Get guided feedback on how clearly your aims, methods and key findings are presented so editors and reviewers can follow your story quickly.",
     tags: ["Section-by-section feedback", "Logical flow and structure", "Reviewer-style comments"],
-    cta: "See abstract and manuscript support",
+    cta: "See abstract and\nmanuscript support",
     href: "/services/editing-support",
     imageSrc: "/presentation-hero.svg",
     imageAlt: "Abstract and manuscript guidance visual",
@@ -102,21 +102,39 @@ export function Hero() {
     setActiveIndex((prev) => (prev + 1) % HERO_SLIDES.length);
   };
 
+  function downloadBrochure() {
+    const content = `RESEARCHEDIT4U - Brochure
+
+Services:
+- Editing and language support
+- AI and similarity support
+- Journal selection support
+- Publication support
+
+Contact:
+Website: https://www.researchedit4u.com
+Email: support@researchedit4u.com
+`;
+
+    const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "RESEARCHEDIT4U_Brochure.txt";
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 0);
+  }
+
   return (
-    <section
-      id="sec-hero"
-      className="section-pad"
-      style={{
-        background:
-          "radial-gradient(circle at 12% 8%, rgba(168,199,230,0.24), transparent 42%), radial-gradient(circle at 88% 12%, rgba(63,127,114,0.18), transparent 48%), linear-gradient(135deg, rgba(255,255,255,0.98), rgba(233,227,213,0.52))",
-      }}
-    >
+    <section id="sec-hero" className="section-pad">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid gap-8 lg:grid-cols-[1.25fr_1.15fr] lg:items-center">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(148,163,184,.5)] bg-white/90 px-3 py-1 text-xs font-medium text-[#1F3A5F]">
+            <div className="inline-flex flex-wrap items-center gap-2 rounded-full border border-[rgba(148,163,184,.5)] bg-white/90 px-3 py-1 text-xs font-medium text-[#1F3A5F]">
               <span className="h-2 w-2 rounded-full bg-[#3F7F72]" aria-hidden />
-              <span>From draft to journal decision - in one partner</span>
+              <span className="min-w-0">From draft to journal decision - in one partner</span>
             </div>
 
             <h1 className="mt-4 text-[36px] font-semibold leading-[1.2] tracking-[-0.03em] text-[#2A2E35] md:text-[42px]">
@@ -132,16 +150,23 @@ export function Hero() {
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center rounded-2xl bg-[#1F3A5F] px-6 py-3 text-sm font-semibold text-white shadow-md transition duration-300 hover:scale-105 hover:bg-[#3F7F72]"
+                className="inline-flex w-full items-center justify-center rounded-2xl bg-[#1F3A5F] px-6 py-3 text-sm font-semibold text-white shadow-md transition duration-300 hover:scale-105 hover:bg-[#3F7F72] sm:w-auto"
               >
                 Book Now
               </Link>
               <Link
                 href="/case-studies"
-                className="inline-flex items-center justify-center rounded-2xl border border-[#A8C7E6]/60 bg-white px-6 py-3 text-sm font-semibold text-[#1F3A5F] transition duration-300 hover:scale-105 hover:bg-[#E9E3D5]"
+                className="inline-flex w-full items-center justify-center rounded-2xl border border-[#A8C7E6]/60 bg-white px-6 py-3 text-sm font-semibold text-[#1F3A5F] transition duration-300 hover:scale-105 hover:bg-[#E9E3D5] sm:w-auto"
               >
                 See Editing Samples
               </Link>
+              <button
+                type="button"
+                onClick={downloadBrochure}
+                className="inline-flex w-full items-center justify-center rounded-2xl border border-[#A8C7E6]/60 bg-white px-6 py-3 text-sm font-semibold text-[#1F3A5F] transition duration-300 hover:scale-105 hover:bg-[#E9E3D5] sm:w-auto"
+              >
+                Download Broucher
+              </button>
             </div>
 
             <div className="mt-7 flex flex-wrap gap-6 text-xs text-[#2A2E35]/80">
@@ -164,9 +189,9 @@ export function Hero() {
             className="relative rounded-2xl border border-[#A8C7E6]/60 bg-[radial-gradient(circle_at_top_left,#ffffff_0,#A8C7E6_45%,#E9E3D5_100%)] p-5 shadow-[0_20px_50px_rgba(15,23,42,.10)]"
             aria-label="Key services carousel"
           >
-            <div className="mb-4 flex items-center justify-between gap-3 text-[11px] text-black">
+            <div className="mb-4 flex flex-wrap items-center gap-3 text-[11px] text-black sm:flex-nowrap sm:justify-between">
               <div
-                className="rounded-full border border-[rgba(148,163,184,.5)] bg-[#A8C7E6]/30 px-3 py-1"
+                className="max-w-full rounded-full border border-[rgba(148,163,184,.5)] bg-[#A8C7E6]/30 px-3 py-1"
                 aria-live="polite"
               >
                 {slideLabel}
@@ -212,10 +237,9 @@ export function Hero() {
                   </div>
                   <Link
                     href={slide.href}
-                    className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-black"
+                    className="mt-4 inline-flex items-center gap-1 whitespace-pre-line text-xs font-semibold text-black"
                   >
                     {slide.cta}
-                    <span aria-hidden>{"->"}</span>
                   </Link>
                 </div>
 
@@ -232,7 +256,7 @@ export function Hero() {
               </article>
             ))}
 
-            <div className="mt-4 flex items-center justify-between gap-3">
+            <div className="mt-4 flex items-center gap-3">
               <div className="flex gap-2">
                 <button
                   type="button"
@@ -252,9 +276,6 @@ export function Hero() {
                 >
                   <ChevronRight className="h-4 w-4" />
                 </button>
-              </div>
-              <div className="rounded-full border border-[#A8C7E6]/60 bg-white px-3 py-1 text-[11px] text-black">
-                Hover cards and buttons, or click arrows to explore.
               </div>
             </div>
           </section>

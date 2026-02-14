@@ -158,7 +158,7 @@ export function EditingFaqsSection() {
                       id={`faq-${index}`}
                       role="region"
                       aria-labelledby={`faq-btn-${index}`}
-                      style={{ maxHeight: openIndex === index ? "200px" : "0px" }}
+                      style={{ maxHeight: openIndex === index ? "640px" : "0px" }}
                     >
                       <div className={styles.faqAnswerInner}>
                         <ul>

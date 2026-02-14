@@ -106,14 +106,7 @@ export function HowItWorks() {
   }
 
   return (
-    <section
-      id="sec-process"
-      className="section-pad"
-      style={{
-        background:
-          "radial-gradient(900px 450px at 25% 0%, rgba(168,199,230,.24), transparent 55%), radial-gradient(900px 450px at 85% 10%, rgba(63,127,114,.14), transparent 55%), linear-gradient(180deg, rgba(255,255,255,.98), rgba(233,227,213,.46))",
-      }}
-    >
+    <section id="sec-process" className="section-pad">
       <div className="mx-auto max-w-7xl px-6">
         <div className="rounded-2xl border border-[#A8C7E6]/55 bg-white/85 shadow-[0_10px_30px_rgba(13,28,56,.08)]">
           <div className="px-5 pb-5 pt-6 sm:px-6">
@@ -136,42 +129,45 @@ export function HowItWorks() {
                     <span aria-hidden> - </span>
                     <span>{STEPS[activeStep].name}</span>
                   </span>
-                  <span className="text-[12.5px] max-[920px]:hidden">
-                    Click a step. On mobile, swipe the card.
+                  <span className="hidden text-[12.5px] sm:inline">
+                    Click a step to jump.
+                  </span>
+                  <span className="text-[12.5px] sm:hidden">
+                    Swipe the card to change steps.
                   </span>
                 </div>
-                <div className="text-[12.5px] text-[#2A2E35]/70 max-[920px]:hidden">
+                <div className="hidden text-[12.5px] text-[#2A2E35]/70 md:block">
                   Step {activeStep + 1} of {TOTAL_STEPS}
                 </div>
               </div>
 
               <div className="relative mt-4 px-2 pb-2 pt-4">
-                <div className="absolute left-4 right-4 top-[28px] h-[2px] rounded-full bg-[#A8C7E6]/45" />
+                <div className="absolute left-4 right-4 top-[28px] hidden h-[2px] rounded-full bg-[#A8C7E6]/45 md:block" />
                 <div
-                  className="absolute left-4 top-[28px] h-[2px] rounded-full bg-[#3F7F72] transition-[width] duration-300"
+                  className="absolute left-4 top-[28px] hidden h-[2px] rounded-full bg-[#3F7F72] transition-[width] duration-300 md:block"
                   style={{ width: `calc(${trackFill}% - 0px)` }}
                 />
 
-                <div className="relative z-10 grid grid-cols-5 gap-2">
+                <div className="relative z-10 -mx-2 flex gap-3 overflow-x-auto px-2 pb-1 md:mx-0 md:grid md:grid-cols-5 md:gap-2 md:overflow-visible md:px-0 md:pb-0">
                   {STEPS.map((step, index) => (
                     <button
                       key={step.short}
                       type="button"
                       onClick={() => setActive(index)}
                       aria-current={index === activeStep}
-                      className="group flex flex-col items-center text-center"
+                      className="group flex min-w-[68px] flex-col items-center text-center md:min-w-0"
                     >
                       <span
                         className={`mb-2 grid h-9 w-9 place-items-center rounded-full border text-sm font-bold transition ${
                           index === activeStep
                             ? "border-[#3F7F72]/45 bg-[#A8C7E6]/25 text-[#1F3A5F] shadow-md"
-                            : "border-[#A8C7E6]/60 bg-white/90 text-[#1F3A5F]"
+                          : "border-[#A8C7E6]/60 bg-white/90 text-[#1F3A5F]"
                         }`}
                       >
                         {index + 1}
                       </span>
                       <span
-                        className={`text-[12.5px] ${
+                        className={`text-[11px] sm:text-[12.5px] ${
                           index === activeStep ? "font-bold text-[#1F3A5F]" : "text-[#2A2E35]/70"
                         }`}
                       >

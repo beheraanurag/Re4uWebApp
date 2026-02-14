@@ -1,19 +1,19 @@
 .section {
-  --bg: color-mix(in srgb, var(--brand-lapis) 45%, #000);
+  --bg: #dbe2e4;
   --accent: var(--brand-green);
-  --ink: #eaf0ff;
-  --muted: rgba(234, 240, 255, 0.7);
-  --stroke: rgba(255, 255, 255, 0.12);
-  --glass: rgba(255, 255, 255, 0.06);
-  --glass2: rgba(255, 255, 255, 0.03);
-  --shadow: 0 28px 70px rgba(0, 0, 0, 0.58);
+  --ink: rgba(31, 58, 95, 0.92);
+  --muted: rgba(42, 46, 53, 0.72);
+  --stroke: rgba(31, 58, 95, 0.08);
+  --glass: rgba(168, 199, 230, 0.28);
+  --glass2: rgba(233, 227, 213, 0.34);
+  --shadow: 0 18px 40px rgba(17, 24, 39, 0.12);
   --ease: cubic-bezier(0.22, 0.75, 0.18, 1);
   margin: 0 0 24px;
   padding: 56px 18px 70px;
   background:
     radial-gradient(1100px 700px at 18% 12%, rgba(63, 127, 114, 0.12), transparent 60%),
-    radial-gradient(900px 650px at 78% 18%, rgba(168, 199, 230, 0.14), transparent 62%),
-    radial-gradient(900px 650px at 72% 88%, rgba(233, 227, 213, 0.12), transparent 65%),
+    radial-gradient(900px 650px at 78% 18%, rgba(168, 199, 230, 0.22), transparent 62%),
+    radial-gradient(900px 650px at 72% 88%, rgba(233, 227, 213, 0.26), transparent 65%),
     var(--bg);
   color: var(--ink);
 }
@@ -21,9 +21,9 @@
 .frame {
   max-width: 1100px;
   margin: 0 auto;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: none;
   border-radius: 28px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  background: linear-gradient(180deg, rgba(168, 199, 230, 0.24), rgba(233, 227, 213, 0.34));
   box-shadow: var(--shadow);
   overflow: hidden;
   position: relative;
@@ -31,7 +31,7 @@
 
 .top {
   padding: 34px 26px 18px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(31, 58, 95, 0.12);
 }
 
 .kicker {
@@ -42,7 +42,7 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-size: 11px;
-  color: rgba(234, 240, 255, 0.72);
+  color: rgba(31, 58, 95, 0.72);
 }
 
 .dot {
@@ -58,7 +58,7 @@
   font-size: clamp(26px, 2.9vw, 36px);
   font-weight: 900;
   letter-spacing: 0.01em;
-  color: #ffffff;
+  color: rgba(31, 58, 95, 0.95);
 }
 
 .lead {
@@ -70,7 +70,7 @@
 }
 
 .lead b {
-  color: rgba(234, 240, 255, 0.92);
+  color: rgba(31, 58, 95, 0.9);
 }
 
 .grid {
@@ -83,8 +83,8 @@
 
 .scene {
   border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(31, 58, 95, 0.12);
+  background: linear-gradient(180deg, rgba(168, 199, 230, 0.24), rgba(233, 227, 213, 0.34));
   position: relative;
   overflow: hidden;
   min-height: 460px;
@@ -94,7 +94,7 @@
   content: "";
   position: absolute;
   inset: -1px;
-  background: radial-gradient(900px 320px at 30% 5%, rgba(255, 255, 255, 0.1), transparent 60%);
+  background: radial-gradient(900px 320px at 30% 5%, rgba(168, 199, 230, 0.2), transparent 60%);
   pointer-events: none;
 }
 
@@ -112,12 +112,12 @@
 
 .badge {
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(31, 58, 95, 0.12);
+  background: rgba(168, 199, 230, 0.26);
   padding: 8px 10px;
   font-weight: 900;
   font-size: 12px;
-  color: rgba(234, 240, 255, 0.78);
+  color: rgba(31, 58, 95, 0.78);
   white-space: nowrap;
 }
 
@@ -129,9 +129,9 @@
 
 .btn {
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-  color: rgba(234, 240, 255, 0.92);
+  border: 1px solid rgba(31, 58, 95, 0.14);
+  background: linear-gradient(180deg, rgba(168, 199, 230, 0.32), rgba(233, 227, 213, 0.34));
+  color: rgba(31, 58, 95, 0.9);
   padding: 9px 12px;
   font-weight: 900;
   font-size: 12px;
@@ -142,7 +142,7 @@
 .btn:hover {
   transform: translateY(-1px);
   border-color: rgba(63, 127, 114, 0.3);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 12px 24px rgba(17, 24, 39, 0.12);
 }
 
 .btn:focus-visible {
@@ -155,20 +155,20 @@
   left: 18px;
   bottom: 16px;
   right: 18px;
-  color: rgba(234, 240, 255, 0.62);
+  color: rgba(42, 46, 53, 0.72);
   font-size: 12.5px;
   line-height: 1.55;
   z-index: 3;
 }
 
 .hint b {
-  color: rgba(234, 240, 255, 0.86);
+  color: rgba(31, 58, 95, 0.86);
 }
 
 .details {
   border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(31, 58, 95, 0.12);
+  background: linear-gradient(180deg, rgba(168, 199, 230, 0.24), rgba(233, 227, 213, 0.34));
   padding: 16px;
   position: relative;
   overflow: hidden;
@@ -183,7 +183,7 @@
 
 .detailsBody {
   margin: 10px 0 0;
-  color: rgba(234, 240, 255, 0.72);
+  color: rgba(42, 46, 53, 0.72);
   line-height: 1.65;
   font-size: 13.6px;
 }
@@ -198,12 +198,12 @@
 
 .pillMini {
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(31, 58, 95, 0.12);
+  background: rgba(168, 199, 230, 0.28);
   padding: 8px 10px;
   font-weight: 900;
   font-size: 12px;
-  color: rgba(234, 240, 255, 0.78);
+  color: rgba(31, 58, 95, 0.78);
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -219,8 +219,8 @@
 
 .box {
   border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(31, 58, 95, 0.12);
+  background: rgba(168, 199, 230, 0.24);
   padding: 14px;
 }
 
@@ -230,27 +230,27 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 900;
-  color: rgba(234, 240, 255, 0.72);
+  color: rgba(31, 58, 95, 0.72);
 }
 
 .box ul {
   margin: 10px 0 0;
   padding-left: 16px;
-  color: rgba(234, 240, 255, 0.72);
+  color: rgba(42, 46, 53, 0.72);
   line-height: 1.65;
   font-size: 13.4px;
 }
 
 .box p {
   margin: 10px 0 0;
-  color: rgba(234, 240, 255, 0.72);
+  color: rgba(42, 46, 53, 0.72);
   line-height: 1.65;
   font-size: 13.4px;
 }
 
 .boxNote {
   margin-top: 12px;
-  color: rgba(234, 240, 255, 0.62);
+  color: rgba(42, 46, 53, 0.66);
 }
 
 .tabs {
@@ -262,8 +262,8 @@
 
 .tab {
   border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(31, 58, 95, 0.12);
+  background: rgba(168, 199, 230, 0.28);
   padding: 12px 12px;
   cursor: pointer;
   transition: transform 0.14s var(--ease), border-color 0.14s var(--ease), background 0.14s var(--ease);
@@ -273,12 +273,12 @@
 .tab:hover {
   transform: translateY(-1px);
   border-color: rgba(63, 127, 114, 0.24);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(168, 199, 230, 0.36);
 }
 
 .tabActive {
   border-color: rgba(63, 127, 114, 0.38);
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(168, 199, 230, 0.44);
 }
 
 .tabTitle {
@@ -288,7 +288,7 @@
 
 .tabSub {
   margin-top: 6px;
-  color: rgba(234, 240, 255, 0.65);
+  color: rgba(42, 46, 53, 0.68);
   font-size: 12.5px;
   line-height: 1.45;
 }
@@ -296,7 +296,7 @@
 .footerLine {
   margin-top: 16px;
   text-align: center;
-  color: rgba(234, 240, 255, 0.78);
+  color: rgba(31, 58, 95, 0.78);
   font-weight: 850;
   font-size: 13px;
 }
@@ -306,7 +306,7 @@
 }
 
 .steamLine {
-  stroke: rgba(234, 240, 255, 0.22);
+  stroke: rgba(31, 58, 95, 0.2);
   stroke-width: 3;
   fill: none;
   stroke-linecap: round;
@@ -352,12 +352,12 @@
 
 .bubble:hover {
   transform: translateY(-2px) scale(1.01);
-  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, 0.55));
+  filter: drop-shadow(0 10px 18px rgba(17, 24, 39, 0.14));
 }
 
 .bubbleOn {
   opacity: 1;
-  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, 0.55));
+  filter: drop-shadow(0 10px 18px rgba(17, 24, 39, 0.14));
 }
 
 .bubbleOff {
@@ -422,6 +422,7 @@
   .btn {
     flex: 1 1 calc(33.33% - 6px);
     text-align: center;
+    min-width: 0;
   }
 
   .hint {
@@ -432,6 +433,16 @@
 
   .pillMini {
     white-space: normal;
+  }
+
+  .metaRow {
+    align-items: stretch;
+  }
+
+  .pillMini {
+    flex: 1 1 auto;
+    justify-content: center;
+    text-align: center;
   }
 
   .tabs {
@@ -453,3 +464,4 @@
     transition: none;
   }
 }
+

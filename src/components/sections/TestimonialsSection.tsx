@@ -359,14 +359,7 @@ export function TestimonialsSection() {
   }
 
   return (
-    <section
-      id="sec-testimonials"
-      className="py-8 md:py-10"
-      style={{
-        background:
-          "radial-gradient(900px 500px at 10% -10%, rgba(168,199,230,.24), transparent 55%), radial-gradient(900px 500px at 90% 0%, rgba(63,127,114,.14), transparent 55%), linear-gradient(180deg, rgba(255,255,255,.98), rgba(233,227,213,.42))",
-      }}
-    >
+    <section id="sec-testimonials" className="py-8 md:py-10">
       <div className="mx-auto max-w-7xl px-6">
         <div className="overflow-hidden rounded-2xl border border-[#A8C7E6]/60 bg-white shadow-[0_18px_60px_rgba(11,27,44,.10)]">
           <header className="flex flex-wrap items-start justify-between gap-4 px-6 pb-3 pt-4">

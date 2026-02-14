@@ -109,14 +109,7 @@ Note: This is a front-end demo file. Replace with a real PDF in production.`;
 
 export function PopularServicesSection() {
   return (
-    <section
-      id="sec-popular-services"
-      className="section-pad"
-      style={{
-        background:
-          "radial-gradient(900px 420px at 20% -10%, rgba(168,199,230,.26), transparent 60%), radial-gradient(900px 420px at 85% -10%, rgba(63,127,114,.14), transparent 65%), linear-gradient(180deg, rgba(255,255,255,.98), rgba(233,227,213,.48))",
-      }}
-    >
+    <section id="sec-popular-services" className="section-pad">
       <div className="mx-auto max-w-7xl px-6">
         <div className="text-left">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#2A2E35]/70">

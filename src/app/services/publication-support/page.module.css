@@ -4272,4 +4272,232 @@
   }
 }
 
+/* Publication support spacing system (single source of truth) */
+.page {
+  --pub-section-gap: clamp(8px, 1.3vw, 14px);
+  --pub-pad-x: clamp(12px, 1.9vw, 18px);
+  --pub-head-top: clamp(10px, 1.5vw, 14px);
+  --pub-head-bottom: clamp(8px, 1.1vw, 10px);
+  --pub-content-top: clamp(8px, 1.2vw, 12px);
+  --pub-content-bottom: clamp(10px, 1.5vw, 14px);
+}
 
+.wrap {
+  padding: clamp(10px, 1.6vw, 14px) var(--pub-pad-x) clamp(18px, 2.6vw, 24px) !important;
+}
+
+.hero,
+.audienceSection,
+.deliverSection,
+.pricingSection,
+.addOnSection,
+.eduSection,
+.integritySection,
+.faqSection,
+.finalCtaSection {
+  margin-block: var(--pub-section-gap) !important;
+}
+
+.hero {
+  padding: clamp(10px, 1.5vw, 14px) !important;
+}
+
+.scene {
+  min-height: clamp(240px, 32vw, 330px) !important;
+}
+
+.audienceSection {
+  padding: clamp(10px, 1.8vw, 16px) !important;
+}
+
+.audienceHeader {
+  gap: 9px !important;
+}
+
+.audienceContent {
+  margin-top: 10px !important;
+}
+
+.deliverHeader,
+.pricingHeader,
+.addOnHeader,
+.eduHeader,
+.integrityHeader,
+.faqHeader {
+  padding: var(--pub-head-top) var(--pub-pad-x) var(--pub-head-bottom) !important;
+}
+
+.deliverContent,
+.pricingContent,
+.addOnContent,
+.eduContent,
+.integrityContent,
+.faqContent {
+  padding: var(--pub-content-top) var(--pub-pad-x) var(--pub-content-bottom) !important;
+}
+
+.finalCtaSection {
+  padding: clamp(10px, 1.9vw, 16px) !important;
+}
+
+.deliverTitle,
+.pricingTitle,
+.addOnTitle,
+.eduTitle,
+.integrityTitle,
+.faqTitle {
+  margin: 4px 0 3px !important;
+}
+
+.audienceSub,
+.deliverSub,
+.pricingSub,
+.addOnSub,
+.eduSub,
+.integritySub,
+.faqSub {
+  margin: 0 !important;
+}
+
+.deliverBtnRow,
+.pricingBtnRow,
+.addOnBtnRow,
+.eduBtnRow,
+.integrityBtnRow {
+  margin-top: 6px !important;
+}
+
+.deliverLayout,
+.pricingGrid,
+.addOnGrid,
+.eduGrid,
+.integrityCols,
+.faqWrap,
+.finalCtaGrid {
+  gap: 12px !important;
+}
+
+.deliverContent > :first-child,
+.pricingContent > :first-child,
+.addOnContent > :first-child,
+.eduContent > :first-child,
+.integrityContent > :first-child,
+.faqContent > :first-child {
+  margin-top: 0 !important;
+}
+
+.deliverContent > :last-child,
+.pricingContent > :last-child,
+.addOnContent > :last-child,
+.eduContent > :last-child,
+.integrityContent > :last-child,
+.faqContent > :last-child {
+  margin-bottom: 0 !important;
+}
+
+@media (max-width: 980px) {
+  .page {
+    --pub-section-gap: 8px;
+    --pub-pad-x: 13px;
+    --pub-head-top: 9px;
+    --pub-head-bottom: 7px;
+    --pub-content-top: 7px;
+    --pub-content-bottom: 10px;
+  }
+
+  .wrap {
+    padding: 8px var(--pub-pad-x) 14px !important;
+  }
+
+  .hero {
+    padding: 8px !important;
+  }
+
+  .scene {
+    min-height: 250px !important;
+  }
+
+  .audienceSection {
+    padding: 10px var(--pub-pad-x) !important;
+  }
+
+  .finalCtaSection {
+    padding: 10px var(--pub-pad-x) !important;
+  }
+
+  .deliverLayout,
+  .pricingGrid,
+  .addOnGrid,
+  .eduGrid,
+  .integrityCols,
+  .faqWrap,
+  .finalCtaGrid {
+    gap: 10px !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .page {
+    --pub-section-gap: 7px;
+    --pub-pad-x: 11px;
+    --pub-head-top: 8px;
+    --pub-head-bottom: 6px;
+    --pub-content-top: 6px;
+    --pub-content-bottom: 9px;
+  }
+
+  .wrap {
+    padding: 6px var(--pub-pad-x) 12px !important;
+  }
+
+  .hero {
+    padding: 7px !important;
+  }
+
+  .scene {
+    min-height: 220px !important;
+  }
+
+  .audienceSection {
+    padding: 9px var(--pub-pad-x) !important;
+  }
+
+  .audienceHeader {
+    gap: 8px !important;
+  }
+
+  .audienceContent {
+    margin-top: 9px !important;
+  }
+
+  .finalCtaSection {
+    padding: 9px var(--pub-pad-x) !important;
+  }
+
+  .deliverTitle,
+  .pricingTitle,
+  .addOnTitle,
+  .eduTitle,
+  .integrityTitle,
+  .faqTitle {
+    margin: 3px 0 2px !important;
+  }
+
+  .deliverBtnRow,
+  .pricingBtnRow,
+  .addOnBtnRow,
+  .eduBtnRow,
+  .integrityBtnRow {
+    margin-top: 5px !important;
+  }
+
+  .deliverLayout,
+  .pricingGrid,
+  .addOnGrid,
+  .eduGrid,
+  .integrityCols,
+  .faqWrap,
+  .finalCtaGrid {
+    gap: 8px !important;
+  }
+}

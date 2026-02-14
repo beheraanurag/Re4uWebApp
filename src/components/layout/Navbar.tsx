@@ -31,7 +31,7 @@ const navItems = [
 ];
 
 const servicesSubItems = [
-  { href: "/services", label: "All Services" },
+  // { href: "/services", label: "All Services" },
   { href: "/services/service-overview", label: "Service Overview" },
   { href: "/services/editing-support", label: "Editing Support" },
   { href: "/services/publication-support", label: "Publication Support" },
