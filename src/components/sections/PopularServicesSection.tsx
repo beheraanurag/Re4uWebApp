@@ -96,7 +96,7 @@ const SAMPLE_PDF_BY_SERVICE_ID: Record<string, string> = {
   "data-services": "/sample-doc/DATA ANALYSIS SAMPLE_RE4U SOLUTIONS.pdf",
   "editorial-support": "/sample-doc/EDITING SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
   "publication-support": "/sample-doc/PUBLICATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
-  "academic-presentations": "/sample-doc/PUBLICATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+  "academic-presentations": "/sample-doc/RE4U_Academic_Presentations_Sample_Deck.pptx",
   "consultation-support": "/sample-doc/CONSULTATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
 };
 

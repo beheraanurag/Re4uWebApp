@@ -103,31 +103,6 @@ export function Hero() {
     setActiveIndex((prev) => (prev + 1) % HERO_SLIDES.length);
   };
 
-  function downloadBrochure() {
-    const content = `RESEARCHEDIT4U - Brochure
-
-Services:
-- Editing and language support
-- AI and similarity support
-- Journal selection support
-- Publication support
-
-Contact:
-Website: https://www.researchedit4u.com
-Email: support@researchedit4u.com
-`;
-
-    const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = "RESEARCHEDIT4U_Brochure.txt";
-    document.body.appendChild(anchor);
-    anchor.click();
-    anchor.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 0);
-  }
-
   return (
     <section id="sec-hero" className="section-pad">
       <div className="mx-auto max-w-7xl px-6">
@@ -160,13 +135,13 @@ Email: support@researchedit4u.com
               >
                 See Editing Samples
               </Link>
-              <button
-                type="button"
-                onClick={downloadBrochure}
+              <a
+                href="/brochure/RESEARCHEDIT4U_Brochure.pdf"
+                download="RESEARCHEDIT4U_Brochure.pdf"
                 className="inline-flex w-full items-center justify-center rounded-2xl border border-[#A8C7E6]/60 bg-white px-6 py-3 text-sm font-semibold text-[#1F3A5F] transition duration-300 hover:scale-105 hover:bg-[#E9E3D5] sm:w-auto"
               >
-                Download Broucher
-              </button>
+                Download Brochure
+              </a>
             </div>
 
             <div className="mt-7 flex flex-wrap gap-6 text-xs text-[#2A2E35]/80">

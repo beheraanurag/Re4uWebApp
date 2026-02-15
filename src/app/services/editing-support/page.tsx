@@ -75,7 +75,7 @@ export default function EditingSupportPage() {
                   <aside className={styles.heroVisual} aria-label="Editing support preview">
                     <div className={styles.heroMediaWrap}>
                       <Image
-                        src="/images/home-page-hero/image24.jpeg"
+                        src="/images/services/editing-support-hero.jpg"
                         alt="Editing support sample visual"
                         width={920}
                         height={420}
