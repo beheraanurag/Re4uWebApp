@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
+import { WHATSAPP_URL } from "@/lib/contact";
 import {
   faqItems,
   heroTrustChips,
@@ -290,9 +292,9 @@ export default function DataServicesExperience({
 
               <div className={styles.heroActions}>
                 <Link
-                  href={buildContactHref({
-                    source: "data-services-hero",
-                  })}
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`${styles.btn} ${styles.btnPrimary}`}
                 >
                   Get a Data Review + Quote
@@ -318,24 +320,14 @@ export default function DataServicesExperience({
             </article>
 
             <aside className={styles.heroSide}>
-              <h2 className={styles.sideTitle}>At a glance</h2>
-              <div className={styles.kpiGrid}>
-                <article className={styles.kpiCard}>
-                  <strong>24h</strong>
-                  <span>Initial feasibility response</span>
-                </article>
-                <article className={styles.kpiCard}>
-                  <strong>QC</strong>
-                  <span>Second-pass consistency checks</span>
-                </article>
-                <article className={styles.kpiCard}>
-                  <strong>Editable</strong>
-                  <span>Tables, figures, and notes</span>
-                </article>
-                <article className={styles.kpiCard}>
-                  <strong>Secure</strong>
-                  <span>Confidential and integrity-first</span>
-                </article>
+              <div className={styles.heroMediaWrap}>
+                <Image
+                  src="/images/home-page-hero/image22.jpg"
+                  alt="Data analysis service sample visual"
+                  width={560}
+                  height={320}
+                  className={styles.heroMedia}
+                />
               </div>
             </aside>
           </div>
@@ -440,10 +432,9 @@ export default function DataServicesExperience({
               </p>
               <div className={styles.selectorCtas}>
                 <Link
-                  href={buildContactHref({
-                    source: "data-services-outcomes",
-                    notes: `${activeOutcomePanel.title} review`,
-                  })}
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`${styles.btn} ${styles.btnPrimary}`}
                 >
                   Get a Data Review + Quote
@@ -688,10 +679,9 @@ export default function DataServicesExperience({
 
             <div className={styles.panelActions}>
               <Link
-                href={buildContactHref({
-                  source: "data-services-workflow",
-                  notes: "Workflow review request",
-                })}
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`${styles.btn} ${styles.btnPrimary}`}
               >
                 Get a Data Review + Quote
@@ -909,9 +899,14 @@ export default function DataServicesExperience({
 
               {leadError ? <p className={styles.leadError}>{leadError}</p> : null}
 
-              <button type="submit" className={`${styles.btn} ${styles.btnPrimary}`}>
+              <Link
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.btn} ${styles.btnPrimary}`}
+              >
                 Send and get a reply
-              </button>
+              </Link>
             </form>
           </article>
         </div>
@@ -971,9 +966,9 @@ export default function DataServicesExperience({
 
           <div className={styles.panelActions}>
             <Link
-              href={buildContactHref({
-                source: "data-services-faq",
-              })}
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className={`${styles.btn} ${styles.btnPrimary}`}
             >
               Get a Data Review + Quote
@@ -997,9 +992,9 @@ export default function DataServicesExperience({
             </p>
             <div className={styles.panelActions}>
               <Link
-                href={buildContactHref({
-                  source: "data-services-final",
-                })}
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`${styles.btn} ${styles.btnPrimary}`}
               >
                 Get a Data Review + Quote

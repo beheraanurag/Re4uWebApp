@@ -567,29 +567,162 @@
 }
 
 @media (max-width: 640px) {
+  .section {
+    border-radius: 22px;
+    padding: 14px 10px 10px;
+    background:
+      radial-gradient(520px 180px at 12% 0%, rgba(168, 199, 230, 0.18), transparent 62%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(240, 247, 253, 0.9));
+    box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+  }
+
+  .head {
+    gap: 8px;
+    padding: 0 2px 8px;
+  }
+
+  .title {
+    font-size: 19px;
+  }
+
+  .sub {
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+
+  .badge {
+    font-size: 11px;
+    padding: 7px 9px;
+  }
+
   .card {
     padding: 12px;
     border-radius: 22px;
+    border-color: rgba(31, 58, 95, 0.08);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(236, 245, 252, 0.9));
+    box-shadow: 0 8px 18px rgba(17, 24, 39, 0.07);
   }
 
   .panel,
   .stairArea {
     padding: 12px;
     border-radius: 20px;
+    border-color: rgba(31, 58, 95, 0.08);
+    box-shadow: none;
+  }
+
+  .stairArea {
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  .stairCanvas {
+    gap: 8px;
+    border-radius: 14px;
+    border-color: rgba(31, 58, 95, 0.08);
+    background: rgba(255, 255, 255, 0.64);
+    padding: 8px;
+  }
+
+  .platform {
+    min-height: 64px;
+    border-radius: 14px;
+    border-color: rgba(31, 58, 95, 0.08);
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: none;
+    opacity: 0.95;
+    filter: none;
+  }
+
+  .platform::before {
+    display: none;
+  }
+
+  .platformActive {
+    transform: none;
+    border-color: rgba(63, 127, 114, 0.28);
+    background: rgba(168, 199, 230, 0.3);
+    box-shadow: 0 0 0 2px rgba(63, 127, 114, 0.1) inset;
+  }
+
+  .cap {
+    gap: 8px;
+    padding: 9px 10px 0;
+  }
+
+  .stepNum {
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
+  }
+
+  .stepTitle {
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  .stepHint {
+    padding: 6px 10px 9px;
+    font-size: 11px;
+  }
+
+  .panel {
+    background: rgba(255, 255, 255, 0.74);
+  }
+
+  .panelTop {
+    border-radius: 14px;
+    padding: 10px 10px 9px;
+    background: rgba(168, 199, 230, 0.2);
+    box-shadow: none;
+  }
+
+  .panelTitle {
+    font-size: 16px;
+  }
+
+  .panelBody {
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .ethics {
+    border-radius: 12px;
+    font-size: 11.5px;
+    line-height: 1.45;
+    padding: 8px 10px;
   }
 
   .btnRow {
     width: 100%;
+    gap: 6px;
   }
 
   .btn {
     flex: 1 1 calc(33.33% - 8px);
     text-align: center;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    box-shadow: none;
   }
 
   .dots {
     width: 100%;
     justify-content: center;
+    padding: 7px 9px;
+  }
+
+  .trail {
+    border-radius: 14px;
+    padding: 8px;
+    gap: 8px;
+    background: rgba(168, 199, 230, 0.16);
+  }
+
+  .tag {
+    width: 100%;
+    justify-content: flex-start;
+    font-size: 11px;
+    padding: 7px 10px;
   }
 }
 
@@ -605,4 +738,3 @@
     animation: none;
   }
 }
-

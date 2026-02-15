@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LOGO_MAIN_SRC } from "@/lib/branding";
 import { WHATSAPP_URL } from "@/lib/contact";
+import { BookNowModal } from "@/components/sections/BookNowModal";
 import { Mail, ArrowUp, MessageCircle, Instagram, Linkedin, Twitter } from "lucide-react";
 
 function QuoraIcon(props: SVGProps<SVGSVGElement>) {
@@ -170,9 +171,11 @@ export function Footer() {
               <Link href="#hours" className="text-sm font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">
                 Hours: Mon-Sat
               </Link>
-              <Link href="/contact" className="text-sm font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">
-                Book 1:1 Expert Call
-              </Link>
+              <BookNowModal
+                source="footer-contact"
+                triggerLabel="Book 1:1 Expert Call"
+                triggerClassName="inline-flex w-fit rounded-md text-sm font-semibold text-[#2f558f] no-underline transition-colors hover:text-[#1d2f4d] hover:underline"
+              />
             </div>
           </div>
         </div>
@@ -224,4 +227,3 @@ export function Footer() {
     </div>
   );
 }
-

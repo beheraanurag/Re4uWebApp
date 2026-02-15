@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import Link from "next/link";
+import { useState } from "react";
 import styles from "./page.module.css";
+import { BookNowModal } from "@/components/sections/BookNowModal";
 
 const FAQS = [
   {
@@ -84,8 +84,6 @@ export function EditingFaqsSection() {
   });
   const [quickScanFocus, setQuickScanFocus] = useState([...quickScanDefaults]);
   const [showError, setShowError] = useState(false);
-  const activeItem = useMemo(() => (openIndex !== null ? FAQS[openIndex] : null), [openIndex]);
-
   const toggleItem = (index: number) => {
     setOpenIndex((prev) => (prev === index ? null : index));
   };
@@ -166,13 +164,11 @@ export function EditingFaqsSection() {
                             <li key={bullet} dangerouslySetInnerHTML={{ __html: bullet }} />
                           ))}
                         </ul>
-                        <button
-                          type="button"
-                          className={styles.faqMiniLink}
-                          onClick={openModal}
-                        >
-                          Still unsure? Get a quote
-                        </button>
+                        <BookNowModal
+                          source="editing-faq-item"
+                          triggerLabel="Still unsure? Get a quote"
+                          triggerClassName={styles.faqMiniLink}
+                        />
                       </div>
                     </div>
                   </div>
@@ -205,9 +201,11 @@ export function EditingFaqsSection() {
                 <strong>Close to submission?</strong> Human editing often saves a full round of reviewer comments on language and clarity.
               </div>
               <div className={styles.faqsButtons}>
-                <button type="button" className={`${styles.btn} ${styles.btnPrimary}`} onClick={openModal}>
-                  Get a quote
-                </button>
+                <BookNowModal
+                  source="editing-faqs-sidebar"
+                  triggerLabel="Get a quote"
+                  triggerClassName={`${styles.btn} ${styles.btnPrimary}`}
+                />
                 <button type="button" className={styles.btn} onClick={openModal}>
                   Quick scan recommendation
                 </button>

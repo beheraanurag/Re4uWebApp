@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import styles from "./page.module.css";
+import { BookNowModal } from "@/components/sections/BookNowModal";
 
 const QUESTIONS = [
   {
@@ -222,9 +223,11 @@ export function EditingSelfCheck() {
                   <div className={styles.selfCheckSmall}>
                     Want a full manuscript review? Upload your file for a quote in 1-2 hours.
                   </div>
-                  <button type="button" className={`${styles.btn} ${styles.btnPrimary}`}>
-                    Upload your file
-                  </button>
+                  <BookNowModal
+                    source="editing-self-check"
+                    triggerLabel="Upload your file"
+                    triggerClassName={`${styles.btn} ${styles.btnPrimary}`}
+                  />
                 </div>
 
                 <div className={styles.selfCheckDisclaimer}>

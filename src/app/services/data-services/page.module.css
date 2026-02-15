@@ -209,6 +209,21 @@
   padding: 16px;
 }
 
+.heroMediaWrap {
+  margin-bottom: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--stroke);
+  background: #ffffff;
+}
+
+.heroMedia {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
 .sideTitle {
   margin: 2px 0 10px;
   color: rgba(31, 58, 95, 0.96);

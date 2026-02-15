@@ -2,6 +2,7 @@
 import { ShieldCheck, Target, TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { BookNowModal } from "@/components/sections/BookNowModal";
 
 const RISK_ITEMS = [
   {
@@ -115,9 +116,11 @@ export function TrustControlsSection() {
               <Button asChild variant="outline" className="rounded-full border-[#A8C7E6]/60">
                 <Link href="/case-studies">See editing samples</Link>
               </Button>
-              <Button asChild className="rounded-full bg-[#1F3A5F] text-white hover:bg-[#3F7F72]">
-                <Link href="/contact">Book 1:1 expert call</Link>
-              </Button>
+              <BookNowModal
+                source="trust-controls"
+                triggerLabel="Book 1:1 expert call"
+                triggerClassName="inline-flex h-10 items-center justify-center rounded-full bg-[#1F3A5F] px-4 text-sm font-medium text-white transition-colors hover:bg-[#3F7F72]"
+              />
             </div>
           </div>
         </div>

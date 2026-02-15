@@ -44,7 +44,6 @@ const STEPS: Step[] = [
 
 export function AboutWhatWeDoSection() {
   const ringRef = useRef<SVGCircleElement | null>(null);
-  const beamRef = useRef<HTMLDivElement | null>(null);
   const hubRef = useRef<HTMLDivElement | null>(null);
   const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
   const animationRef = useRef<number | null>(null);
@@ -55,46 +54,12 @@ export function AboutWhatWeDoSection() {
     return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
   }, []);
 
-  const shootTo = useCallback(
-    (stepEl: HTMLDivElement | null) => {
-      const beam = beamRef.current;
-      const hub = hubRef.current;
-      if (!beam || !hub || !stepEl) return;
-      if (reducedMotion) return;
-
-      const hubRect = hub.getBoundingClientRect();
-      const stepRect = stepEl.getBoundingClientRect();
-      const x0 = hubRect.right - 10;
-      const y0 = hubRect.top + hubRect.height * 0.5;
-      const x1 = stepRect.left + 14;
-      const y1 = stepRect.top + stepRect.height * 0.5;
-      const dx = x1 - x0;
-      const dy = y1 - y0;
-      const len = Math.max(140, Math.hypot(dx, dy));
-
-      beam.style.left = `${x0}px`;
-      beam.style.top = `${y0 - 5}px`;
-      beam.style.width = `${len}px`;
-      const ang = (Math.atan2(dy, dx) * 180) / Math.PI;
-      beam.style.setProperty("--a", `${ang}deg`);
-
-      beam.classList.remove(styles.beamOn);
-      void beam.offsetWidth;
-      beam.classList.add(styles.beamOn);
-    },
-    [reducedMotion],
-  );
-
   const setActive = useCallback(
-    (stepKey: number, fireBeam = true) => {
+    (stepKey: number) => {
       const next = Math.max(1, Math.min(STEPS.length, stepKey));
       setActiveStep(next);
-      if (fireBeam) {
-        const stepEl = stepRefs.current[next - 1] ?? null;
-        window.requestAnimationFrame(() => shootTo(stepEl));
-      }
     },
-    [shootTo],
+    [],
   );
 
   useEffect(() => {
@@ -132,19 +97,14 @@ export function AboutWhatWeDoSection() {
   useEffect(() => {
     const times = reducedMotion ? [0, 0, 0, 0] : [1200, 2600, 4000, 5400];
     const timers = times.map((ms, idx) =>
-      window.setTimeout(() => setActive(idx + 1, true), ms),
+      window.setTimeout(() => setActive(idx + 1), ms),
     );
-    window.setTimeout(() => setActive(1, true), 120);
-    window.setTimeout(() => shootTo(stepRefs.current[0] ?? null), 240);
-
-    const handleResize = () => shootTo(stepRefs.current[activeStep - 1] ?? null);
-    window.addEventListener("resize", handleResize);
+    window.setTimeout(() => setActive(1), 120);
 
     return () => {
       timers.forEach((timer) => window.clearTimeout(timer));
-      window.removeEventListener("resize", handleResize);
     };
-  }, [activeStep, reducedMotion, setActive, shootTo]);
+  }, [reducedMotion, setActive]);
 
   return (
     <section className={styles.section} aria-label="What we do today">
@@ -166,7 +126,7 @@ export function AboutWhatWeDoSection() {
             build confidence that carries forward.
           </p>
         </div>
-        <div className={styles.badge}>Ring sequence - scanner beam - outcome trail</div>
+        <div className={styles.badge}>Ring sequence - outcome trail</div>
       </div>
 
       <div className={styles.card}>
@@ -178,9 +138,10 @@ export function AboutWhatWeDoSection() {
                 <circle className={styles.ringBg} cx="130" cy="130" r="108" />
                 <circle className={styles.ringProg} ref={ringRef} cx="130" cy="130" r="108" />
               </svg>
-              <div>
+              <div className={styles.hubContent}>
+                <span className={styles.hubKicker}>Core</span>
                 <h3>Human-reviewed guidance</h3>
-                <p>Clarity, integrity, readiness, confidence - with transparent scope and ethics.</p>
+                <p>Clarity, integrity, and readiness.</p>
               </div>
             </div>
           </div>
@@ -197,11 +158,11 @@ export function AboutWhatWeDoSection() {
                   tabIndex={0}
                   role="button"
                   aria-pressed={activeStep === step.key}
-                  onClick={() => setActive(step.key, true)}
+                  onClick={() => setActive(step.key)}
                   onKeyDown={(event) => {
                     if (event.key === "Enter" || event.key === " ") {
                       event.preventDefault();
-                      setActive(step.key, true);
+                      setActive(step.key);
                     }
                   }}
                 >
@@ -235,8 +196,6 @@ export function AboutWhatWeDoSection() {
         </div>
       </div>
 
-      <div ref={beamRef} className={styles.beam} aria-hidden="true" />
     </section>
   );
 }
-

@@ -10,6 +10,7 @@ type ResourcePost = {
   title: string;
   excerpt: string;
   slug: string;
+  featured_image?: string | null;
   tags?: string[];
 };
 
@@ -22,6 +23,7 @@ type ResourceItem = {
   title: string;
   excerpt: string;
   href: string;
+  coverImage: string | null;
   kind: ResourceType;
   readMeta: string;
   tags: string[];
@@ -44,6 +46,7 @@ const FALLBACK_RESOURCES: ResourceItem[] = [
     excerpt:
       "A structure that makes purpose, method, and contribution obvious - fast.",
     href: "/blog",
+    coverImage: null,
     kind: "Series",
     readMeta: "6 min | Checklist",
     tags: ["series", "abstract", "peer"],
@@ -54,6 +57,7 @@ const FALLBACK_RESOURCES: ResourceItem[] = [
     title: "How to choose the right journal.",
     excerpt: "A simple way to shortlist safe, realistic targets for your paper.",
     href: "/blog",
+    coverImage: null,
     kind: "Guide",
     readMeta: "7 min | Framework",
     tags: ["standalone", "journal"],
@@ -65,6 +69,7 @@ const FALLBACK_RESOURCES: ResourceItem[] = [
     excerpt:
       "What similarity scores mean and how policies are being interpreted.",
     href: "/blog",
+    coverImage: null,
     kind: "Guide",
     readMeta: "8 min | Clarity",
     tags: ["standalone", "ai"],
@@ -76,6 +81,7 @@ const FALLBACK_RESOURCES: ResourceItem[] = [
     excerpt:
       "A point-by-point style that keeps the editor on your side.",
     href: "/blog",
+    coverImage: null,
     kind: "Series",
     readMeta: "7 min | Templates",
     tags: ["series", "peer"],
@@ -132,12 +138,21 @@ function toResourceItems(posts: ResourcePost[]): ResourceItem[] {
       title: post.title,
       excerpt: post.excerpt,
       href: `/blog/${post.slug}`,
+      coverImage: post.featured_image ?? null,
       kind,
       readMeta: `${6 + (index % 4)} min | ${kind === "Series" ? "Series" : "Guide"}`,
       tags: normalizedTags,
       categories,
     };
   });
+}
+
+function toCoverSrc(path: string | null): string | null {
+  if (!path) return null;
+  if (path.startsWith("http://") || path.startsWith("https://") || path.startsWith("/")) {
+    return path;
+  }
+  return `/${path}`;
 }
 
 export function ResourcesShelfSection({ posts }: { posts: ResourcePost[] }) {
@@ -217,17 +232,28 @@ export function ResourcesShelfSection({ posts }: { posts: ResourcePost[] }) {
 
           {filtered.length > 0 ? (
             <div className="grid grid-cols-1 gap-4 pb-1 sm:grid-cols-2 xl:grid-cols-4">
-              {filtered.slice(0, 4).map((item) => (
-                <article
-                  key={item.id}
-                  className="flex h-full min-h-[240px] flex-col overflow-hidden rounded-2xl border border-[#A8C7E6]/60 bg-white shadow-md"
-                >
-                  <div className="relative h-[120px] bg-[#1F3A5F]">
-                    <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-[rgba(255,255,255,.18)] bg-white/10 px-3 py-1 text-[11px] font-extrabold text-white/90">
-                      <span className="h-2 w-2 rounded-full bg-[#3F7F72] shadow-[0_0_0_4px_rgba(63,127,114,.18)]" />
-                      {item.kind}
-                    </span>
-                  </div>
+              {filtered.slice(0, 4).map((item) => {
+                const coverSrc = toCoverSrc(item.coverImage);
+
+                return (
+                  <article
+                    key={item.id}
+                    className="flex h-full min-h-[240px] flex-col overflow-hidden rounded-2xl border border-[#A8C7E6]/60 bg-white shadow-md"
+                  >
+                    <div className="relative h-[120px] bg-[#1F3A5F]">
+                      {coverSrc ? (
+                        <img
+                          src={coverSrc}
+                          alt={item.title}
+                          className="h-full w-full object-cover"
+                          loading="lazy"
+                        />
+                      ) : null}
+                      <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-[rgba(255,255,255,.18)] bg-white/10 px-3 py-1 text-[11px] font-extrabold text-white/90">
+                        <span className="h-2 w-2 rounded-full bg-[#3F7F72] shadow-[0_0_0_4px_rgba(63,127,114,.18)]" />
+                        {item.kind}
+                      </span>
+                    </div>
                   <div className="px-4 pb-3 pt-3">
                     <h3
                       className="text-[17px] font-semibold text-[#2A2E35]"
@@ -268,7 +294,8 @@ export function ResourcesShelfSection({ posts }: { posts: ResourcePost[] }) {
                     </Link>
                   </div>
                 </article>
-              ))}
+                );
+              })}
             </div>
           ) : (
             <div className="mt-3 rounded-xl border border-dashed border-[#A8C7E6]/60 bg-white/60 p-4 text-sm text-[#2A2E35]/75">

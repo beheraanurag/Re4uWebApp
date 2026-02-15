@@ -8,6 +8,7 @@ import { Menu, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LOGO_MAIN_SRC } from "@/lib/branding";
 import { WHATSAPP_URL } from "@/lib/contact";
+import { BookNowModal } from "@/components/sections/BookNowModal";
 import {
   Sheet,
   SheetContent,
@@ -173,12 +174,11 @@ export function Navbar() {
                     WhatsApp Support
                   </Link>
                 </Button>
-                <Button
-                  asChild
-                  className="rounded-2xl border border-[#2f558f] bg-[#2f558f] px-5 py-2 text-[0.82rem] font-semibold text-white shadow-[0_10px_24px_rgba(46,83,142,0.28)] hover:border-[#3F7F72] hover:bg-[#3F7F72] hover:shadow-lg hover:shadow-[0_14px_32px_rgba(63,127,114,0.24)] whitespace-nowrap"
-                >
-                  <Link href="/contact">Book 1:1 Expert Call</Link>
-                </Button>
+                <BookNowModal
+                  source="navbar-desktop"
+                  triggerLabel="Book 1:1 Expert Call"
+                  triggerClassName="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-2xl border border-[#2f558f] bg-[#2f558f] px-5 py-2 text-[0.82rem] font-semibold text-white shadow-[0_10px_24px_rgba(46,83,142,0.28)] transition-colors hover:border-[#3F7F72] hover:bg-[#3F7F72] hover:shadow-lg hover:shadow-[0_14px_32px_rgba(63,127,114,0.24)]"
+                />
               </div>
 
               <div className="xl:hidden">
@@ -247,14 +247,12 @@ export function Navbar() {
                             </Link>
                           </Button>
                         </SheetClose>
-                        <SheetClose asChild>
-                          <Button
-                            asChild
-                            className="w-full justify-center whitespace-nowrap rounded-2xl border border-[#2f558f] bg-[#2f558f] px-4 py-2 text-[0.82rem] font-semibold text-white shadow-[0_10px_24px_rgba(46,83,142,0.28)] hover:bg-[#1F3A5F]"
-                          >
-                            <Link href="/contact">Book 1:1 Expert Call</Link>
-                          </Button>
-                        </SheetClose>
+                        <BookNowModal
+                          source="navbar-mobile"
+                          triggerLabel="Book 1:1 Expert Call"
+                          onBeforeOpen={() => setIsSheetOpen(false)}
+                          triggerClassName="inline-flex w-full items-center justify-center whitespace-nowrap rounded-2xl border border-[#2f558f] bg-[#2f558f] px-4 py-2 text-[0.82rem] font-semibold text-white shadow-[0_10px_24px_rgba(46,83,142,0.28)] transition-colors hover:bg-[#1F3A5F]"
+                        />
                       </div>
                     </div>
                   </SheetContent>
@@ -267,4 +265,3 @@ export function Navbar() {
     </header>
   );
 }
-

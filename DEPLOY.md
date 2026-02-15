@@ -31,6 +31,21 @@ Set:
 - `NEXTAUTH_SECRET` to a strong secret
 - `DB_PASSWORD` strong
 - update `DATABASE_URL` to match the DB password
+- configure Book Now SMTP:
+  - `BOOKNOW_SMTP_HOST`
+  - `BOOKNOW_SMTP_PORT`
+  - `BOOKNOW_SMTP_SECURE`
+  - `BOOKNOW_SMTP_USER` (optional if provider allows no-auth relay)
+  - `BOOKNOW_SMTP_PASS` (optional if provider allows no-auth relay)
+  - `BOOKNOW_SMTP_FROM`
+  - `BOOKNOW_SMTP_TO` (comma-separated recipients)
+
+For Gmail SMTP use:
+- `BOOKNOW_SMTP_HOST=smtp.gmail.com`
+- `BOOKNOW_SMTP_PORT=587`
+- `BOOKNOW_SMTP_SECURE=false`
+- `BOOKNOW_SMTP_USER=<gmail>`
+- `BOOKNOW_SMTP_PASS=<gmail app password>`
 
 ## 4) Build and run
 

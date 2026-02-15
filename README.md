@@ -39,6 +39,45 @@ npm run dev
 
 Open **http://localhost:3000** and **http://localhost:3000/blog**.
 
+## Book Now SMTP (Modal Email)
+
+The `BookNowModal` now posts to `/api/book-now` by default and sends email using SMTP.
+
+Set these variables in `.env` on the server:
+
+```bash
+BOOKNOW_SMTP_HOST=smtp.your-provider.com
+BOOKNOW_SMTP_PORT=465
+BOOKNOW_SMTP_SECURE=true
+BOOKNOW_SMTP_USER=your-smtp-username
+BOOKNOW_SMTP_PASS=your-smtp-password
+BOOKNOW_SMTP_FROM=no-reply@yourdomain.com
+BOOKNOW_SMTP_TO=ops@yourdomain.com,support@yourdomain.com
+```
+
+Notes:
+- `BOOKNOW_SMTP_TO` supports comma-separated recipient emails.
+- `BOOKNOW_SMTP_PORT=465` with `BOOKNOW_SMTP_SECURE=true` is the recommended setup.
+- If `NEXT_PUBLIC_API_URL` is set, the modal continues using `${NEXT_PUBLIC_API_URL}/contact` instead of local SMTP route.
+
+### Docker-first local setup (Mailpit)
+
+```bash
+docker compose --profile mail up -d mailpit
+```
+
+Local `.env` values:
+
+```bash
+BOOKNOW_SMTP_HOST=localhost
+BOOKNOW_SMTP_PORT=1025
+BOOKNOW_SMTP_SECURE=false
+BOOKNOW_SMTP_FROM=no-reply@local.re4u
+BOOKNOW_SMTP_TO=ops@local.re4u
+```
+
+View captured emails at [http://localhost:8025](http://localhost:8025).
+
 ## Blog (Prisma)
 
 - **Schema:** `prisma/schema.prisma` – `Post` model (title, slug, content, excerpt, coverImage, published, authorName, etc.).

@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import styles from "./page.module.css";
+import { BookNowModal } from "@/components/sections/BookNowModal";
 
 const payloads = [
   {
@@ -116,9 +116,11 @@ export function EditingFreeToolsSection() {
               <strong>If you are close to submission, human editing saves rounds of rewrites.</strong> It
               reduces misunderstandings, avoids false positives, and keeps your meaning intact.
             </p>
-            <Link href="/contact" className={`${styles.btn} ${styles.btnPrimary}`}>
-              Get a quote
-            </Link>
+            <BookNowModal
+              source="editing-free-tools"
+              triggerLabel="Get a quote"
+              triggerClassName={`${styles.btn} ${styles.btnPrimary}`}
+            />
           </div>
         </div>
       </div>

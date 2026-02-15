@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { CareersExperience } from "@/components/sections/CareersExperience";
-import { PublicPageFrame } from "@/components/layout/PublicPageFrame";
 
 export const metadata: Metadata = {
   title: "Careers - Researchedit4u",
@@ -9,9 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function CareersPage() {
-  return (
-    <PublicPageFrame>
-      <CareersExperience />
-    </PublicPageFrame>
-  );
+  return <CareersExperience />;
 }

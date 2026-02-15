@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { BookNowModal } from "@/components/sections/BookNowModal";
 
 type HeroSlide = {
   label: string;
@@ -25,18 +26,18 @@ const HERO_SLIDES: HeroSlide[] = [
     tags: ["AI and similarity review", "Turnitin / iThenticate focus", "Editor feedback built-in"],
     cta: "Explore AI and plagiarism support",
     href: "/services/editing-support",
-    imageSrc: "/presentation-hero.svg",
+    imageSrc: "/images/home-page-hero/image4.jpg",
     imageAlt: "AI and plagiarism safety visual",
   },
   {
     label: "Abstract and section coaching",
-    title: "Clarify your abstract, introduction and flow.",
+    title: "Clarify your abstract,\nintroduction and flow.",
     copy:
       "Get guided feedback on how clearly your aims, methods and key findings are presented so editors and reviewers can follow your story quickly.",
     tags: ["Section-by-section feedback", "Logical flow and structure", "Reviewer-style comments"],
     cta: "See abstract and\nmanuscript support",
     href: "/services/editing-support",
-    imageSrc: "/presentation-hero.svg",
+    imageSrc: "/images/home-page-hero/image6.jpeg",
     imageAlt: "Abstract and manuscript guidance visual",
   },
   {
@@ -47,7 +48,7 @@ const HERO_SLIDES: HeroSlide[] = [
     tags: ["Journal-compliant layouts", "Infographics and visual summaries", "Conference-ready graphics"],
     cta: "View graphical abstract options",
     href: "/services/presentations",
-    imageSrc: "/presentation-hero.svg",
+    imageSrc: "/images/home-page-hero/image8.jpg",
     imageAlt: "Graphical abstracts service visual",
   },
   {
@@ -58,7 +59,7 @@ const HERO_SLIDES: HeroSlide[] = [
     tags: ["Language and formatting checks", "Journal selection guidance", "Submission pack review"],
     cta: "Explore editing and submission",
     href: "/services/service-overview",
-    imageSrc: "/presentation-hero.svg",
+    imageSrc: "/images/home-page-hero/image2.jpg",
     imageAlt: "Research paper editing and submission visual",
   },
 ];
@@ -148,12 +149,11 @@ Email: support@researchedit4u.com
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
-              <Link
-                href="/contact"
-                className="inline-flex w-full items-center justify-center rounded-2xl bg-[#1F3A5F] px-6 py-3 text-sm font-semibold text-white shadow-md transition duration-300 hover:scale-105 hover:bg-[#3F7F72] sm:w-auto"
-              >
-                Book Now
-              </Link>
+              <BookNowModal
+                source="home-hero-book-now"
+                triggerLabel="Book Now"
+                triggerClassName="inline-flex w-full items-center justify-center rounded-2xl bg-[#1F3A5F] px-6 py-3 text-sm font-semibold text-white shadow-md transition duration-300 hover:scale-105 hover:bg-[#3F7F72] sm:w-auto"
+              />
               <Link
                 href="/case-studies"
                 className="inline-flex w-full items-center justify-center rounded-2xl border border-[#A8C7E6]/60 bg-white px-6 py-3 text-sm font-semibold text-[#1F3A5F] transition duration-300 hover:scale-105 hover:bg-[#E9E3D5] sm:w-auto"
@@ -218,7 +218,17 @@ Email: support@researchedit4u.com
               >
                 <div>
                   <h2
-                    className={`${index === 0 ? "text-[14px]" : "text-lg"} font-semibold text-black ${
+                    className={`${
+                      index === 0
+                        ? "!text-[28px] md:!text-[30px] lg:!text-[32px]"
+                        : index === 1
+                          ? "!text-[18px] md:!text-[17px] lg:!text-[18px]"
+                          : "!text-[22px] md:!text-[23px] lg:!text-[24px]"
+                    } ${
+                      index === 1
+                        ? "whitespace-pre-line tracking-[-0.01em] text-black max-w-[20ch]"
+                        : "text-black"
+                    } font-semibold ${
                       index === 3 ? "leading-[1.08] whitespace-pre-line" : "leading-[1.15]"
                     }`}
                   >

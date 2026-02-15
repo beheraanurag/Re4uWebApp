@@ -1,5 +1,5 @@
 .wrap {
-  --sand: #e9e3d5;
+  --sand: #dbeaf8;
   --lapis: #1f3a5f;
   --ink: #2a2e35;
   --sky: #a8c7e6;
@@ -8,7 +8,7 @@
   --ink-55: rgba(42, 46, 53, 0.55);
   --line: rgba(31, 58, 95, 0.12);
   --glass-a: rgba(168, 199, 230, 0.32);
-  --glass-b: rgba(233, 227, 213, 0.4);
+  --glass-b: rgba(168, 199, 230, 0.24);
   --shadow: 0 18px 40px rgba(17, 24, 39, 0.12);
   --shadow2: 0 10px 22px rgba(17, 24, 39, 0.1);
   --r-xl: 26px;
@@ -21,7 +21,7 @@
   border: none;
   background:
     radial-gradient(680px 220px at 12% 0%, rgba(168, 199, 230, 0.26), transparent 62%),
-    linear-gradient(180deg, rgba(168, 199, 230, 0.22), rgba(233, 227, 213, 0.34));
+    linear-gradient(180deg, rgba(168, 199, 230, 0.22), rgba(168, 199, 230, 0.16));
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: var(--shadow);
@@ -38,7 +38,7 @@
     radial-gradient(1100px 700px at 15% 10%, rgba(168, 199, 230, 0.45), transparent 60%),
     radial-gradient(900px 600px at 85% 0%, rgba(63, 127, 114, 0.16), transparent 55%),
     radial-gradient(800px 650px at 70% 90%, rgba(168, 199, 230, 0.26), transparent 60%),
-    linear-gradient(180deg, rgba(233, 227, 213, 0.98), rgba(233, 227, 213, 0.9));
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(236, 244, 252, 0.9));
   opacity: 0.9;
   z-index: -2;
 }
@@ -230,12 +230,12 @@
 }
 
 .front {
-  background: linear-gradient(180deg, rgba(168, 199, 230, 0.24), rgba(233, 227, 213, 0.26));
+  background: linear-gradient(180deg, rgba(168, 199, 230, 0.24), rgba(168, 199, 230, 0.16));
 }
 
 .back {
   transform: rotateY(180deg);
-  background: linear-gradient(180deg, rgba(168, 199, 230, 0.3), rgba(233, 227, 213, 0.32));
+  background: linear-gradient(180deg, rgba(168, 199, 230, 0.3), rgba(168, 199, 230, 0.2));
 }
 
 .minihead {
@@ -366,4 +366,3 @@
     transition: none;
   }
 }
-

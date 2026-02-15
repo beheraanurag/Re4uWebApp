@@ -14,6 +14,7 @@ const POPULAR_SERVICES = [
   {
     id: "research-planning",
     title: "Research Planning",
+    exploreHref: "/services/research-planning",
     subtitle: "Start right, move faster",
     bullets: [
       "Validate topic and objectives",
@@ -26,6 +27,7 @@ const POPULAR_SERVICES = [
   {
     id: "data-services",
     title: "Data Services",
+    exploreHref: "/services/data-services",
     subtitle: "Stats & ML that hold up",
     bullets: [
       "Analyze in SPSS / R / Python",
@@ -38,6 +40,7 @@ const POPULAR_SERVICES = [
   {
     id: "editorial-support",
     title: "Editorial Support",
+    exploreHref: "/services/editing-support",
     subtitle: "Polished, compliant, clear",
     bullets: [
       "Edit language and structure",
@@ -50,6 +53,7 @@ const POPULAR_SERVICES = [
   {
     id: "publication-support",
     title: "Publication Support",
+    exploreHref: "/services/publication-support",
     subtitle: "Submit with confidence",
     bullets: [
       "Target suitable journals",
@@ -62,6 +66,7 @@ const POPULAR_SERVICES = [
   {
     id: "academic-presentations",
     title: "Academic Presentations",
+    exploreHref: "/services/presentations",
     subtitle: "Impactful visuals that land",
     bullets: [
       "Design slides and posters",
@@ -74,6 +79,7 @@ const POPULAR_SERVICES = [
   {
     id: "consultation-support",
     title: "Consultation Support",
+    exploreHref: "",
     subtitle: "Expert guidance at every step",
     bullets: [
       "One-on-one project discussions",
@@ -85,26 +91,26 @@ const POPULAR_SERVICES = [
   },
 ];
 
-function downloadSample(title: string) {
-  const content = `RE4U - Popular Service Sample
+const SAMPLE_PDF_BY_SERVICE_ID: Record<string, string> = {
+  "research-planning": "/sample-doc/RESEARCH PLANNING SAMPLE_RE4U SOLUTIONS.pdf",
+  "data-services": "/sample-doc/DATA ANALYSIS SAMPLE_RE4U SOLUTIONS.pdf",
+  "editorial-support": "/sample-doc/EDITING SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+  "publication-support": "/sample-doc/PUBLICATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+  "academic-presentations": "/sample-doc/PUBLICATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+  "consultation-support": "/sample-doc/CONSULTATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+};
 
-Service: ${title}
+function downloadSamplePdf(serviceId: string) {
+  const filePath =
+    SAMPLE_PDF_BY_SERVICE_ID[serviceId] ??
+    "/sample-doc/CONSULTATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf";
 
-Sample includes:
-- Scope overview
-- Delivery checklist
-- Sample outputs (demo)
-
-Note: This is a front-end demo file. Replace with a real PDF in production.`;
-  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
-  anchor.href = url;
-  anchor.download = `RE4U_${title.replace(/[^a-z0-9]+/gi, "_")}_Sample.txt`;
+  anchor.href = encodeURI(filePath);
+  anchor.download = filePath.split("/").pop() ?? "sample.pdf";
   document.body.appendChild(anchor);
   anchor.click();
   anchor.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 0);
 }
 
 export function PopularServicesSection() {
@@ -157,17 +163,26 @@ export function PopularServicesSection() {
                 <div className="mt-auto flex items-center justify-between pt-4 text-sm">
                   <button
                     type="button"
-                    onClick={() => downloadSample(service.title)}
+                    onClick={() => downloadSamplePdf(service.id)}
                     className="rounded-2xl border border-[#A8C7E6]/60 bg-white px-3 py-2 text-xs font-semibold text-[#1F3A5F] transition hover:bg-[#E9E3D5]"
                   >
                     Download Sample
                   </button>
-                  <Link
-                    href={`/services#${service.id}`}
-                    className="text-xs font-bold text-[#1F3A5F] hover:text-[#3F7F72]"
-                  >
-                    Explore -&gt;
-                  </Link>
+                  {service.exploreHref ? (
+                    <Link
+                      href={service.exploreHref}
+                      className="text-xs font-bold text-[#1F3A5F] hover:text-[#3F7F72]"
+                    >
+                      Explore -&gt;
+                    </Link>
+                  ) : (
+                    <span
+                      aria-disabled="true"
+                      className="cursor-not-allowed text-xs font-bold text-[#1F3A5F]/45"
+                    >
+                      Explore -&gt;
+                    </span>
+                  )}
                 </div>
               </article>
             );

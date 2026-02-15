@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
+import { WHATSAPP_URL } from "@/lib/contact";
 
 const heroBullets = [
   "Research proposal outline aligned to your university or funder format",
@@ -297,45 +299,123 @@ export default function ResearchPlanningPage() {
       <section className={styles.heroSection}>
         <div className={styles.container}>
           <div className={styles.heroGrid}>
-            <div className={styles.heroContent}>
-              <p className={styles.kicker}>
-                <span className={styles.dot} aria-hidden="true" />
-                Research Planning | Proposal Help | PhD/Thesis/Grants
-              </p>
-              <h1 className={styles.heroTitle}>
-                Research Planning for PhD and Grants - Proposal, Methodology,
-                and Work Plan
-              </h1>
-              <p className={styles.heroSubtitle}>
-                Get a supervisor-ready research plan with a clear{" "}
-                <strong>problem statement</strong>, defendable{" "}
-                <strong>research gap</strong>, aligned{" "}
-                <strong>research objectives</strong> and{" "}
-                <strong>research questions</strong>, strong{" "}
-                <strong>research methodology</strong>, and a feasible timeline.
-              </p>
+            <div className={styles.heroMain}>
+              <div className={styles.heroContent}>
+                <p className={styles.kicker}>
+                  <span className={styles.dot} aria-hidden="true" />
+                  Research Planning | Proposal Help | PhD/Thesis/Grants
+                </p>
+                <h1 className={styles.heroTitle}>
+                  Research Planning for PhD and Grants - Proposal, Methodology,
+                  and Work Plan
+                </h1>
+                <p className={styles.heroSubtitle}>
+                  Get a supervisor-ready research plan with a clear{" "}
+                  <strong>problem statement</strong>, defendable{" "}
+                  <strong>research gap</strong>, aligned{" "}
+                  <strong>research objectives</strong> and{" "}
+                  <strong>research questions</strong>, strong{" "}
+                  <strong>research methodology</strong>, and a feasible timeline.
+                </p>
 
-              <ul className={styles.bulletList}>
-                {heroBullets.map((bullet) => (
-                  <li key={bullet} className={styles.bulletItem}>
-                    <span className={styles.tick} aria-hidden="true">
-                      OK
-                    </span>
-                    <span>{bullet}</span>
-                  </li>
-                ))}
-              </ul>
+                <ul className={styles.bulletList}>
+                  {heroBullets.map((bullet) => (
+                    <li key={bullet} className={styles.bulletItem}>
+                      <span className={styles.tick} aria-hidden="true">
+                        OK
+                      </span>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
 
-              <div className={styles.heroActions}>
-                <Link href="/contact" className={`${styles.btn} ${styles.btnPrimary}`}>
-                  Get a Free Planning Call
-                </Link>
-                <Link href="/contact" className={styles.btn}>
-                  Upload Your Brief
-                </Link>
-                <a href="#packages" className={`${styles.btn} ${styles.btnGhost}`}>
-                  View Packages
-                </a>
+                <div className={styles.heroActions}>
+                  <Link
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${styles.btn} ${styles.btnPrimary}`}
+                  >
+                    Get a Free Planning Call
+                  </Link>
+                  <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={styles.btn}>
+                    Upload Your Brief
+                  </Link>
+                  <a href="#packages" className={`${styles.btn} ${styles.btnGhost}`}>
+                    View Packages
+                  </a>
+                </div>
+              </div>
+
+              <form
+                className={`${styles.quickForm} ${styles.heroQuoteForm}`}
+                action="/contact"
+                method="get"
+              >
+                <p className={styles.formTitle}>
+                  Get a quote in 30 minutes (WhatsApp or Email)
+                </p>
+                <div className={styles.formGrid}>
+                  <input className={styles.input} name="name" placeholder="Full Name" required />
+                  <input
+                    className={styles.input}
+                    name="whatsapp"
+                    placeholder="WhatsApp Number"
+                    required
+                  />
+                  <select
+                    className={styles.input}
+                    name="level"
+                    defaultValue=""
+                    required
+                  >
+                    <option value="" disabled>
+                      Academic Level
+                    </option>
+                    <option>UG</option>
+                    <option>PG</option>
+                    <option>PhD</option>
+                    <option>Postdoc</option>
+                    <option>Grant</option>
+                  </select>
+                  <input className={styles.input} type="date" name="deadline" required />
+                </div>
+                <div className={styles.formActions}>
+                  <Link
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${styles.btn} ${styles.btnPrimary}`}
+                  >
+                    Get Quote and Next Steps
+                  </Link>
+                  <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={styles.btn}>
+                    Share More Details
+                  </Link>
+                </div>
+                <p className={styles.formNote}>
+                  Transparent quote before work starts | Confidential |
+                  Integrity-first
+                </p>
+              </form>
+
+              <div className={`${styles.trustStrip} ${styles.heroTrustStrip}`}>
+                <span className={styles.chip}>
+                  <span className={styles.dot} aria-hidden="true" />
+                  Confidential
+                </span>
+                <span className={styles.chip}>
+                  <span className={styles.dot} aria-hidden="true" />
+                  Domain-aligned experts
+                </span>
+                <span className={styles.chip}>
+                  <span className={styles.dot} aria-hidden="true" />
+                  Quote shared before work
+                </span>
+                <span className={styles.chip}>
+                  <span className={styles.dot} aria-hidden="true" />
+                  Integrity promise
+                </span>
               </div>
             </div>
 
@@ -344,6 +424,15 @@ export default function ResearchPlanningPage() {
               <p className={styles.visualSub}>
                 From topic confusion to proposal clarity
               </p>
+              <div className={styles.visualMediaWrap}>
+                <Image
+                  src="/images/home-page-hero/image20.jpg"
+                  alt="Research planning sample visual"
+                  width={560}
+                  height={320}
+                  className={styles.visualMedia}
+                />
+              </div>
               <ol className={styles.roadmap}>
                 <li className={styles.roadmapItem}>
                   <span className={styles.roadmapIndex}>1</span>
@@ -386,72 +475,6 @@ export default function ResearchPlanningPage() {
                 Timeline/Milestones
               </p>
             </aside>
-
-            <form
-              className={`${styles.quickForm} ${styles.heroQuoteForm}`}
-              action="/contact"
-              method="get"
-            >
-              <p className={styles.formTitle}>
-                Get a quote in 30 minutes (WhatsApp or Email)
-              </p>
-              <div className={styles.formGrid}>
-                <input className={styles.input} name="name" placeholder="Full Name" required />
-                <input
-                  className={styles.input}
-                  name="whatsapp"
-                  placeholder="WhatsApp Number"
-                  required
-                />
-                <select
-                  className={styles.input}
-                  name="level"
-                  defaultValue=""
-                  required
-                >
-                  <option value="" disabled>
-                    Academic Level
-                  </option>
-                  <option>UG</option>
-                  <option>PG</option>
-                  <option>PhD</option>
-                  <option>Postdoc</option>
-                  <option>Grant</option>
-                </select>
-                <input className={styles.input} type="date" name="deadline" required />
-              </div>
-              <div className={styles.formActions}>
-                <button className={`${styles.btn} ${styles.btnPrimary}`} type="submit">
-                  Get Quote and Next Steps
-                </button>
-                <Link href="/contact" className={styles.btn}>
-                  Share More Details
-                </Link>
-              </div>
-              <p className={styles.formNote}>
-                Transparent quote before work starts | Confidential |
-                Integrity-first
-              </p>
-            </form>
-
-            <div className={`${styles.trustStrip} ${styles.heroTrustStrip}`}>
-              <span className={styles.chip}>
-                <span className={styles.dot} aria-hidden="true" />
-                Confidential
-              </span>
-              <span className={styles.chip}>
-                <span className={styles.dot} aria-hidden="true" />
-                Domain-aligned experts
-              </span>
-              <span className={styles.chip}>
-                <span className={styles.dot} aria-hidden="true" />
-                Quote shared before work
-              </span>
-              <span className={styles.chip}>
-                <span className={styles.dot} aria-hidden="true" />
-                Integrity promise
-              </span>
-            </div>
           </div>
         </div>
       </section>
@@ -534,7 +557,9 @@ export default function ResearchPlanningPage() {
                       with a transparent quote before work begins.
                     </p>
                     <Link
-                      href="/contact"
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={`${styles.btn} ${styles.btnPrimary} ${styles.fastStartBtn}`}
                     >
                       Upload Your Brief
@@ -605,10 +630,15 @@ export default function ResearchPlanningPage() {
                   ))}
                 </ul>
                 <div className={styles.packageActions}>
-                  <Link href="/contact" className={`${styles.btn} ${styles.btnPrimary}`}>
+                  <Link
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${styles.btn} ${styles.btnPrimary}`}
+                  >
                     {item.ctaPrimary}
                   </Link>
-                  <Link href="/contact" className={styles.btn}>
+                  <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={styles.btn}>
                     {item.ctaSecondary}
                   </Link>
                 </div>
@@ -679,14 +709,21 @@ export default function ResearchPlanningPage() {
                       ) : null}
                       {step.primaryCta ? (
                         <Link
-                          href="/contact"
+                          href={WHATSAPP_URL}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className={`${styles.btn} ${styles.btnPrimary} ${styles.btnSmall}`}
                         >
                           {step.primaryCta}
                         </Link>
                       ) : null}
                       {step.secondaryCta ? (
-                        <Link href="/contact" className={`${styles.btn} ${styles.btnSmall}`}>
+                        <Link
+                          href={WHATSAPP_URL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`${styles.btn} ${styles.btnSmall}`}
+                        >
                           {step.secondaryCta}
                         </Link>
                       ) : null}
@@ -747,7 +784,9 @@ export default function ResearchPlanningPage() {
                 (Starter/Core/Premium) with a transparent quote.
               </p>
               <Link
-                href="/contact"
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`${styles.btn} ${styles.btnPrimary} ${styles.shareBriefBtn}`}
               >
                 Upload Brief
@@ -1003,10 +1042,15 @@ export default function ResearchPlanningPage() {
               </p>
             </div>
             <div className={styles.finalButtons}>
-              <Link href="/contact" className={`${styles.btn} ${styles.btnPrimary}`}>
+              <Link
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.btn} ${styles.btnPrimary}`}
+              >
                 Get a Free Planning Call
               </Link>
-              <Link href="/contact" className={styles.btn}>
+              <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={styles.btn}>
                 Upload Your Brief
               </Link>
             </div>
@@ -1016,4 +1060,3 @@ export default function ResearchPlanningPage() {
     </>
   );
 }
-

@@ -188,6 +188,20 @@ const SUBJECTS: SubjectScorecard[] = [
   },
 ];
 
+const SAMPLE_PDF_BY_SUBJECT_KEY: Record<string, string> = {
+  "eng-tech": "/sample-doc/ENGINNERING EDITING_RE4U SOLUTIONS.pdf",
+  "med-health": "/sample-doc/MEDICAL SCIENCE EDITING_RE4U SOLUTIONS.pdf",
+  "life-bio": "/sample-doc/LIFE SCIENCE EDITING_RE4U SOLUTIONS.pdf",
+  "cs-ai": "/sample-doc/COMPUTER SCIENCE EDITING_RE4U SOLUTIONS.pdf",
+  chem: "/sample-doc/CHEMICAL SCIENCE EDITING_RE4U SOLUTIONS.pdf",
+  "env-earth": "/sample-doc/ENVIRONMENTAL SCIENCE EDITING_RE4U SOLUTIONS.pdf",
+  "biz-econ": "/sample-doc/BUSINESS & MANAGEMENT EDITING_RE4U SOLUTIONS.pdf",
+  "soc-edu": "/sample-doc/EDUCATION EDITING_RE4U SOLUTIONS.pdf",
+  "arts-hum": "/sample-doc/ARTS AND HUMANITIES EDITING_RE4U SOLUTIONS.pdf",
+};
+
+const DEFAULT_SAMPLE_PDF = "/sample-doc/EDITING SUPPORT SAMPLE_RE4U SOLUTIONS.pdf";
+
 export function SubjectExplorerSection() {
   const [activeKey, setActiveKey] = useState(SUBJECTS[0]?.key ?? "");
   const activeSubject = useMemo(
@@ -196,36 +210,13 @@ export function SubjectExplorerSection() {
   );
 
   function downloadSample(subject: SubjectScorecard) {
-    const safeTitle = subject.title.replace(/[^a-z0-9]+/gi, "_");
-    const content = `RE4U - Sample Preview (Anonymised)
-Subject: ${subject.title}
-Scope tag: ${subject.tag}
-
-Typical improvements:
-- Language refinement for clarity and concision
-- Methods transparency and logical flow
-- Journal-aligned structure and formatting checks
-- Figure/table callout consistency and referencing hygiene
-
-Scorecard snapshot:
-- Edited: ${subject.stats.edited}
-- Journal matches: ${subject.stats.matches}
-- Acceptances supported: ${subject.stats.accepts}
-
-Subfields:
-${subject.subfields.map((item) => `- ${item}`).join("\n")}
-
-Note: This is a front-end demo sample file. Replace with your real PDF sample link for production.`;
-
-    const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
+    const filePath = SAMPLE_PDF_BY_SUBJECT_KEY[subject.key] ?? DEFAULT_SAMPLE_PDF;
     const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = `RE4U_${safeTitle}_Sample.txt`;
+    anchor.href = encodeURI(filePath);
+    anchor.download = filePath.split("/").pop() ?? "sample.pdf";
     document.body.appendChild(anchor);
     anchor.click();
     anchor.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 0);
   }
 
   return (
@@ -393,25 +384,12 @@ Note: This is a front-end demo sample file. Replace with your real PDF sample li
               </div>
             </div>
 
-            <div className="mt-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-              <p className="text-xs text-[#2A2E35]/65">
-                Download an anonymised sample preview for this subject (demo).
-              </p>
-              <button
-                type="button"
-                onClick={() => downloadSample(activeSubject)}
-                className="inline-flex items-center gap-2 rounded-full bg-[#1F3A5F] px-4 py-2.5 text-sm font-extrabold text-white shadow-md"
-              >
-                <Download className="h-4 w-4" aria-hidden />
-                Download sample
-              </button>
-            </div>
           </div>
 
           <p className="mt-4 text-xs text-[#2A2E35]/65">
             <strong className="text-[#2A2E35]/80">Note:</strong> Subject clusters follow
-            Scopus-style discipline groupings. The download button provides an anonymised preview
-            file (front-end demo).
+            Scopus-style discipline groupings. The download button provides a matched anonymised
+            sample PDF for each subject cluster.
           </p>
         </section>
       </div>

@@ -2,8 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
+import { WHATSAPP_URL } from "@/lib/contact";
 import {
   categoryLabels,
   categoryModules,
@@ -60,6 +62,88 @@ type TestimonialLeadForm = {
 
 type TabMode = "preview" | "inside" | "download";
 
+const DEFAULT_SAMPLE_PDF =
+  "/sample-doc/CONSULTATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf";
+
+const SAMPLE_DOC_BY_CATEGORY_MODULE: Record<string, string> = {
+  "planning:Topic Selection":
+    "/sample-doc/RESEARCH PLANNING SAMPLE_RE4U SOLUTIONS.pdf",
+  "planning:Proposal Support":
+    "/sample-doc/RESEARCH PLANNING SAMPLE_RE4U SOLUTIONS.pdf",
+  "planning:Research Design":
+    "/sample-doc/RESEARCH PLANNING SAMPLE_RE4U SOLUTIONS.pdf",
+  "planning:Ethics and Feasibility":
+    "/sample-doc/CONSULTATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+  "data:Statistical Analysis":
+    "/sample-doc/DATA ANALYSIS SAMPLE_RE4U SOLUTIONS.pdf",
+  "data:Data Cleaning": "/sample-doc/DATA ANALYSIS SAMPLE_RE4U SOLUTIONS.pdf",
+  "data:ML Modelling": "/sample-doc/DATA ANALYSIS SAMPLE_RE4U SOLUTIONS.pdf",
+  "data:Interpretation Help":
+    "/sample-doc/DATA ANALYSIS SAMPLE_RE4U SOLUTIONS.pdf",
+  "editorial:Substantive Editing":
+    "/sample-doc/EDITING SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+  "editorial:Language Polishing":
+    "/sample-doc/SEE EDITING SAMPLE_RE4U SOLUTIONS.pdf",
+  "editorial:Formatting Help":
+    "/sample-doc/EDITING SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+  "editorial:AI and Plagiarism Fix":
+    "/sample-doc/AI_PLAGIARISM REWRITE SAFE_RE4U SOLUTIONS.pdf",
+  "publication:Pre-Submission Review":
+    "/sample-doc/REJECTION RISK CHECK_RE4U SOLUTIONS.pdf",
+  "publication:Manuscript Editing":
+    "/sample-doc/EDITING SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+  "publication:Journal Selection":
+    "/sample-doc/JOURNAL MATCH PRO_RE4U SOLUTIONS.pdf",
+  "publication:Submission Guidance":
+    "/sample-doc/PUBLICATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+  "presentations:PhD Presentations":
+    "/sample-doc/PUBLICATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+  "presentations:Conference Posters":
+    "/sample-doc/PUBLICATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+  "presentations:Oral Slides":
+    "/sample-doc/PUBLICATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+  "presentations:Visual Enhancements":
+    "/sample-doc/PUBLICATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+};
+
+const SAMPLE_DOC_BY_ASSET_ID: Record<string, string> = {
+  "structure-map": "/sample-doc/RESEARCH PLANNING SAMPLE_RE4U SOLUTIONS.pdf",
+  "method-fit": "/sample-doc/DATA ANALYSIS SAMPLE_RE4U SOLUTIONS.pdf",
+  "revision-sheet":
+    "/sample-doc/SEVEN STEP REJECTION PROOF CHECKLIST_RE4U SOLUTIONS.pdf",
+  "ethics-pack":
+    "/sample-doc/CONSULTATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+};
+
+const SAMPLE_DOC_BY_HERO_STAGE: Record<StageKey, string> = {
+  planning: "/sample-doc/RESEARCH PLANNING SAMPLE_RE4U SOLUTIONS.pdf",
+  "mid-stage": "/sample-doc/DATA ANALYSIS SAMPLE_RE4U SOLUTIONS.pdf",
+  submitting: "/sample-doc/PUBLICATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+};
+
+function getCategorySamplePdfPath(category: CategoryKey, moduleTitle: string): string {
+  return (
+    SAMPLE_DOC_BY_CATEGORY_MODULE[`${category}:${moduleTitle}`] ??
+    DEFAULT_SAMPLE_PDF
+  );
+}
+
+function getAssetSamplePdfPath(assetId: string): string {
+  return SAMPLE_DOC_BY_ASSET_ID[assetId] ?? DEFAULT_SAMPLE_PDF;
+}
+
+function getHeroToolkitPdfPath(stage: StageKey): string {
+  return SAMPLE_DOC_BY_HERO_STAGE[stage] ?? DEFAULT_SAMPLE_PDF;
+}
+
+function getSampleFileLabel(filePath: string): string {
+  const filename = filePath.split("/").pop() ?? "Sample PDF";
+  return filename
+    .replace(/_RE4U SOLUTIONS\.pdf$/i, "")
+    .replace(/_/g, " ")
+    .trim();
+}
+
 function buildContactHref(params: {
   source?: string;
   need?: string;
@@ -84,24 +168,26 @@ function buildContactHref(params: {
   return `/contact?${query.toString()}`;
 }
 
-function downloadTextFile(filename: string, content: string) {
-  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
+function openSamplePdf(filePath: string) {
+  const encodedPath = encodeURI(filePath);
+  window.open(encodedPath, "_blank", "noopener,noreferrer");
+}
+
+function downloadSamplePdf(filePath: string) {
   const anchor = document.createElement("a");
-  anchor.href = url;
-  anchor.download = filename;
+  anchor.href = encodeURI(filePath);
+  anchor.download = filePath.split("/").pop() ?? "sample.pdf";
   document.body.appendChild(anchor);
   anchor.click();
   anchor.remove();
-  URL.revokeObjectURL(url);
 }
 
-function getHeroArtTone(slideId: number) {
-  if (slideId === 1) return "proposal";
-  if (slideId === 2) return "methods";
-  if (slideId === 3) return "data";
-  if (slideId === 4) return "editing";
-  return "journal";
+function getHeroImageSrc(slideId: number) {
+  if (slideId === 1) return "/images/home-page-hero/image10.jpg";
+  if (slideId === 2) return "/images/home-page-hero/image12.jpg";
+  if (slideId === 3) return "/images/home-page-hero/image14.png";
+  if (slideId === 4) return "/images/home-page-hero/image16.png";
+  return "/images/home-page-hero/image18.png";
 }
 
 export default function ServiceOverviewExperience({
@@ -235,16 +321,6 @@ export default function ServiceOverviewExperience({
     ? `Stage: ${activeStage} | Module: ${selectedModule}`
     : `Stage: ${activeStage} | Module: choose one`;
 
-  function openHeroModal(context?: string) {
-    setHeroModalOpen(true);
-    setHeroFormError("");
-    setHeroForm((prev) => ({
-      ...prev,
-      stage: hero.stageLabel,
-      query: context ? `${context}: ` : "",
-    }));
-  }
-
   function submitHeroLead(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const email = heroForm.email.trim();
@@ -329,8 +405,8 @@ export default function ServiceOverviewExperience({
     openServiceModal(moduleTitle, moduleMeta);
   }
 
-  function onDownloadCategorySample(fileName: string, fileText: string) {
-    downloadTextFile(fileName, fileText);
+  function onDownloadCategorySample(category: CategoryKey, moduleTitle: string) {
+    openSamplePdf(getCategorySamplePdfPath(category, moduleTitle));
   }
 
   function setAssetTab(assetId: string, tab: TabMode) {
@@ -490,24 +566,20 @@ export default function ServiceOverviewExperience({
                 <p className={styles.heroText}>{hero.summary}</p>
 
                 <div className={styles.heroActions}>
-                  <button
-                    type="button"
+                  <Link
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={`${styles.btn} ${styles.btnPrimary}`}
-                    onClick={() => openHeroModal(hero.queryContext)}
                   >
                     Drop a Query
-                  </button>
+                  </Link>
                   <button
                     type="button"
                     className={`${styles.btn} ${styles.btnGhost}`}
-                    onClick={() =>
-                      downloadTextFile(
-                        `${hero.toolkit.replace(/\s+/g, "_")}.txt`,
-                        `${hero.toolkit}: quick reference\n\n${hero.summary}`,
-                      )
-                    }
+                    onClick={() => openSamplePdf(getHeroToolkitPdfPath(hero.stage))}
                   >
-                    Download Toolkit
+                    Open Toolkit PDF
                   </button>
                 </div>
 
@@ -521,20 +593,14 @@ export default function ServiceOverviewExperience({
               </div>
 
               <div className={styles.heroArtWrap}>
-                <div
-                  className={`${styles.heroArt} ${
-                    styles[`heroArt${getHeroArtTone(hero.id)}` as keyof typeof styles]
-                  }`}
-                >
-                  <div className={styles.artOrbit} />
-                  <div className={styles.artCardLine} />
-                  <div className={styles.artCardLine} />
-                  <div className={styles.artCardLine} />
-                  <div className={styles.artNodes}>
-                    <span />
-                    <span />
-                    <span />
-                  </div>
+                <div className={styles.heroArt}>
+                  <Image
+                    src={getHeroImageSrc(hero.id)}
+                    alt={`${hero.title} visual preview`}
+                    fill
+                    sizes="(max-width: 980px) 100vw, 45vw"
+                    className={styles.heroArtMedia}
+                  />
                 </div>
               </div>
             </div>
@@ -847,6 +913,8 @@ export default function ServiceOverviewExperience({
             >
               {activeCategoryItems.map((item) => {
                 const meta = `Category: ${categoryLabels[activeCategory]} | Starts at: ${item.price}`;
+                const samplePdfPath = getCategorySamplePdfPath(activeCategory, item.title);
+                const samplePdfLabel = getSampleFileLabel(samplePdfPath);
 
                 return (
                   <article key={`${activeCategory}-${item.title}`} className={styles.categoryCard}>
@@ -893,11 +961,10 @@ export default function ServiceOverviewExperience({
                         <button
                           type="button"
                           className={`${styles.btn} ${styles.btnGhost}`}
-                          onClick={() =>
-                            onDownloadCategorySample(item.sampleName, item.sampleText)
-                          }
+                          onClick={() => onDownloadCategorySample(activeCategory, item.title)}
+                          aria-label={`Open sample PDF: ${samplePdfLabel}`}
                         >
-                          Download sample
+                          Open {samplePdfLabel}
                         </button>
                       </div>
                     </div>
@@ -959,10 +1026,9 @@ export default function ServiceOverviewExperience({
                 </ul>
                 <div className={`${styles.cardActions} ${styles.pricingActions}`}>
                   <Link
-                    href={buildContactHref({
-                      source: "service-overview-pricing",
-                      plan: plan.id,
-                    })}
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={`${styles.btn} ${styles.btnPrimary}`}
                   >
                     Request scope
@@ -1018,6 +1084,8 @@ export default function ServiceOverviewExperience({
             <div className={styles.sampleGrid}>
               {sampleAssets.map((asset) => {
                 const tab = getAssetTab(asset.id);
+                const samplePdfPath = getAssetSamplePdfPath(asset.id);
+                const samplePdfLabel = getSampleFileLabel(samplePdfPath);
 
                 return (
                   <article key={asset.id} className={`${styles.sampleCard} ${styles.sampleAsset}`}>
@@ -1093,12 +1161,12 @@ export default function ServiceOverviewExperience({
                           <button
                             type="button"
                             className={`${styles.btn} ${styles.btnPrimary}`}
-                            onClick={() => downloadTextFile(asset.fileName, asset.fileText)}
+                            onClick={() => openSamplePdf(samplePdfPath)}
                           >
                             <span className={styles.sampleCtaIcon} aria-hidden="true">
                               v
                             </span>
-                            Download now
+                            Open matched PDF
                           </button>
                           <button
                             type="button"
@@ -1111,7 +1179,9 @@ export default function ServiceOverviewExperience({
                             Email me this
                           </button>
                         </div>
-                        <p className={styles.sampleMicro}>{asset.downloadHint}</p>
+                        <p className={styles.sampleMicro}>
+                          Matched file: {samplePdfLabel}. PDF opens in a new tab.
+                        </p>
                       </div>
                     ) : null}
                   </article>
@@ -1187,13 +1257,14 @@ export default function ServiceOverviewExperience({
                       >
                         {expanded ? "Hide details" : "Show details"}
                       </button>
-                      <button
-                        type="button"
+                      <Link
+                        href={WHATSAPP_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className={`${styles.btn} ${styles.btnPrimary}`}
-                        onClick={() => openTestimonialLead(item.stage, item.category)}
                       >
                         Request scope
-                      </button>
+                      </Link>
                     </div>
 
                     {expanded ? (
@@ -1254,7 +1325,7 @@ export default function ServiceOverviewExperience({
         </div>
       </section>
 
-      <section className={`${styles.section} ${styles.sectionSoft}`} id="overview-faq">
+      <section className={styles.section} id="overview-faq">
         <div className={styles.container}>
           <div className={styles.sectionKicker}>FAQ</div>
           <h2 className={`${styles.sectionTitle} ${fontClassName}`}>
@@ -1313,7 +1384,7 @@ export default function ServiceOverviewExperience({
                     aria-expanded={isOpen}
                     onClick={() => toggleFaqOpen(item)}
                   >
-                    <h3>{item.q}</h3>
+                    <h4>{item.q}</h4>
                     <span>{isOpen ? "-" : "+"}</span>
                   </button>
 
@@ -1360,7 +1431,9 @@ export default function ServiceOverviewExperience({
             </p>
             <div className={styles.ctaRow}>
               <Link
-                href={buildContactHref({ source: "service-overview-final" })}
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`${styles.btn} ${styles.btnPrimary}`}
               >
                 Drop a Query
@@ -1655,11 +1728,9 @@ export default function ServiceOverviewExperience({
                     <button
                       type="button"
                       className={`${styles.btn} ${styles.btnGhost}`}
-                      onClick={() =>
-                        downloadTextFile(sampleLeadAsset.fileName, sampleLeadAsset.fileText)
-                      }
+                      onClick={() => downloadSamplePdf(getAssetSamplePdfPath(sampleLeadAsset.id))}
                     >
-                      Download instead
+                      Download matched PDF
                     </button>
                   </div>
                 </form>

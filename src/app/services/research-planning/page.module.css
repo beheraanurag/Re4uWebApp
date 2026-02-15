@@ -31,6 +31,12 @@
   align-items: start;
 }
 
+.heroMain {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
 .heroContent {
   min-width: 0;
 }
@@ -269,6 +275,21 @@
   color: rgba(42, 46, 53, 0.72);
   font-size: 13px;
   font-weight: 700;
+}
+
+.visualMediaWrap {
+  margin-bottom: 12px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(31, 58, 95, 0.12);
+  background: #ffffff;
+}
+
+.visualMedia {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 .roadmap {
@@ -1192,6 +1213,10 @@
 @media (max-width: 980px) {
   .heroGrid {
     grid-template-columns: 1fr;
+  }
+
+  .visualCard {
+    margin-top: 0;
   }
 
   .finalCtaNoWrap {

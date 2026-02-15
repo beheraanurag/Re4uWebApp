@@ -17,7 +17,7 @@ Same pattern as the reference blog: **one Postgres service**, single database `b
 
    Defaults: `DB_USER=blog`, `DB_NAME=blog`, `DB_PASSWORD=blog`. Set `DATABASE_URL=postgresql://blog:blog@localhost:5432/blog` (same credentials).
 
-2. **Start Postgres:**
+2. **Start full local stack (DB + web + Mailpit):**
 
    ```bash
    docker compose up -d
@@ -38,6 +38,34 @@ Same pattern as the reference blog: **one Postgres service**, single database `b
    ```
 
    Open **http://localhost:3000** and **http://localhost:3000/blog**.
+
+## Book Now email via Docker (recommended for local)
+
+Use Mailpit as a local SMTP sink so Book Now modal emails are captured safely in Docker.
+
+1. Mailpit starts automatically with `docker compose up -d`.
+   If app runs in Docker, `docker-compose.yml` defaults SMTP host to `mailpit` for the `web` service.
+
+2. Add these vars in `.env`:
+
+   ```bash
+   BOOKNOW_SMTP_HOST=localhost
+   BOOKNOW_SMTP_PORT=1025
+   BOOKNOW_SMTP_SECURE=false
+   BOOKNOW_SMTP_FROM=no-reply@local.re4u
+   BOOKNOW_SMTP_TO=ops@local.re4u
+   ```
+
+   Optional auth vars (usually not needed for Mailpit):
+   - `BOOKNOW_SMTP_USER`
+   - `BOOKNOW_SMTP_PASS`
+
+3. Open Mailpit inbox UI:
+   - [http://localhost:8025](http://localhost:8025)
+
+Notes:
+- The app posts modal data to `/api/book-now` by default.
+- If `NEXT_PUBLIC_API_URL` is set, modal submissions go to `${NEXT_PUBLIC_API_URL}/contact` instead.
 
 ## Env vars
 

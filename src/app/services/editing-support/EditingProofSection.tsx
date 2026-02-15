@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import styles from "./page.module.css";
+import { BookNowModal } from "@/components/sections/BookNowModal";
 
 const beforeText =
   "Communication is essential in everyday life and business. People constantly need to generate, organize, and pass information so that others understand expectations and take the right actions. Today, many interactions rely on technology. Smartphones and computers allow people to send messages and receive feedback through calls, texts, and emails. This paper discusses how technology influences communication by looking at common digital methods.";
@@ -164,9 +164,11 @@ export function EditingProofSection() {
               <strong>Want this level of clarity across the whole manuscript?</strong> Upload your file for a quote.
               We recommend the right depth after a quick scan—so you don’t overpay or under-edit.
             </p>
-            <Link href="/contact" className={`${styles.btn} ${styles.btnPrimary}`}>
-              Get a quote
-            </Link>
+            <BookNowModal
+              source="editing-proof-section"
+              triggerLabel="Get a quote"
+              triggerClassName={`${styles.btn} ${styles.btnPrimary}`}
+            />
           </div>
         </div>
       </div>

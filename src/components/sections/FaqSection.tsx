@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { BookNowModal } from "@/components/sections/BookNowModal";
 import {
   Shield,
   Ban,
@@ -107,18 +108,23 @@ export function FaqSection() {
                 steps.
               </p>
               <div className="flex flex-col gap-2.5">
-                <Button
-                  asChild
-                  className="rounded-full bg-[#1F3A5F] px-4 py-2.5 text-sm font-semibold text-white transition-all hover:shadow-lg"
-                >
-                  <Link href="/contact">Book 1:1 Expert Call</Link>
-                </Button>
+                <BookNowModal
+                  source="home-faq-book-expert-call"
+                  triggerLabel="Book 1:1 Expert Call"
+                  triggerClassName="inline-flex items-center justify-center rounded-full bg-[#1F3A5F] px-4 py-2.5 text-sm font-semibold text-white transition-all hover:shadow-lg"
+                />
                 <Button
                   variant="outline"
                   className="rounded-full border-[#A8C7E6]/60 bg-white px-4 py-2.5 text-sm font-semibold text-[#1F3A5F] hover:bg-[#E9E3D5]"
                   asChild
                 >
-                  <Link href="/services">See Editing Sample</Link>
+                  <Link
+                    href="/sample-doc/EDITING SUPPORT SAMPLE_RE4U SOLUTIONS.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    See Editing Sample
+                  </Link>
                 </Button>
               </div>
               <div className="mt-4 flex flex-wrap gap-2 text-xs">

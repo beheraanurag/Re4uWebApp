@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./page.module.css";
+import { BookNowModal } from "@/components/sections/BookNowModal";
 
 type Plan = {
   key: string;
@@ -210,13 +211,11 @@ export function EditingPlansPricingPreview({ titleClassName }: { titleClassName?
             <button type="button" className={styles.btn} onClick={handleScrollCompare}>
               Compare plans
             </button>
-            <button
-              type="button"
-              className={`${styles.btn} ${styles.btnPrimary}`}
-              onClick={() => openModal(plans[1].title)}
-            >
-              Get exact quote
-            </button>
+            <BookNowModal
+              source="editing-plans-hero-quote"
+              triggerLabel="Get exact quote"
+              triggerClassName={`${styles.btn} ${styles.btnPrimary}`}
+            />
           </div>
 
           <div className={styles.pricingGrid}>
@@ -257,13 +256,11 @@ export function EditingPlansPricingPreview({ titleClassName }: { titleClassName?
                   ))}
                 </ul>
                 <div className={styles.pricingActions}>
-                  <button
-                    type="button"
-                    className={`${styles.btn} ${styles.btnPrimary}`}
-                    onClick={() => openModal(plan.title)}
-                  >
-                    Get exact quote
-                  </button>
+                  <BookNowModal
+                    source={`editing-plans-${plan.key}`}
+                    triggerLabel="Get exact quote"
+                    triggerClassName={`${styles.btn} ${styles.btnPrimary}`}
+                  />
                   <button type="button" className={styles.pricingLink} onClick={handleScrollCompare}>
                     See comparison
                   </button>
@@ -324,7 +321,7 @@ export function EditingPlansPricingPreview({ titleClassName }: { titleClassName?
             </div>
 
             <div className={styles.pricingQuoteLine}>
-              "Pick the depth based on your stress level and deadline - not on guilt."
+              &quot;Pick the depth based on your stress level and deadline - not on guilt.&quot;
             </div>
 
             <div className={styles.pricingAddOn}>

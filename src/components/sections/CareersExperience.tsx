@@ -422,7 +422,7 @@ export function CareersExperience() {
   }
 
   return (
-    <div className="pb-16">
+    <div>
       <section className="relative overflow-hidden border-b border-[#A8C7E6]/60 bg-gradient-to-b from-[#A8C7E6]/45 via-[#A8C7E6]/25 to-[#E9E3D5]/35 py-16 md:py-20">
         <div className="container">
           <div className="mx-auto max-w-5xl">
@@ -821,7 +821,7 @@ export function CareersExperience() {
         </div>
       </section>
 
-      <section className="py-10 md:py-12">
+      <section className="bg-white py-10 md:py-12">
         <div className="container">
           <h2 className="text-3xl font-semibold text-[#1F3A5F]">Careers FAQ</h2>
           <div className="mt-5 space-y-3">

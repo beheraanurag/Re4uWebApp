@@ -273,12 +273,19 @@
   inset: 0;
   width: 100%;
   height: 100%;
+  z-index: 0;
 }
 
 .sceneSvg svg {
   width: 100%;
   height: 100%;
   display: block;
+}
+
+.sceneImage {
+  object-fit: cover;
+  opacity: 1;
+  z-index: 1;
 }
 
 .sceneOverlay {
@@ -290,6 +297,7 @@
     radial-gradient(560px 420px at 60% 90%, rgba(233, 227, 213, 0.1), transparent 62%),
     linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.18));
   pointer-events: none;
+  z-index: 2;
 }
 
 .tags {
@@ -4555,5 +4563,166 @@
   .faqWrap,
   .finalCtaGrid {
     gap: 8px !important;
+  }
+}
+
+/* Mobile polish: publication support page */
+@media (max-width: 720px) {
+  .page h1 {
+    font-size: clamp(24px, 8.2vw, 34px);
+    line-height: 1.08;
+  }
+
+  .subhead {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .chips {
+    gap: 8px;
+  }
+
+  .chip {
+    width: 100%;
+    justify-content: flex-start;
+    line-height: 1.25;
+  }
+
+  .ctaRow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .ctaRow > * {
+    width: 100%;
+  }
+
+  .btn,
+  .btnPrimary,
+  .btnSecondary,
+  .uploadButton {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    min-height: 44px;
+  }
+
+  .trust {
+    flex-wrap: wrap;
+    overflow: visible;
+    gap: 8px;
+  }
+
+  .trustItem {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .foot {
+    margin-top: 8px;
+    font-size: 11.5px;
+  }
+
+  .scene {
+    min-height: 200px !important;
+  }
+
+  .audienceTitle,
+  .deliverTitle,
+  .pricingTitle,
+  .addOnTitle,
+  .eduTitle,
+  .integrityTitle,
+  .faqTitle {
+    font-size: clamp(19px, 6.3vw, 24px);
+    line-height: 1.16;
+  }
+
+  .audienceSub,
+  .deliverSub,
+  .pricingSub,
+  .addOnSub,
+  .eduSub,
+  .integritySub,
+  .faqSub {
+    font-size: 13.5px;
+    line-height: 1.45 !important;
+  }
+
+  .deliverPanelTop {
+    gap: 10px;
+  }
+
+  .deliverH3 {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+
+  .deliverCardPad,
+  .pricingItem,
+  .addOnChip,
+  .eduAcc,
+  .integrityAcc {
+    padding: 12px;
+  }
+
+  .pricingBtnRow,
+  .addOnBtnRow,
+  .eduBtnRow,
+  .integrityBtnRow {
+    flex-direction: column;
+    align-items: stretch;
+    overflow: visible;
+    gap: 8px !important;
+  }
+
+  .pricingBtn,
+  .pricingBtnSmall,
+  .addOnBtn,
+  .addOnBtnSmall,
+  .eduBtn,
+  .integrityBtn,
+  .finalCtaBtn {
+    width: 100%;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .faqAccBtn,
+  .integrityAccBtn {
+    padding: 12px;
+  }
+
+  .faqQText b {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .finalCtaBtnRow {
+    grid-template-columns: 1fr !important;
+  }
+
+  .finalCtaBox {
+    padding: 12px;
+  }
+
+  .pricingMobileBar {
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 520px) {
+  .scene {
+    min-height: 180px !important;
+  }
+
+  .audChip,
+  .deliverMiniChip,
+  .pricingTag,
+  .addOnPill,
+  .faqSidePill {
+    white-space: normal;
   }
 }

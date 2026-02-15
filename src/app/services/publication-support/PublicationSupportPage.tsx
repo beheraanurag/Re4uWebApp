@@ -2,7 +2,9 @@
 import React from "react";
 import type { ChangeEvent } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import styles from "./page.module.css";
+import { BookNowModal } from "@/components/sections/BookNowModal";
 
 const WHATSAPP_NUMBER = "918093778526";
 const EMAIL_TO = "";
@@ -1449,30 +1451,21 @@ export function PublicationSupportPage() {
               </div>
 
               <div className={styles.ctaRow}>
-                <a
-                  className={`${styles.btn} ${styles.uploadButton}`}
-                  href="#upload"
-                  aria-label="Upload manuscript to get a quote"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M12 16V4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-                    <path
-                      d="M7 8l5-5 5 5"
-                      stroke="currentColor"
-                      strokeWidth="1.7"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path d="M4 20h16" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-                  </svg>
-                  Upload Manuscript / Get Quote
-                </a>
+                <BookNowModal
+                  source="publication-support-hero"
+                  triggerLabel="Upload Manuscript / Get Quote"
+                  triggerClassName={`${styles.btn} ${styles.uploadButton}`}
+                />
 
                 <button
                   className={`${styles.btn} ${styles.btnSecondary}`}
                   type="button"
                   aria-label="Get a journal shortlist and publication plan"
-                  onClick={() => setPlanOpen(true)}
+                  onClick={() =>
+                    openWhatsAppMessage(
+                      "Hi RE4U team, I want a Journal Shortlist + Publication Plan. Please share next steps and final quote.",
+                    )
+                  }
                 >
                   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <path
@@ -1547,130 +1540,13 @@ export function PublicationSupportPage() {
             </div>
 
             <div className={styles.scene} aria-label="Research desk scene with integrity overlays">
-              <div className={styles.sceneSvg} dangerouslySetInnerHTML={{ __html: sceneSvg }} />
-              <div className={styles.sceneOverlay} aria-hidden="true" />
-
-              <div className={styles.tags} aria-label="Trust tags">
-                <span className={styles.tag}>
-                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path
-                      d="M12 21s-7-4.6-7-11a4 4 0 0 1 7-2.3A4 4 0 0 1 19 10c0 6.4-7 11-7 11Z"
-                      stroke="currentColor"
-                      opacity=".95"
-                    />
-                    <path
-                      d="M9.2 11.8 11 13.6l3.8-4.1"
-                      stroke="currentColor"
-                      strokeWidth="1.7"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      opacity=".85"
-                    />
-                  </svg>
-                  Ethics-first
-                </span>
-              </div>
-
-              <div className={styles.shieldWrap} tabIndex={0} aria-label="Integrity shield tooltip">
-                <div className={styles.shield} role="note" aria-label="Integrity Shield badge">
-                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M12 2 20 6v6c0 5-3.5 9.4-8 10-4.5-.6-8-5-8-10V6l8-4Z" stroke="currentColor" />
-                    <path
-                      d="M9 12l2 2 4-5"
-                      stroke="currentColor"
-                      strokeWidth="1.6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <b>Integrity Shield</b>
-                </div>
-                <div className={styles.tooltip} role="tooltip">
-                  Publication support, not shortcuts.
-                </div>
-              </div>
-
-              <div className={styles.twoPane} aria-label="Before and After panels">
-                <div className={styles.miniPanel} aria-label="Messy submission panel">
-                  <div className={styles.miniPanelHeader}>
-                    <strong>Messy submission</strong>
-                    <span className={styles.badgeState}>before</span>
-                  </div>
-
-                  <div className={`${styles.bullet} ${styles.miss}`}>
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M12 22a10 10 0 1 0-10-10 10 10 0 0 0 10 10Z" stroke="currentColor" opacity=".9" />
-                      <path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                    </svg>
-                    Missing files: <span className={styles.blur}>figures + ethics statement</span>
-                  </div>
-
-                  <div className={`${styles.bullet} ${styles.miss}`}>
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M12 22a10 10 0 1 0-10-10 10 10 0 0 0 10 10Z" stroke="currentColor" opacity=".9" />
-                      <path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                    </svg>
-                    Cover letter: <span className={styles.blur}>unclear contribution</span>
-                  </div>
-
-                  <div className={`${styles.bullet} ${styles.miss}`} style={{ marginBottom: 0 }}>
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M12 22a10 10 0 1 0-10-10 10 10 0 0 0 10 10Z" stroke="currentColor" opacity=".9" />
-                      <path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                    </svg>
-                    Journal fit: <span className={styles.blur}>guesswork</span>
-                  </div>
-                </div>
-
-                <div className={styles.miniPanel} aria-label="Submission-ready pack panel">
-                  <div className={styles.miniPanelHeader}>
-                    <strong>Submission-ready pack</strong>
-                    <span className={styles.badgeState}>after</span>
-                  </div>
-
-                  <div className={styles.bullet}>
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M12 2 20 6v6c0 5-3.5 9.4-8 10-4.5-.6-8-5-8-10V6l8-4Z" stroke="currentColor" />
-                      <path
-                        d="M9 12l2 2 4-5"
-                        stroke="currentColor"
-                        strokeWidth="1.6"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    Files complete (manuscript, figures, statements)
-                  </div>
-
-                  <div className={styles.bullet}>
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M12 2 20 6v6c0 5-3.5 9.4-8 10-4.5-.6-8-5-8-10V6l8-4Z" stroke="currentColor" />
-                      <path
-                        d="M9 12l2 2 4-5"
-                        stroke="currentColor"
-                        strokeWidth="1.6"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    Cover letter positioned (why this journal, why now)
-                  </div>
-
-                  <div className={styles.bullet} style={{ marginBottom: 0 }}>
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M12 2 20 6v6c0 5-3.5 9.4-8 10-4.5-.6-8-5-8-10V6l8-4Z" stroke="currentColor" />
-                      <path
-                        d="M9 12l2 2 4-5"
-                        stroke="currentColor"
-                        strokeWidth="1.6"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    Journal fit shortlist + risk flags
-                  </div>
-                </div>
-              </div>
+              <Image
+                src="/images/home-page-hero/image26.jpg"
+                alt="Publication support sample visual"
+                fill
+                sizes="(max-width: 980px) 100vw, 50vw"
+                className={styles.sceneImage}
+              />
             </div>
           </div>
           <div id="upload" className={styles.anchor} />
@@ -1810,7 +1686,11 @@ export function PublicationSupportPage() {
               <button
                 className={`${styles.deliverBtn} ${styles.deliverBtnPrimary}`}
                 type="button"
-                onClick={() => setPlanOpen(true)}
+                onClick={() =>
+                  openWhatsAppMessage(
+                    "Hi RE4U team, I want a Journal Shortlist + Plan. Please guide me on scope and quote.",
+                  )
+                }
               >
                 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path
@@ -2080,17 +1960,11 @@ export function PublicationSupportPage() {
                         >
                           {whatsappIcon} Start on WhatsApp
                         </button>
-                        <button
-                          className={styles.pricingBtnSmall}
-                          type="button"
-                          onClick={() =>
-                            openWhatsAppMessage(
-                              `Hi RE4U team, please share the final quote for: ${pkg.title}. My manuscript details: [discipline/type/timeline].`,
-                            )
-                          }
-                        >
-                          Request final quote
-                        </button>
+                        <BookNowModal
+                          source={`publication-support-package-${pkg.id}`}
+                          triggerLabel="Request final quote"
+                          triggerClassName={styles.pricingBtnSmall}
+                        />
                       </div>
                       <div className={styles.pricingMiniNote}>
                         <b>Simple flow:</b> quick diagnostic -&gt; final quote -&gt; payment -&gt;
@@ -2714,34 +2588,19 @@ export function PublicationSupportPage() {
               </div>
 
               <div className={styles.finalCtaBtnRow}>
-                <button
-                  className={`${styles.finalCtaBtn} ${styles.finalCtaBtnPrimary}`}
-                  type="button"
-                  onClick={() => {
-                    setCtaMode("upload");
-                    setCtaOpen(true);
-                  }}
-                >
-                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M12 16V4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                    <path
-                      d="M7 9l5-5 5 5"
-                      stroke="currentColor"
-                      strokeWidth="1.8"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path d="M4 20h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                  </svg>
-                  Upload Manuscript
-                </button>
+                <BookNowModal
+                  source="publication-support-final-cta"
+                  triggerLabel="Upload Manuscript"
+                  triggerClassName={`${styles.finalCtaBtn} ${styles.finalCtaBtnPrimary}`}
+                />
                 <button
                   className={styles.finalCtaBtn}
                   type="button"
-                  onClick={() => {
-                    setCtaMode("plan");
-                    setCtaOpen(true);
-                  }}
+                  onClick={() =>
+                    openWhatsAppMessage(
+                      "Hi RE4U team, I need Journal Shortlist & Plan support. Please share next steps.",
+                    )
+                  }
                 >
                   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <path d="M7 3h10v18H7V3Z" stroke="currentColor" strokeWidth="1.4" />
@@ -2763,29 +2622,6 @@ export function PublicationSupportPage() {
             </div>
           </div>
         </section>
-      </div>
-
-      <div className={styles.pricingMobileBar} aria-label="Mobile CTA bar">
-        <div className={styles.pricingMobileRow}>
-          <div>
-            <b>Need help choosing?</b>
-            <br />
-            <span className={styles.pricingMobileHint}>
-              Message RE4U for the right package
-            </span>
-          </div>
-          <button
-            className={`${styles.pricingBtnSmall} ${styles.pricingBtnSmallPrimary}`}
-            type="button"
-            onClick={() =>
-              openWhatsAppMessage(
-                "Hi RE4U team, I want publication support. Please help me pick the right package and share the final quote.",
-              )
-            }
-          >
-            {whatsappIcon} WhatsApp
-          </button>
-        </div>
       </div>
 
       <div
@@ -2987,17 +2823,11 @@ export function PublicationSupportPage() {
               WhatsApp is used to confirm details and send the final quote.
             </div>
             <div className={styles.pricingFooterActions}>
-              <button
-                className={styles.pricingBtnSmall}
-                type="button"
-                onClick={() =>
-                  openWhatsAppMessage(
-                    `Hi RE4U team, please share the final quote for: ${activePackage.title}. My manuscript details: [discipline/type/timeline].`,
-                  )
-                }
-              >
-                Request final quote
-              </button>
+              <BookNowModal
+                source={`publication-support-drawer-${activePackage.id}`}
+                triggerLabel="Request final quote"
+                triggerClassName={styles.pricingBtnSmall}
+              />
               <button
                 className={`${styles.pricingBtnSmall} ${styles.pricingBtnSmallPrimary}`}
                 type="button"

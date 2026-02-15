@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import styles from "./page.module.css";
+import { BookNowModal } from "@/components/sections/BookNowModal";
 
 type SelectedOptions = {
   clarity: boolean;
@@ -427,9 +427,11 @@ export function EditingDiagnosticPreview({ titleClassName }: { titleClassName?: 
                       to see a safe rewrite hint.
                     </p>
                   </div>
-                  <Link href="/contact" className={`${styles.btn} ${styles.btnPrimary}`}>
-                    Get a quote
-                  </Link>
+                  <BookNowModal
+                    source="editing-diagnostic-table"
+                    triggerLabel="Get a quote"
+                    triggerClassName={`${styles.btn} ${styles.btnPrimary}`}
+                  />
                 </div>
                 <div className={styles.diagnosticTableWrap}>
                   <table className={styles.diagnosticTable}>
@@ -553,9 +555,11 @@ export function EditingDiagnosticPreview({ titleClassName }: { titleClassName?: 
                     </div>
 
                     <div className={styles.diagnosticCta}>
-                      <Link href="/contact" className={`${styles.btn} ${styles.btnPrimary}`}>
-                        Get a quote
-                      </Link>
+                      <BookNowModal
+                        source="editing-diagnostic-results"
+                        triggerLabel="Get a quote"
+                        triggerClassName={`${styles.btn} ${styles.btnPrimary}`}
+                      />
                     </div>
                   </>
                 ) : (

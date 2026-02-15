@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { Service } from "@/lib/types";
 import { API_BASE } from "@/lib/api";
+import { BookNowModal } from "@/components/sections/BookNowModal";
+import { WHATSAPP_URL } from "@/lib/contact";
 
 const QUICK_OFFERS = [
   {
@@ -18,7 +20,10 @@ const QUICK_OFFERS = [
       "Similarity and AI-risk notes for each section.",
     ],
     primary: { label: "Get quote", href: "/contact?source=quick-offer-ai" },
-    secondary: { label: "See sample", href: "/services/editing-support" },
+    secondary: {
+      label: "See sample",
+      href: "/sample-doc/AI_PLAGIARISM REWRITE SAFE_RE4U SOLUTIONS.pdf",
+    },
   },
   {
     id: "rejection-risk-check",
@@ -31,8 +36,11 @@ const QUICK_OFFERS = [
       "Reviewer-style comments on clarity and methods.",
       "Action-ready improvement checklist.",
     ],
-    primary: { label: "Book now", href: "/contact?source=quick-offer-risk" },
-    secondary: { label: "See example", href: "#", opensGuide: true },
+    primary: { label: "Book now", href: "/contact?source=quick-offer-risk", opensBookModal: true },
+    secondary: {
+      label: "See sample",
+      href: "/sample-doc/REJECTION RISK CHECK_RE4U SOLUTIONS.pdf",
+    },
   },
   {
     id: "journal-match-pro",
@@ -46,7 +54,10 @@ const QUICK_OFFERS = [
       "Timelines and decision-speed insights.",
     ],
     primary: { label: "Get started", href: "/contact?source=quick-offer-journals" },
-    secondary: { label: "View sample", href: "/services/research-planning" },
+    secondary: {
+      label: "View sample",
+      href: "/sample-doc/JOURNAL MATCH PRO_RE4U SOLUTIONS.pdf",
+    },
   },
 ];
 
@@ -80,13 +91,7 @@ export function ServicesPreview({ services: _services }: { services: Service[] }
   }, [isModalOpen]);
 
   function openModal() {
-    lastFocusRef.current = document.activeElement as HTMLElement | null;
-    setModalStatus(null);
-    setForm((current) => ({
-      ...current,
-      email: inlineEmail.trim() || current.email,
-    }));
-    setIsModalOpen(true);
+    window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer");
   }
 
   function closeModal() {
@@ -178,28 +183,28 @@ export function ServicesPreview({ services: _services }: { services: Service[] }
                   ))}
                 </ul>
                 <div className="mt-auto flex flex-wrap items-center gap-2 border-t border-dashed border-[#A8C7E6]/55 pt-4 sm:flex-nowrap">
-                  <Link
-                    href={offer.primary.href}
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-[#A8C7E6]/60 bg-[#1F3A5F] px-3 py-2 text-[13px] font-bold text-white shadow-md sm:whitespace-nowrap"
-                  >
-                    {offer.primary.label}
-                  </Link>
-                  {offer.secondary.opensGuide ? (
-                    <button
-                      type="button"
-                      onClick={openModal}
-                      className="rounded-full border border-[#A8C7E6]/60 bg-white px-3 py-2 text-center text-[13px] font-bold text-[#1F3A5F] sm:whitespace-nowrap"
-                    >
-                      {offer.secondary.label}
-                    </button>
+                  {offer.primary.opensBookModal ? (
+                    <BookNowModal
+                      source={`quick-offer-${offer.id}`}
+                      triggerLabel={offer.primary.label}
+                      triggerClassName="inline-flex items-center justify-center gap-2 rounded-full border border-[#A8C7E6]/60 bg-[#1F3A5F] px-3 py-2 text-[13px] font-bold text-white shadow-md sm:whitespace-nowrap"
+                    />
                   ) : (
                     <Link
-                      href={offer.secondary.href}
-                      className="rounded-full border border-[#A8C7E6]/60 bg-white px-3 py-2 text-center text-[13px] font-bold text-[#1F3A5F] sm:whitespace-nowrap"
+                      href={offer.primary.href}
+                      className="inline-flex items-center justify-center gap-2 rounded-full border border-[#A8C7E6]/60 bg-[#1F3A5F] px-3 py-2 text-[13px] font-bold text-white shadow-md sm:whitespace-nowrap"
                     >
-                      {offer.secondary.label}
+                      {offer.primary.label}
                     </Link>
                   )}
+                  <Link
+                    href={offer.secondary.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full border border-[#A8C7E6]/60 bg-white px-3 py-2 text-center text-[13px] font-bold text-[#1F3A5F] sm:whitespace-nowrap"
+                  >
+                    {offer.secondary.label}
+                  </Link>
                 </div>
               </article>
             ))}
@@ -245,7 +250,15 @@ export function ServicesPreview({ services: _services }: { services: Service[] }
                 </button>
                 <button
                   type="button"
-                  onClick={openModal}
+                  onClick={() =>
+                    window.open(
+                      encodeURI(
+                        "/sample-doc/SEVEN STEP REJECTION PROOF CHECKLIST_RE4U SOLUTIONS.pdf",
+                      ),
+                      "_blank",
+                      "noopener,noreferrer",
+                    )
+                  }
                   className="rounded-full border border-[#A8C7E6]/60 bg-white px-3 py-2 text-center text-[13px] font-bold text-[#1F3A5F] sm:whitespace-nowrap hover:bg-[#E9E3D5]"
                 >
                   What is inside?

@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./page.module.css";
+import { BookNowModal } from "@/components/sections/BookNowModal";
+import { WHATSAPP_URL } from "@/lib/contact";
 import {
   ethicalSupportItems,
   ethicalSupportSignals,
@@ -188,15 +190,6 @@ export default function PresentationsExperience({
 
   const urgencyHint = useMemo(() => getUrgencyHint(deadline), [deadline]);
 
-  const quoteHref = useMemo(() => {
-    return buildContactHref({
-      need,
-      deadline,
-      plan: needToPlan[need],
-      notes,
-    });
-  }, [deadline, need, notes]);
-
   const visibleFaqs = useMemo(() => {
     const query = normalizeSearchText(faqSearch);
     const isFilterAll = faqFilter === "all";
@@ -328,12 +321,11 @@ export default function PresentationsExperience({
                 </p>
 
                 <div className={styles.heroActions}>
-                  <Link
-                    href={buildContactHref({})}
-                    className={`${styles.btn} ${styles.btnPrimary}`}
-                  >
-                    Get a Quote
-                  </Link>
+                  <BookNowModal
+                    source="presentations-hero"
+                    triggerLabel="Get a Quote"
+                    triggerClassName={`${styles.btn} ${styles.btnPrimary}`}
+                  />
                   <a href="#samples" className={styles.btn}>
                     View samples
                   </a>
@@ -361,7 +353,7 @@ export default function PresentationsExperience({
               <aside className={styles.heroVisual} aria-label="Presentation preview">
                 <div className={styles.heroImageWrap}>
                   <Image
-                    src="/presentation-hero.svg"
+                    src="/images/home-page-hero/image28.jpg"
                     alt="Preview of academic presentation and poster design outputs"
                     width={560}
                     height={420}
@@ -544,12 +536,11 @@ export default function PresentationsExperience({
                   </p>
                 </div>
                 <div className={styles.outputActions}>
-                  <Link
-                    href={buildContactHref({})}
-                    className={`${styles.btn} ${styles.btnPrimary} ${styles.outputActionBtn}`}
-                  >
-                    Get a quote
-                  </Link>
+                  <BookNowModal
+                    source="presentations-output-recommendation"
+                    triggerLabel="Get a quote"
+                    triggerClassName={`${styles.btn} ${styles.btnPrimary} ${styles.outputActionBtn}`}
+                  />
                   <a
                     href="#samples"
                     className={`${styles.btn} ${styles.outputActionBtn}`}
@@ -800,7 +791,12 @@ export default function PresentationsExperience({
                 <span aria-hidden="true">{"\u2605\u2605\u2605\u2605\u2605"}</span> 4.4/5 average rating - based
                 on client feedback
               </p>
-              <Link href="/contact" className={styles.planExpertLink}>
+              <Link
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.planExpertLink}
+              >
                 Not sure? Talk to an expert
               </Link>
             </div>
@@ -1010,9 +1006,11 @@ export default function PresentationsExperience({
             </p>
 
             <div className={`${styles.heroActions} ${styles.finalActions}`}>
-              <Link href={quoteHref} className={`${styles.btn} ${styles.btnPrimary}`}>
-                Get a quote
-              </Link>
+              <BookNowModal
+                source="presentations-final-cta"
+                triggerLabel="Get a quote"
+                triggerClassName={`${styles.btn} ${styles.btnPrimary}`}
+              />
               <Link
                 href={buildContactHref({
                   need,
@@ -1162,9 +1160,11 @@ export default function PresentationsExperience({
               </div>
             </div>
             <div className={styles.modalActions}>
-              <Link href={buildContactHref({})} className={`${styles.btn} ${styles.btnPrimary}`}>
-                Get a quote
-              </Link>
+              <BookNowModal
+                source="presentations-sample-modal"
+                triggerLabel="Get a quote"
+                triggerClassName={`${styles.btn} ${styles.btnPrimary}`}
+              />
             </div>
           </div>
         </div>

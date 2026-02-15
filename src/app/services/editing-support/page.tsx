@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
 import { EditingDiagnosticPreview } from "./EditingDiagnosticPreview";
@@ -10,6 +11,7 @@ import { EditingResearchStyle } from "./EditingResearchStyle";
 import { EditingProofSection } from "./EditingProofSection";
 import { EditingFreeToolsSection } from "./EditingFreeToolsSection";
 import { EditingFaqsSection } from "./EditingFaqsSection";
+import { BookNowModal } from "@/components/sections/BookNowModal";
 
 const heroBullets = [
   "Meaning-safe editing with no idea distortion.",
@@ -30,39 +32,57 @@ export default function EditingSupportPage() {
     <main className={styles.page}>
         <section className={styles.hero}>
           <div className={styles.container}>
-            <div className={`${styles.heroCard} ${styles.heroCenter}`}>
+            <div className={styles.heroCard}>
               <div className={styles.heroInner}>
-                <p className={styles.kicker}>
-                  <span className={styles.dot} aria-hidden="true" />
-                  Editing Support by ResearchEdit4U
-                </p>
-                <h1 className={styles.heroTitle}>
-                  Research Editing Support for Clear, Submission-Ready Writing
-                </h1>
-                <p className={styles.heroSub}>
-                  We improve grammar, flow, and academic readability while preserving your original
-                  meaning and author voice.
-                </p>
-                <ul className={styles.heroBullets}>
-                  {heroBullets.map((item) => (
-                    <li key={item} className={styles.heroBullet}>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <div className={styles.heroActions}>
-                  <Link href="/contact" className={`${styles.btn} ${styles.btnPrimary}`}>
-                    Upload Draft for Quote
-                  </Link>
-                  <a href="#stages" className={styles.btn}>
-                    View Editing Levels
-                  </a>
-                </div>
-                <div className={styles.pillRow}>
-                  <span className={styles.pill}>Track Changes</span>
-                  <span className={styles.pill}>Clean Copy</span>
-                  <span className={styles.pill}>Editor Notes</span>
-                  <span className={styles.pill}>Confidential</span>
+                <div className={styles.heroTop}>
+                  <div className={styles.heroContent}>
+                    <p className={styles.kicker}>
+                      <span className={styles.dot} aria-hidden="true" />
+                      Editing Support by ResearchEdit4U
+                    </p>
+                    <h1 className={styles.heroTitle}>
+                      Research Editing Support for Clear, Submission-Ready Writing
+                    </h1>
+                    <p className={styles.heroSub}>
+                      We improve grammar, flow, and academic readability while preserving your original
+                      meaning and author voice.
+                    </p>
+                    <ul className={styles.heroBullets}>
+                      {heroBullets.map((item) => (
+                        <li key={item} className={styles.heroBullet}>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className={styles.heroActions}>
+                      <BookNowModal
+                        source="editing-support-hero"
+                        triggerLabel="Upload Draft for Quote"
+                        triggerClassName={`${styles.btn} ${styles.btnPrimary}`}
+                      />
+                      <a href="#stages" className={styles.btn}>
+                        View Editing Levels
+                      </a>
+                    </div>
+                    <div className={styles.pillRow}>
+                      <span className={styles.pill}>Track Changes</span>
+                      <span className={styles.pill}>Clean Copy</span>
+                      <span className={styles.pill}>Editor Notes</span>
+                      <span className={styles.pill}>Confidential</span>
+                    </div>
+                  </div>
+
+                  <aside className={styles.heroVisual} aria-label="Editing support preview">
+                    <div className={styles.heroMediaWrap}>
+                      <Image
+                        src="/images/home-page-hero/image24.jpeg"
+                        alt="Editing support sample visual"
+                        width={920}
+                        height={420}
+                        className={styles.heroMedia}
+                      />
+                    </div>
+                  </aside>
                 </div>
 
                 <div className={styles.exampleWrap}>
