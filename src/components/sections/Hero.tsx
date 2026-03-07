@@ -14,6 +14,7 @@ type HeroSlide = {
   cta: string;
   href: string;
   imageSrc: string;
+  imageFallbackSrc?: string;
   imageAlt: string;
 };
 
@@ -37,7 +38,8 @@ const HERO_SLIDES: HeroSlide[] = [
     tags: ["Section-by-section feedback", "Logical flow and structure", "Reviewer-style comments"],
     cta: "See abstract and\nmanuscript support",
     href: "/services/editing-support",
-    imageSrc: "/images/home-page-hero/image6.jpeg",
+    imageSrc: "/images/home-page-hero/abstract-intro-flow.png",
+    imageFallbackSrc: "/images/home-page-hero/abstract-intro-flow.svg",
     imageAlt: "Abstract and manuscript guidance visual",
   },
   {
@@ -65,6 +67,40 @@ const HERO_SLIDES: HeroSlide[] = [
 ];
 
 const AUTO_ROTATE_MS = 9000;
+
+function SlideImage({
+  src,
+  fallbackSrc,
+  alt,
+  priority,
+  className,
+}: {
+  src: string;
+  fallbackSrc?: string;
+  alt: string;
+  priority: boolean;
+  className: string;
+}) {
+  const [currentSrc, setCurrentSrc] = useState(src);
+
+  useEffect(() => {
+    setCurrentSrc(src);
+  }, [src]);
+
+  return (
+    <Image
+      src={currentSrc}
+      alt={alt}
+      width={520}
+      height={360}
+      className={className}
+      priority={priority}
+      onError={() => {
+        if (fallbackSrc && currentSrc !== fallbackSrc) setCurrentSrc(fallbackSrc);
+      }}
+    />
+  );
+}
 
 export function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -228,14 +264,13 @@ export function Hero() {
                   </Link>
                 </div>
 
-                <div className="overflow-hidden rounded-xl border border-[rgba(15,23,42,.4)] bg-[#1F3A5F]">
-                  <Image
+                <div className="overflow-hidden rounded-xl border border-[rgba(15,23,42,.4)] bg-white aspect-[13/9]">
+                  <SlideImage
                     src={slide.imageSrc}
+                    fallbackSrc={slide.imageFallbackSrc}
                     alt={slide.imageAlt}
-                    width={520}
-                    height={360}
-                    className="h-full w-full object-cover"
                     priority={index === 0}
+                    className="h-full w-full object-cover object-center"
                   />
                 </div>
               </article>

@@ -26,7 +26,8 @@
   margin: 0;
   font-family: var(--font-manrope);
   font-size: 22px;
-  color: rgba(31, 58, 95, 0.92);
+  color: #1f2b3a;
+  letter-spacing: -0.02em;
 }
 
 .sub {
@@ -87,7 +88,7 @@
   margin: 10px 0 0;
   font-family: var(--font-manrope);
   font-size: 20px;
-  color: rgba(31, 58, 95, 0.92);
+  color: #1f2b3a;
 }
 
 .carouselWrap {

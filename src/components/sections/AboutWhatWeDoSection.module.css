@@ -35,8 +35,9 @@
 .title {
   margin: 0;
   font-family: var(--font-manrope);
-  color: rgba(31, 58, 95, 0.92);
+  color: #1f2b3a;
   font-size: 22px;
+  letter-spacing: -0.02em;
 }
 
 .sub {
