@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import { writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 import { join } from "path";
 
 export async function POST(request: NextRequest) {
@@ -43,21 +43,15 @@ export async function POST(request: NextRequest) {
 
     // Generate unique filename
     const timestamp = Date.now();
-    const extension = file.name.split('.').pop();
+    const extension = file.name.split('.').pop() || "bin";
     const filename = `${timestamp}-${Math.random().toString(36).substring(2)}.${extension}`;
 
     // Save to public/uploads directory
     const uploadDir = join(process.cwd(), 'public', 'uploads');
     const filepath = join(uploadDir, filename);
 
-    try {
-      await writeFile(filepath, buffer);
-    } catch (error) {
-      // If uploads directory doesn't exist, create it
-      const { mkdir } = await import('fs/promises');
-      await mkdir(uploadDir, { recursive: true });
-      await writeFile(filepath, buffer);
-    }
+    await mkdir(uploadDir, { recursive: true });
+    await writeFile(filepath, buffer);
 
     // Return the public URL (absolute)
     const baseUrl = process.env.NEXTAUTH_URL || request.nextUrl.origin;
