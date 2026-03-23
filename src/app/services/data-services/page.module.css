@@ -46,7 +46,7 @@
 
 .sectionSub {
   margin: 8px 0 0;
-  max-width: 82ch;
+  max-width: 100%;
   color: rgba(42, 46, 53, 0.8);
   line-height: 1.58;
 }

@@ -1371,7 +1371,11 @@
   font-size: 0.78rem;
   font-weight: 700;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
+
 
 .finalCta {
   padding: 30px 0 6px;

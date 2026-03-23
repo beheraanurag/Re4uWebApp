@@ -1,8 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useRef } from "react";
 import {
   BarChart3,
+  ChevronLeft,
+  ChevronRight,
   FilePenLine,
   FileSearch,
   FileText,
@@ -114,6 +117,15 @@ function downloadSamplePdf(serviceId: string) {
 }
 
 export function PopularServicesSection() {
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  function scrollByCards(direction: -1 | 1) {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    el.scrollBy({ left: direction * 340, behavior: "smooth" });
+  }
+
   return (
     <section id="sec-popular-services" className="section-pad">
       <div className="mx-auto max-w-7xl px-6">
@@ -129,64 +141,92 @@ export function PopularServicesSection() {
           </p>
         </div>
 
-        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {POPULAR_SERVICES.map((service) => {
-            const Icon = service.icon;
-            return (
-              <article
-                key={service.id}
-                className="relative flex h-full flex-col rounded-2xl border border-[#A8C7E6]/60 bg-white/90 p-5 shadow-md transition duration-300 hover:shadow-xl"
-              >
-                <span className="absolute left-4 top-4 rounded-full bg-[#3F7F72] px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-white">
-                  Popular
-                </span>
-                <div className="flex items-start justify-between gap-3">
-                  <div className="mt-6">
-                    <h3 className="text-lg font-bold text-[#1F3A5F]">{service.title}</h3>
-                    <p className="mt-1 text-sm text-[#2A2E35]/75">{service.subtitle}</p>
-                  </div>
-                  <span className="mt-5 grid h-11 w-11 place-items-center rounded-xl border border-[#A8C7E6]/60 bg-[#A8C7E6]/20 text-[#1F3A5F]">
-                    <Icon className="h-5 w-5" aria-hidden />
+        <div className="relative mt-6">
+          <div
+            ref={scrollRef}
+            className="flex items-stretch gap-4 overflow-x-auto pb-2 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory scroll-px-6 md:grid md:snap-none md:grid-cols-2 md:overflow-visible md:pb-0 xl:grid-cols-3"
+            aria-label="Popular services carousel"
+          >
+            {POPULAR_SERVICES.map((service) => {
+              const Icon = service.icon;
+              return (
+                <article
+                  key={service.id}
+                  className="relative flex min-h-[320px] min-w-[280px] snap-start flex-col rounded-2xl border border-[#A8C7E6]/60 bg-white/90 p-5 shadow-md transition duration-300 hover:shadow-xl md:min-h-0 md:min-w-0"
+                >
+                  <span className="absolute left-4 top-4 rounded-full bg-[#3F7F72] px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-white">
+                    Popular
                   </span>
-                </div>
-
-                <ul className="mt-4 list-disc space-y-1 pl-5 text-sm text-[#2A2E35]/85">
-                  {service.bullets.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-
-                <p className="mt-4 text-lg font-bold text-[#1F3A5F] md:text-xl">
-                  Starts at {service.price}
-                </p>
-
-                <div className="mt-auto flex items-center justify-between pt-4 text-sm">
-                  <button
-                    type="button"
-                    onClick={() => downloadSamplePdf(service.id)}
-                    className="rounded-2xl border border-[#A8C7E6]/60 bg-white px-3 py-2 text-xs font-semibold text-[#1F3A5F] transition hover:bg-[#E9E3D5]"
-                  >
-                    Download Sample
-                  </button>
-                  {service.exploreHref ? (
-                    <Link
-                      href={service.exploreHref}
-                      className="text-xs font-bold text-[#1F3A5F] hover:text-[#3F7F72]"
-                    >
-                      Explore -&gt;
-                    </Link>
-                  ) : (
-                    <span
-                      aria-disabled="true"
-                      className="cursor-not-allowed text-xs font-bold text-[#1F3A5F]/45"
-                    >
-                      Explore -&gt;
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="mt-6 min-w-0">
+                      <h3 className="text-lg font-bold text-[#1F3A5F]">{service.title}</h3>
+                      <p className="mt-1 text-sm text-[#2A2E35]/75">{service.subtitle}</p>
+                    </div>
+                    <span className="mt-5 grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-[#A8C7E6]/60 bg-[#A8C7E6]/20 text-[#1F3A5F]">
+                      <Icon className="h-5 w-5" aria-hidden />
                     </span>
-                  )}
-                </div>
-              </article>
-            );
-          })}
+                  </div>
+
+                  <ul className="mt-4 list-disc space-y-1 pl-5 text-sm text-[#2A2E35]/85">
+                    {service.bullets.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+
+                  <p className="mt-4 text-lg font-bold text-[#1F3A5F] md:text-xl">
+                    Starts at {service.price}
+                  </p>
+
+                  <div className="mt-auto flex items-center justify-between pt-4 text-sm">
+                    <button
+                      type="button"
+                      onClick={() => downloadSamplePdf(service.id)}
+                      className="rounded-2xl border border-[#A8C7E6]/60 bg-white px-3 py-2 text-xs font-semibold text-[#1F3A5F] transition hover:bg-[#E9E3D5]"
+                    >
+                      Download Sample
+                    </button>
+                    {service.exploreHref ? (
+                      <Link
+                        href={service.exploreHref}
+                        className="text-xs font-bold text-[#1F3A5F] hover:text-[#3F7F72]"
+                      >
+                        Explore -&gt;
+                      </Link>
+                    ) : (
+                      <span
+                        aria-disabled="true"
+                        className="cursor-not-allowed text-xs font-bold text-[#1F3A5F]/45"
+                      >
+                        Explore -&gt;
+                      </span>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+
+          <div className="mt-3 flex items-center justify-center md:hidden">
+            <div className="inline-flex items-center gap-1 rounded-full border border-[#A8C7E6]/60 bg-white/95 p-1 shadow-md backdrop-blur">
+              <button
+                type="button"
+                onClick={() => scrollByCards(-1)}
+                aria-label="Scroll left"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-transparent text-[#1F3A5F] transition hover:border-[#A8C7E6]/60 hover:bg-[#E9E3D5] active:scale-[0.98]"
+              >
+                <ChevronLeft className="h-5 w-5" aria-hidden />
+              </button>
+              <span className="h-6 w-px bg-[#A8C7E6]/60" aria-hidden />
+              <button
+                type="button"
+                onClick={() => scrollByCards(1)}
+                aria-label="Scroll right"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-transparent text-[#1F3A5F] transition hover:border-[#A8C7E6]/60 hover:bg-[#E9E3D5] active:scale-[0.98]"
+              >
+                <ChevronRight className="h-5 w-5" aria-hidden />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>

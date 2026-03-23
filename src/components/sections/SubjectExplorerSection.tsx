@@ -282,17 +282,17 @@ export function SubjectExplorerSection() {
                     type="button"
                     onClick={() => setActiveKey(subject.key)}
                     aria-pressed={isActive}
-                    className="flex w-full items-start justify-between gap-3 text-left"
+                    className="flex w-full min-w-0 flex-col gap-2 text-left sm:flex-row sm:items-start sm:justify-between sm:gap-3"
                   >
-                    <div className="flex items-start gap-2.5">
+                    <div className="flex min-w-0 items-start gap-2.5">
                       <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[12px] border border-[#A8C7E6]/60 bg-[#A8C7E6]/20 text-[#3F7F72]">
                         {subject.icon}
                       </span>
-                      <span className="text-sm font-extrabold leading-tight text-[#1F3A5F]">
+                      <span className="min-w-0 whitespace-normal break-words text-sm font-extrabold leading-tight text-[#1F3A5F]">
                         {subject.title}
                       </span>
                     </div>
-                    <span className="max-w-[150px] text-right text-[10.5px] font-semibold text-[#2A2E35]/75 sm:text-[11.5px]">
+                    <span className="whitespace-normal break-words text-[10.5px] font-semibold leading-snug text-[#2A2E35]/75 sm:max-w-[150px] sm:text-right sm:text-[11.5px]">
                       {subject.tag}
                     </span>
                   </button>
@@ -300,7 +300,7 @@ export function SubjectExplorerSection() {
                   <button
                     type="button"
                     onClick={() => downloadSample(subject)}
-                    className="mt-3 inline-flex items-center gap-2 rounded-full border border-[#A8C7E6]/60 bg-white px-3 py-1.5 text-xs font-extrabold text-[#1F3A5F] transition hover:bg-[#E9E3D5]"
+                    className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#A8C7E6]/60 bg-white px-3 py-1.5 text-xs font-extrabold text-[#1F3A5F] transition hover:bg-[#E9E3D5] sm:w-auto sm:justify-start"
                   >
                     <Download className="h-3.5 w-3.5" aria-hidden />
                     Download sample

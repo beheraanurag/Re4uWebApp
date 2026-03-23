@@ -138,6 +138,25 @@ const ROLES: CareerRole[] = [
     bestFor: "Profiles focused on defensible quality and ethical publishing.",
   },
   {
+    id: "citation-verification-analyst",
+    title: "Citation Verification Analyst",
+    stream: "Integrity & Compliance",
+    summary: "Validate references, source support, and evidence alignment across manuscript claims.",
+    hiringType: "Immediate",
+    tags: ["Remote", "Compliance", "Citations", "Verification"],
+    responsibilities: [
+      "Check whether key claims are supported by cited sources.",
+      "Identify citation mismatches, missing references, and unsupported statements.",
+      "Flag high-risk evidence gaps before submission.",
+    ],
+    requirements: [
+      "Strong literature reading skills.",
+      "Attention to citation accuracy.",
+      "Familiarity with publication ethics and source validation.",
+    ],
+    bestFor: "Evidence-focused reviewers who can spot citation-risk issues early.",
+  },
+  {
     id: "statistical-reviewer",
     title: "Statistical Reviewer",
     stream: "Data & Statistics",
@@ -155,6 +174,25 @@ const ROLES: CareerRole[] = [
       "Experience reviewing result sections.",
     ],
     bestFor: "Analysts who care about rigor and communication clarity.",
+  },
+  {
+    id: "data-analysis-support-specialist",
+    title: "Data Analysis Support Specialist",
+    stream: "Data & Statistics",
+    summary: "Support statistical outputs, result presentation, and manuscript-ready interpretation.",
+    hiringType: "Immediate",
+    tags: ["Remote", "Analysis", "SPSS/R", "Results"],
+    responsibilities: [
+      "Review statistical output tables and figures.",
+      "Support result wording for clarity and accuracy.",
+      "Help align analysis reporting with journal expectations.",
+    ],
+    requirements: [
+      "Working knowledge of applied statistics.",
+      "Comfort with SPSS, R, or Excel outputs.",
+      "Ability to explain findings in simple academic language.",
+    ],
+    bestFor: "Support-focused analysts who strengthen results clarity without overstepping claims.",
   },
 ];
 const MORE_ROLES: CareerRole[] = [
@@ -178,6 +216,25 @@ const MORE_ROLES: CareerRole[] = [
     bestFor: "Writers who understand reviewer workflows and revision strategy.",
   },
   {
+    id: "tracked-changes-editor",
+    title: "Tracked Changes Editor",
+    stream: "Revision Support",
+    summary: "Prepare clean, tracked, and submission-ready revised manuscript versions.",
+    hiringType: "Immediate",
+    tags: ["Remote", "Revision", "Tracked Changes", "Editing"],
+    responsibilities: [
+      "Implement approved revisions in tracked and clean files.",
+      "Ensure rebuttal comments match manuscript edits.",
+      "Maintain consistency across revised submission documents.",
+    ],
+    requirements: [
+      "Strong Word editing discipline.",
+      "Accuracy in version control.",
+      "Ability to preserve author voice while revising.",
+    ],
+    bestFor: "Editors who can execute revisions precisely across multiple submission files.",
+  },
+  {
     id: "editorial-operations-coordinator",
     title: "Editorial Operations Coordinator",
     stream: "Operations",
@@ -195,6 +252,25 @@ const MORE_ROLES: CareerRole[] = [
       "Professional written communication.",
     ],
     bestFor: "Operations-first profiles who thrive on structure and reliability.",
+  },
+  {
+    id: "manuscript-workflow-coordinator",
+    title: "Manuscript Workflow Coordinator",
+    stream: "Operations",
+    summary: "Support manuscript movement from intake to delivery through structured handoffs.",
+    hiringType: "Immediate",
+    tags: ["Remote", "Workflow", "Delivery", "Coordination"],
+    responsibilities: [
+      "Manage assignment flow and internal status tracking.",
+      "Monitor deadlines, dependencies, and delivery checkpoints.",
+      "Coordinate between editors, analysts, and QA roles.",
+    ],
+    requirements: [
+      "Strong organizational ability.",
+      "Comfort with multi-stage workflows.",
+      "Clear written communication and follow-up discipline.",
+    ],
+    bestFor: "Coordinators who keep multi-role delivery on track without losing details.",
   },
   {
     id: "content-community-lead",

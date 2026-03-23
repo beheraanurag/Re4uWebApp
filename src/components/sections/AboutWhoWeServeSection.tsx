@@ -128,12 +128,11 @@ export function AboutWhoWeServeSection() {
         <div>
           <h2 className={styles.title}>Who we serve</h2>
           <p className={styles.sub}>
-            A "museum wall" carousel: pick a persona, and one shared panel updates. DEI: diverse
+            A &ldquo;museum wall&rdquo; carousel: pick a persona, and one shared panel updates. DEI: diverse
             representation, respectful labels, and interaction that works with touch, keyboard, and
             screen readers.
           </p>
         </div>
-        <div className={styles.badge}>Carousel - drag / arrows</div>
       </div>
 
       <div className={styles.wall}>
@@ -238,9 +237,6 @@ export function AboutWhoWeServeSection() {
           <div className={styles.dRule}>{activePersona.rule}</div>
         </div>
 
-        <div className={styles.helper}>
-          Tip: drag to scroll - arrows to step - Enter to select - Arrow keys to navigate.
-        </div>
       </div>
     </section>
   );

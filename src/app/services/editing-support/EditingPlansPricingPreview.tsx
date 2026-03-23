@@ -186,9 +186,8 @@ export function EditingPlansPricingPreview({ titleClassName }: { titleClassName?
               <h2 className={`${styles.sectionTitle} ${titleClassName ?? ""}`}>
                 Choose your Research Paper Editing Plan
               </h2>
-              <p className={styles.sectionSub}>
-                We recommend the right depth after a quick scan - so you do not overpay or
-                under-edit.
+              <p className={`${styles.sectionSub} ${styles.oneLineSub}`}>
+                Answer honestly. We recommend the best-fit plan (Standard, Advanced, Scientific/Substantive).
               </p>
               <div className={styles.pricingNote}>
                 Prices below are starting estimates. Final quote depends on word count, subject

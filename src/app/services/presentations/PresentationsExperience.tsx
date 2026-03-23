@@ -905,9 +905,15 @@ export default function PresentationsExperience({
                     <span key={`${sample.id}-${change}`}>{change}</span>
                   ))}
                 </div>
-                <button type="button" className={styles.sampleOpenBtn}>
+                <a
+                  href={sample.fileHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.sampleOpenBtn}
+                  onClick={(event) => event.stopPropagation()}
+                >
                   Preview sample
-                </button>
+                </a>
               </article>
             ))}
           </div>
@@ -1142,6 +1148,12 @@ export default function PresentationsExperience({
                 <strong>Deliverable:</strong> {activeSample.deliverable}
               </p>
               <p>
+                <strong>File:</strong>{" "}
+                <a href={activeSample.fileHref} target="_blank" rel="noopener noreferrer">
+                  {activeSample.fileName}
+                </a>
+              </p>
+              <p>
                 <strong>Field:</strong> {activeSample.field}
               </p>
               <p>
@@ -1160,6 +1172,14 @@ export default function PresentationsExperience({
               </div>
             </div>
             <div className={styles.modalActions}>
+              <a
+                href={activeSample.fileHref}
+                className={`${styles.btn} ${styles.btnGhost}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open sample {activeSample.deliverable}
+              </a>
               <BookNowModal
                 source="presentations-sample-modal"
                 triggerLabel="Get a quote"

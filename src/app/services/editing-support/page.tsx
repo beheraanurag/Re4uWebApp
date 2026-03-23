@@ -43,9 +43,8 @@ export default function EditingSupportPage() {
                     <h1 className={styles.heroTitle}>
                       Research Editing Support for Clear, Submission-Ready Writing
                     </h1>
-                    <p className={styles.heroSub}>
-                      We improve grammar, flow, and academic readability while preserving your original
-                      meaning and author voice.
+                    <p className={`${styles.heroSub} ${styles.oneLineSub}`}>
+                      Improve clarity, flow, and academic tone without changing your meaning.
                     </p>
                     <ul className={styles.heroBullets}>
                       {heroBullets.map((item) => (

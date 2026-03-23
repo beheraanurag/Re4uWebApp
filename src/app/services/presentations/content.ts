@@ -79,6 +79,8 @@ export type EthicalSupportItem = {
 export type SampleItem = {
   id: string;
   title: string;
+  fileName: string;
+  fileHref: string;
   deliverable: string;
   field: string;
   style: string;
@@ -434,6 +436,8 @@ export const sampleLibrary: Record<SampleCategory, SampleItem[]> = {
     {
       id: "sd-1",
       title: "Defence Deck - Clean Storyline",
+      fileName: "DEFENCE DECK CLEAN STORY LINE-.pptx",
+      fileHref: "/sample-doc/presentations/DEFENCE DECK CLEAN STORY LINE-.pptx",
       deliverable: "PPTX",
       field: "Life Sciences",
       style: "Minimal",
@@ -444,6 +448,8 @@ export const sampleLibrary: Record<SampleCategory, SampleItem[]> = {
     {
       id: "sd-2",
       title: "Defence Deck - Data Heavy",
+      fileName: "Defence_Deck_Data_Heavy.pptx",
+      fileHref: "/sample-doc/presentations/Defence_Deck_Data_Heavy.pptx",
       deliverable: "PPTX",
       field: "Engineering",
       style: "Data-led",
@@ -454,6 +460,8 @@ export const sampleLibrary: Record<SampleCategory, SampleItem[]> = {
     {
       id: "sd-3",
       title: "Defence Deck - Committee Ready",
+      fileName: "Defence_Deck_Committee_Ready.pptx",
+      fileHref: "/sample-doc/presentations/Defence_Deck_Committee_Ready.pptx",
       deliverable: "PPTX",
       field: "Social Sciences",
       style: "Narrative",
@@ -464,6 +472,8 @@ export const sampleLibrary: Record<SampleCategory, SampleItem[]> = {
     {
       id: "sd-4",
       title: "Defence Deck - Visual First",
+      fileName: "Defence Deck - Visual First.pptx",
+      fileHref: "/sample-doc/presentations/Defence Deck - Visual First.pptx",
       deliverable: "PPTX",
       field: "Chemistry",
       style: "Visual",
@@ -476,6 +486,9 @@ export const sampleLibrary: Record<SampleCategory, SampleItem[]> = {
     {
       id: "vp-1",
       title: "Viva PPT - Quick Polish",
+      fileName: "Viva_PPT_Quick_Polish_Public_Health_Sample_HepC_OU.pptx",
+      fileHref:
+        "/sample-doc/presentations/Viva_PPT_Quick_Polish_Public_Health_Sample_HepC_OU.pptx",
       deliverable: "PPTX",
       field: "Medicine",
       style: "Minimal",
@@ -486,6 +499,9 @@ export const sampleLibrary: Record<SampleCategory, SampleItem[]> = {
     {
       id: "vp-2",
       title: "Proposal PPT - Clear Structure",
+      fileName: "RE4U_Proposal_PPT_Clear_Structure_Sample.pptx",
+      fileHref:
+        "/sample-doc/presentations/RE4U_Proposal_PPT_Clear_Structure_Sample.pptx",
       deliverable: "PPTX",
       field: "Life Sciences",
       style: "Minimal",
@@ -496,6 +512,9 @@ export const sampleLibrary: Record<SampleCategory, SampleItem[]> = {
     {
       id: "vp-3",
       title: "Internal Review - Lab Update",
+      fileName: "RE4U_Internal_Review_Lab_Update_Sample.pptx",
+      fileHref:
+        "/sample-doc/presentations/RE4U_Internal_Review_Lab_Update_Sample.pptx",
       deliverable: "PPTX",
       field: "Engineering",
       style: "Data-led",
@@ -506,6 +525,9 @@ export const sampleLibrary: Record<SampleCategory, SampleItem[]> = {
     {
       id: "vp-4",
       title: "Proposal PPT - Figure Cleanup",
+      fileName: "RE4U_Proposal_PPT_Figure_Cleanup_Sample.pptx",
+      fileHref:
+        "/sample-doc/presentations/RE4U_Proposal_PPT_Figure_Cleanup_Sample.pptx",
       deliverable: "PPTX",
       field: "Chemistry",
       style: "Visual",
@@ -518,6 +540,9 @@ export const sampleLibrary: Record<SampleCategory, SampleItem[]> = {
     {
       id: "cd-1",
       title: "Conference Deck - Talk Ready",
+      fileName: "RE4U_Conference_Deck_Talk_Ready_Sample  -  Repaired.pptx",
+      fileHref:
+        "/sample-doc/presentations/RE4U_Conference_Deck_Talk_Ready_Sample  -  Repaired.pptx",
       deliverable: "PPTX",
       field: "Life Sciences",
       style: "Visual",
@@ -528,6 +553,9 @@ export const sampleLibrary: Record<SampleCategory, SampleItem[]> = {
     {
       id: "cd-2",
       title: "Conference Deck - Poster to Talk",
+      fileName: "RE4U_Conference_Deck_Poster_to_Talk_Sample  -  Repaired.pptx",
+      fileHref:
+        "/sample-doc/presentations/RE4U_Conference_Deck_Poster_to_Talk_Sample  -  Repaired.pptx",
       deliverable: "PPTX",
       field: "Engineering",
       style: "Data-led",
@@ -538,6 +566,9 @@ export const sampleLibrary: Record<SampleCategory, SampleItem[]> = {
     {
       id: "cd-3",
       title: "Conference Deck - Industry R&D",
+      fileName: "RE4U_Conference_Deck_Industry_RnD_Sample  -  Repaired.pptx",
+      fileHref:
+        "/sample-doc/presentations/RE4U_Conference_Deck_Industry_RnD_Sample  -  Repaired.pptx",
       deliverable: "PPTX",
       field: "Industry",
       style: "Minimal",
@@ -548,6 +579,9 @@ export const sampleLibrary: Record<SampleCategory, SampleItem[]> = {
     {
       id: "cd-4",
       title: "Conference Deck - Thesis Summary",
+      fileName: "RE4U_Conference_Deck_Thesis_Summary_Sample.pptx",
+      fileHref:
+        "/sample-doc/presentations/RE4U_Conference_Deck_Thesis_Summary_Sample.pptx",
       deliverable: "PPTX",
       field: "Chemistry",
       style: "Visual",
@@ -560,7 +594,9 @@ export const sampleLibrary: Record<SampleCategory, SampleItem[]> = {
     {
       id: "rp-1",
       title: "Research Poster - A0 Print",
-      deliverable: "Poster PDF",
+      fileName: "RE4U_Research_Poster_A0_Print.pptx",
+      fileHref: "/sample-doc/presentations/RE4U_Research_Poster_A0_Print.pptx",
+      deliverable: "PPTX",
       field: "Life Sciences",
       style: "Minimal",
       format: "A0",
@@ -570,7 +606,9 @@ export const sampleLibrary: Record<SampleCategory, SampleItem[]> = {
     {
       id: "rp-2",
       title: "Research Poster - 36x48",
-      deliverable: "Poster PDF",
+      fileName: "RE4U_Research_Poster_36x48.pptx",
+      fileHref: "/sample-doc/presentations/RE4U_Research_Poster_36x48.pptx",
+      deliverable: "PPTX",
       field: "Medicine",
       style: "Visual",
       format: "36x48",
@@ -580,7 +618,9 @@ export const sampleLibrary: Record<SampleCategory, SampleItem[]> = {
     {
       id: "rp-3",
       title: "Research Poster - Data Layout",
-      deliverable: "Poster PDF",
+      fileName: "RE4U_Research_Poster_Data_Layout_A1.pptx",
+      fileHref: "/sample-doc/presentations/RE4U_Research_Poster_Data_Layout_A1.pptx",
+      deliverable: "PPTX",
       field: "Engineering",
       style: "Data-led",
       format: "A1",
@@ -590,7 +630,10 @@ export const sampleLibrary: Record<SampleCategory, SampleItem[]> = {
     {
       id: "rp-4",
       title: "Research Poster - University Brand",
-      deliverable: "Poster PDF",
+      fileName: "RE4U_Research_Poster_University_Brand_A0.pptx",
+      fileHref:
+        "/sample-doc/presentations/RE4U_Research_Poster_University_Brand_A0.pptx",
+      deliverable: "PPTX",
       field: "Social Sciences",
       style: "Minimal",
       format: "A0",

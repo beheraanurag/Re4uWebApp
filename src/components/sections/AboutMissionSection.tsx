@@ -30,11 +30,7 @@ export function AboutMissionSection() {
         <div className={styles.header}>
           <div>
             <h2 className={styles.title}>Mission and vision</h2>
-            <p className={styles.subtitle}>
-              Core text stays visible. The right panel flips for depth - no overlays.
-            </p>
           </div>
-          <div className={styles.hint}>Click "Flip" to reveal more.</div>
         </div>
 
         <svg className={styles.thread} viewBox="0 0 600 120" aria-hidden="true">
@@ -91,7 +87,9 @@ export function AboutMissionSection() {
                       </p>
                     </div>
                     <div className={styles.handle}>
-                      <span>Flip for "in practice"</span>
+                      <span>
+                        Flip for &ldquo;in practice&rdquo;
+                      </span>
                       <button
                         className={styles.flipbtn}
                         type="button"
@@ -164,7 +162,9 @@ export function AboutMissionSection() {
                       </p>
                     </div>
                     <div className={styles.handle}>
-                      <span>Flip for "we are building"</span>
+                      <span>
+                        Flip for &ldquo;we are building&rdquo;
+                      </span>
                       <button
                         className={styles.flipbtn}
                         type="button"

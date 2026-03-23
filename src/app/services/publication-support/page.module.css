@@ -778,13 +778,13 @@
 .deliverKicker {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
+  gap: 8px;
+  padding: 6px 10px;
   border-radius: 999px;
   background: rgba(15, 23, 42, 0.04);
   border: 1px solid rgba(15, 23, 42, 0.1);
   color: rgba(15, 23, 42, 0.68);
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.2px;
 }
 
@@ -797,7 +797,7 @@
 }
 
 .sectionLabel {
-  font-size: 11px;
+  font-size: 10px;
   text-transform: none;
   font-weight: 600;
 }
@@ -1217,19 +1217,19 @@
 .pricingKicker {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
+  gap: 6px;
+  padding: 5px 8px;
   border-radius: 999px;
   background: rgba(15, 23, 42, 0.04);
   border: 1px solid rgba(15, 23, 42, 0.1);
   color: rgba(15, 23, 42, 0.68);
-  font-size: 13px;
-  letter-spacing: 0.2px;
+  font-size: 11px;
+  letter-spacing: 0.15px;
 }
 
 .pricingDot {
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: var(--section-dot);
   box-shadow: var(--section-dot-shadow);
@@ -1835,13 +1835,13 @@
 .addOnKicker {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
+  gap: 8px;
+  padding: 6px 10px;
   border-radius: 999px;
   background: rgba(15, 23, 42, 0.04);
   border: 1px solid rgba(15, 23, 42, 0.1);
   color: rgba(15, 23, 42, 0.68);
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.2px;
 }
 
@@ -2191,13 +2191,13 @@
 .eduKicker {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
+  gap: 8px;
+  padding: 6px 10px;
   border-radius: 999px;
   background: rgba(15, 23, 42, 0.04);
   border: 1px solid rgba(15, 23, 42, 0.1);
   color: rgba(15, 23, 42, 0.68);
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.2px;
 }
 
@@ -2670,13 +2670,13 @@
 .integrityKicker {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
+  gap: 8px;
+  padding: 6px 10px;
   border-radius: 999px;
   background: rgba(15, 23, 42, 0.04);
   border: 1px solid rgba(15, 23, 42, 0.1);
   color: rgba(15, 23, 42, 0.68);
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.2px;
 }
 

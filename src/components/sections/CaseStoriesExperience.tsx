@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { API_BASE } from "@/lib/api";
+import { WHATSAPP_URL } from "@/lib/contact";
 
 const CATEGORY_FILTERS = [
   "All",
@@ -432,14 +432,18 @@ export function CaseStoriesExperience() {
     }
 
     const message = [
-      "Case story sample request:",
-      `- Story: ${form.storyTitle}`,
-      `- Category: ${form.storyCategory}`,
-      `- Status: ${form.status}`,
-      form.discipline.trim() ? `- Discipline: ${form.discipline.trim()}` : "",
-      form.timeline.trim() ? `- Timeline: ${form.timeline.trim()}` : "",
+      "Case story sample request",
       "",
-      "Request note:",
+      `Full name: ${form.fullName.trim()}`,
+      `Email: ${form.email.trim()}`,
+      `Current status: ${form.status}`,
+      form.discipline.trim() ? `Discipline: ${form.discipline.trim()}` : "",
+      form.timeline.trim() ? `Timeline: ${form.timeline.trim()}` : "",
+      "",
+      `Selected story: ${form.storyTitle}`,
+      `Category: ${form.storyCategory}`,
+      "",
+      "What I want to evaluate:",
       form.notes.trim() || "No additional note provided.",
     ]
       .filter(Boolean)
@@ -447,20 +451,13 @@ export function CaseStoriesExperience() {
 
     setSubmitting(true);
     try {
-      const res = await fetch(`${API_BASE}/contact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.fullName.trim(),
-          email: form.email.trim(),
-          message,
-        }),
-      });
-      if (!res.ok) throw new Error("Request failed");
+      const whatsappHref = `${WHATSAPP_URL}?text=${encodeURIComponent(message)}`;
+      const opened = window.open(whatsappHref, "_blank", "noopener,noreferrer");
+      if (!opened) throw new Error("Popup blocked");
 
       addToast({
-        title: "Sample request received",
-        description: "We will share a matched anonymised sample to your email.",
+        title: "WhatsApp message ready",
+        description: "Your request is pre-filled in WhatsApp. Press send to submit.",
       });
 
       setForm((current) => ({
@@ -475,8 +472,8 @@ export function CaseStoriesExperience() {
       }));
     } catch {
       addToast({
-        title: "Request failed",
-        description: "Please try again in a moment.",
+        title: "Couldn't open WhatsApp",
+        description: "Please allow pop-ups and try again.",
       });
     } finally {
       setSubmitting(false);

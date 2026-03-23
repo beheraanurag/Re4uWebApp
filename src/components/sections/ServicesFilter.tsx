@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Filter } from "lucide-react";
+import { useState } from "react";
 
 export type FilterOption =
   | "all"
@@ -56,7 +57,7 @@ export function ServicesFilter({
           <ChevronDown className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-[200px]">
+      <DropdownMenuContent align="end" className="min-w-50">
         {filterOptions.map((option) => (
           <DropdownMenuItem
             key={option.value}
@@ -73,3 +74,40 @@ export function ServicesFilter({
     </DropdownMenu>
   );
 }
+
+const AcademicPresentationUpload = () => {
+  const [uploadedPPTX, setUploadedPPTX] = useState<string | null>(null);
+
+  const handlePPTXUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setUploadedPPTX(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  return (
+    <div>
+      <label htmlFor="pptx-upload">Upload PPTX:</label>
+      <input
+        type="file"
+        id="pptx-upload"
+        accept="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        onChange={handlePPTXUpload}
+      />
+      {uploadedPPTX && (
+        <div>
+          <p>Uploaded PPTX:</p>
+          <a href={uploadedPPTX} target="_blank" rel="noopener noreferrer">
+            View PPTX
+          </a>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AcademicPresentationUpload;

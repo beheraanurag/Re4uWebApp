@@ -930,7 +930,8 @@
 .faqList {
   display: grid;
   gap: 10px;
-  max-width: 920px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .faqItem {
@@ -1017,6 +1018,12 @@
 .finalCtaNoWrap {
   max-width: 100%;
   white-space: normal;
+}
+
+@media (min-width: 980px) {
+  .finalCtaNoWrap {
+    white-space: nowrap;
+  }
 }
 
 .finalButtons {

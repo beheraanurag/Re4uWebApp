@@ -130,6 +130,10 @@
   color: color-mix(in srgb, var(--about-muted) 92%, var(--about-ink));
 }
 
+.aboutPage :global([class*="_sub__"]) {
+  max-width: 100% !important;
+}
+
 .aboutPage :global([fill*="233, 227, 213"]),
 .aboutPage :global([fill*="233,227,213"]),
 .aboutPage :global([fill="#e9e3d5"]),

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import styles from "./page.module.css";
 
 type ResearchStyle = {
@@ -151,11 +151,15 @@ const IMPROVEMENT_OPTIONS = [
   "Formatting (optional)",
 ];
 
+const DEFAULT_STYLE_KEY = "original" as const;
+const DEFAULT_PLAN =
+  PLANS.find((item) => item.key === RESEARCH_STYLES[DEFAULT_STYLE_KEY].suggestedPlan) ?? PLANS[1];
+
 export function EditingResearchStyle() {
-  const [styleKey, setStyleKey] = useState<keyof typeof RESEARCH_STYLES>("original");
+  const [styleKey, setStyleKey] = useState<keyof typeof RESEARCH_STYLES>(DEFAULT_STYLE_KEY);
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState(PLANS[1].key);
-  const [improvements, setImprovements] = useState<string[]>(PLANS[1].defaults);
+  const [selectedPlan, setSelectedPlan] = useState(DEFAULT_PLAN.key);
+  const [improvements, setImprovements] = useState<string[]>(DEFAULT_PLAN.defaults);
   const [formInputs, setFormInputs] = useState({
     name: "",
     mobile: "",
@@ -174,10 +178,6 @@ export function EditingResearchStyle() {
     setSelectedPlan(plan.key);
     setImprovements(plan.defaults);
   }, []);
-
-  useEffect(() => {
-    selectPlan(currentStyle.suggestedPlan);
-  }, [styleKey, selectPlan, currentStyle.suggestedPlan]);
 
   const toggleImprovement = (value: string) => {
     setImprovements((prev) => {
@@ -276,7 +276,11 @@ export function EditingResearchStyle() {
                 className={`${styles.researchStyleButton} ${
                   styleKey === key ? styles.researchStyleButtonActive : ""
                 }`}
-                onClick={() => setStyleKey(key as keyof typeof RESEARCH_STYLES)}
+                onClick={() => {
+                  const nextKey = key as keyof typeof RESEARCH_STYLES;
+                  setStyleKey(nextKey);
+                  selectPlan(RESEARCH_STYLES[nextKey].suggestedPlan);
+                }}
               >
                 {RESEARCH_STYLES[key].title.split(" ")[0]}
               </button>

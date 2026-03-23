@@ -9,79 +9,6 @@ import { BookNowModal } from "@/components/sections/BookNowModal";
 const WHATSAPP_NUMBER = "918093778526";
 const EMAIL_TO = "";
 
-const sceneSvg = String.raw`<svg viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-  <defs>
-    <linearGradient id="desk" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="0" stop-color="#1F3A5F"/>
-      <stop offset="1" stop-color="#2A2E35"/>
-    </linearGradient>
-    <linearGradient id="screen" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#1F3A5F"/>
-      <stop offset="1" stop-color="#2A2E35"/>
-    </linearGradient>
-    <linearGradient id="paper" x1="0" x2="1">
-      <stop offset="0" stop-color="#E9E3D5"/>
-      <stop offset="1" stop-color="#A8C7E6"/>
-    </linearGradient>
-    <linearGradient id="shadow" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="0" stop-color="#000" stop-opacity="0.0"/>
-      <stop offset="1" stop-color="#000" stop-opacity="0.35"/>
-    </linearGradient>
-    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="10"/>
-    </filter>
-    <filter id="soft2" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="18"/>
-    </filter>
-  </defs>
-
-  <rect width="1200" height="760" fill="url(#desk)"/>
-
-  <circle cx="220" cy="120" r="140" fill="#E9E3D5" opacity="0.18" filter="url(#soft2)"/>
-  <circle cx="220" cy="120" r="80" fill="#E9E3D5" opacity="0.12" filter="url(#soft)"/>
-
-  <path d="M250 520h700c22 0 40 18 40 40v40H210v-40c0-22 18-40 40-40Z" fill="#2A2E35" opacity="0.95"/>
-  <path d="M235 600h730c18 0 35 13 40 30l10 40H185l10-40c5-17 22-30 40-30Z" fill="#2A2E35" opacity="0.95"/>
-  <rect x="520" y="615" width="160" height="18" rx="9" fill="#1F3A5F" opacity="0.8"/>
-
-  <rect x="300" y="150" width="600" height="380" rx="28" fill="#2A2E35" opacity="0.9"/>
-  <rect x="320" y="170" width="560" height="340" rx="22" fill="url(#screen)" opacity="0.95"/>
-
-  <rect x="350" y="205" width="260" height="18" rx="9" fill="#ffffff" opacity="0.10"/>
-  <rect x="350" y="240" width="420" height="10" rx="5" fill="#ffffff" opacity="0.08"/>
-  <rect x="350" y="262" width="380" height="10" rx="5" fill="#ffffff" opacity="0.08"/>
-  <rect x="350" y="284" width="440" height="10" rx="5" fill="#ffffff" opacity="0.08"/>
-  <rect x="350" y="330" width="500" height="120" rx="16" fill="#ffffff" opacity="0.06"/>
-  <rect x="370" y="354" width="220" height="10" rx="5" fill="#ffffff" opacity="0.08"/>
-  <rect x="370" y="376" width="420" height="10" rx="5" fill="#ffffff" opacity="0.08"/>
-  <rect x="370" y="398" width="380" height="10" rx="5" fill="#ffffff" opacity="0.08"/>
-
-  <g transform="translate(120,520) rotate(-10)">
-    <rect x="0" y="0" width="320" height="210" rx="18" fill="url(#paper)" opacity="0.92"/>
-    <rect x="26" y="30" width="210" height="10" rx="5" fill="#2A2E35" opacity="0.18"/>
-    <rect x="26" y="55" width="260" height="8" rx="4" fill="#2A2E35" opacity="0.12"/>
-    <rect x="26" y="74" width="230" height="8" rx="4" fill="#2A2E35" opacity="0.12"/>
-    <rect x="26" y="93" width="250" height="8" rx="4" fill="#2A2E35" opacity="0.12"/>
-    <rect x="26" y="130" width="160" height="26" rx="13" fill="#A8C7E6" opacity="0.20"/>
-  </g>
-  <g transform="translate(820,520) rotate(8)">
-    <rect x="0" y="0" width="300" height="200" rx="18" fill="url(#paper)" opacity="0.86"/>
-    <rect x="24" y="28" width="200" height="10" rx="5" fill="#2A2E35" opacity="0.16"/>
-    <rect x="24" y="52" width="240" height="8" rx="4" fill="#2A2E35" opacity="0.11"/>
-    <rect x="24" y="71" width="210" height="8" rx="4" fill="#2A2E35" opacity="0.11"/>
-    <rect x="24" y="90" width="250" height="8" rx="4" fill="#2A2E35" opacity="0.11"/>
-    <rect x="24" y="126" width="170" height="26" rx="13" fill="#3F7F72" opacity="0.16"/>
-  </g>
-
-  <g transform="translate(520,560) rotate(-18)">
-    <rect x="0" y="0" width="260" height="16" rx="8" fill="#2A2E35" opacity="0.9"/>
-    <rect x="190" y="0" width="70" height="16" rx="8" fill="#1F3A5F" opacity="0.9"/>
-    <circle cx="16" cy="8" r="6" fill="#E9E3D5" opacity="0.55"/>
-  </g>
-
-  <rect width="1200" height="760" fill="url(#shadow)" opacity="0.9"/>
-</svg>`;
-
 type PlanForm = {
   name: string;
   discipline: string;
@@ -1196,7 +1123,7 @@ export function PublicationSupportPage() {
   const [faqQuery, setFaqQuery] = useState("");
   const [openFaq, setOpenFaq] = useState<string>(FAQS[0]?.id ?? "");
   const [ctaOpen, setCtaOpen] = useState(false);
-  const [ctaMode, setCtaMode] = useState<CtaMode>("upload");
+  const [ctaMode] = useState<CtaMode>("upload");
   const [ctaForm, setCtaForm] = useState<CtaForm>(CTA_INITIAL);
 
   const canSubmit = useMemo(() => {
@@ -1343,11 +1270,19 @@ export function PublicationSupportPage() {
     );
   }, [faqQuery]);
 
-  useEffect(() => {
-    if (!filteredFaqs.find((faq) => faq.id === openFaq)) {
-      setOpenFaq(filteredFaqs[0]?.id ?? "");
+  const handleFaqQueryChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const nextValue = event.target.value;
+    setFaqQuery(nextValue);
+
+    const query = nextValue.trim().toLowerCase();
+    const nextFiltered = !query
+      ? FAQS
+      : FAQS.filter((faq) => `${faq.question} ${faq.answer}`.toLowerCase().includes(query));
+
+    if (!nextFiltered.find((faq) => faq.id === openFaq)) {
+      setOpenFaq(nextFiltered[0]?.id ?? "");
     }
-  }, [filteredFaqs, openFaq]);
+  };
 
   const updateCtaField = useCallback(
     (field: keyof CtaForm) =>
@@ -1666,9 +1601,9 @@ export function PublicationSupportPage() {
         <section className={styles.deliverSection} aria-label="What you get">
           <div className={styles.deliverHeader}>
             <div>
-              <div className={styles.deliverKicker}>
-                <span className={styles.deliverDot} aria-hidden="true" />
-                <span className={styles.sectionLabel}>Deliverables</span>
+              <div className={styles.audKicker}>
+                <span className={styles.audDot} aria-hidden="true" />
+                Deliverables
               </div>
               <h2 className={styles.deliverTitle}>What you get</h2>
               <p className={styles.deliverSub}>A guided view of the 4 deliverables. Click each step to see the problem solved and what the output looks like.</p>
@@ -1742,7 +1677,7 @@ export function PublicationSupportPage() {
                     </li>
                     <li>
                       Similarity/plagiarism: if requested, we interpret reports contextually and
-                      do not "game" similarity scores.
+                      do not &ldquo;game&rdquo; similarity scores.
                     </li>
                   </ul>
                 </div>
@@ -1836,9 +1771,9 @@ export function PublicationSupportPage() {
         <section className={styles.pricingSection} aria-label="Packages and pricing">
           <div className={styles.pricingHeader}>
             <div>
-              <div className={styles.pricingKicker}>
-                <span className={styles.pricingDot} aria-hidden="true" />
-                <span className={styles.sectionLabel}>Packages &amp; pricing</span>
+              <div className={styles.audKicker}>
+                <span className={styles.audDot} aria-hidden="true" />
+                Packages &amp; pricing
               </div>
               <h2 className={styles.pricingTitle}>
                 Packages &amp; pricing{" "}
@@ -1986,9 +1921,9 @@ export function PublicationSupportPage() {
         <section className={styles.addOnSection} aria-label="Optional add-ons">
           <div className={styles.addOnHeader}>
             <div>
-              <div className={styles.addOnKicker}>
-                <span className={styles.addOnDot} aria-hidden="true" />
-                <span className={styles.sectionLabel}>Add-ons</span>
+              <div className={styles.audKicker}>
+                <span className={styles.audDot} aria-hidden="true" />
+                Add-ons
               </div>
               <h2 className={styles.addOnTitle}>
                 Optional add-ons{" "}
@@ -2073,9 +2008,9 @@ export function PublicationSupportPage() {
         <section className={styles.eduSection} aria-label="Education guides">
           <div className={styles.eduHeader}>
             <div>
-              <div className={styles.eduKicker}>
-                <span className={styles.eduDot} aria-hidden="true" />
-                <span className={styles.sectionLabel}>Education guides</span>
+              <div className={styles.audKicker}>
+                <span className={styles.audDot} aria-hidden="true" />
+                Education guides
               </div>
               <h2 className={styles.eduTitle}>
                 Quick guides that save careers{" "}
@@ -2253,7 +2188,7 @@ export function PublicationSupportPage() {
 
                 <div className={styles.eduNote}>
                   <b>Friendly reminder:</b> This is educational. For final verification, cross-check
-                  with trusted sources (Think.Check.Submit, COPE, ICMJE) and the journal's official
+                  with trusted sources (Think.Check.Submit, COPE, ICMJE) and the journal&rsquo;s official
                   site.
                 </div>
               </aside>
@@ -2264,9 +2199,9 @@ export function PublicationSupportPage() {
         <section className={styles.integritySection} aria-label="Integrity pledge">
           <div className={styles.integrityHeader}>
             <div>
-              <div className={styles.integrityKicker}>
-                <span className={styles.integrityDot} aria-hidden="true" />
-                <span className={styles.sectionLabel}>Integrity pledge</span>
+              <div className={styles.audKicker}>
+                <span className={styles.audDot} aria-hidden="true" />
+                Integrity pledge
               </div>
               <h2 className={styles.integrityTitle}>Our Integrity Pledge</h2>
               <p className={styles.integritySub}>
@@ -2392,9 +2327,9 @@ export function PublicationSupportPage() {
         <section className={styles.faqSection} aria-label="FAQs">
           <div className={styles.faqHeader}>
             <div>
-              <div className={styles.faqKicker}>
-                <span className={styles.faqDot} aria-hidden="true" />
-                <span className={styles.sectionLabel}>FAQs</span>
+              <div className={styles.audKicker}>
+                <span className={styles.audDot} aria-hidden="true" />
+                FAQs
               </div>
               <h2 className={styles.faqTitle}>FAQs</h2>
               <p className={styles.faqSub}>
@@ -2429,7 +2364,7 @@ export function PublicationSupportPage() {
                       placeholder="Search: guarantee, predatory, paper mill, AI disclosure, pricing..."
                       aria-label="Search FAQs"
                       value={faqQuery}
-                      onChange={(event) => setFaqQuery(event.target.value)}
+                      onChange={handleFaqQueryChange}
                     />
                   </div>
                     <div className={styles.faqSearchNote}>
@@ -2542,7 +2477,7 @@ export function PublicationSupportPage() {
                 Your research deserves a safe submission pathway.
               </div>
               <div className={styles.finalCtaSub}>
-                Not luck. Not shortcuts. Not "guaranteed acceptance" traps.
+                Not luck. Not shortcuts. Not &ldquo;guaranteed acceptance&rdquo; traps.
                 <br />
                 Just a clean, journal-fit plan - and a submission you can stand behind.
               </div>
@@ -2956,7 +2891,7 @@ export function PublicationSupportPage() {
 
           <div className={styles.addOnDrawerFooter}>
             <div className={styles.addOnSmallNote}>
-              Want this add-on? Click "Start on WhatsApp" and we will confirm scope + quote.
+              Want this add-on? Click &ldquo;Start on WhatsApp&rdquo; and we will confirm scope + quote.
             </div>
             <div className={styles.addOnFooterActions}>
               <button

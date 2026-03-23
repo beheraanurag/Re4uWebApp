@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
 import { WHATSAPP_URL } from "@/lib/contact";
+import { SampleRequestWhatsAppForm } from "./SampleRequestWhatsAppForm";
+import { useState } from "react";
 
 const heroBullets = [
   "Research proposal outline aligned to your university or funder format",
@@ -183,18 +185,21 @@ const templates = [
     title: "Research Proposal Outline (Word)",
     text: "A clean structure aligned to common university expectations and ready to edit.",
     cta: "Download Free Template",
+    href: "/sample-doc/RESEARCH PROPOSAL OUTLINE.pdf",
   },
   {
     tag: "Checklist",
     title: "Research Methodology Checklist (1-page)",
     text: "Design, sampling, instrument, and analysis checkpoints supervisors expect.",
     cta: "Download Checklist",
+    href: "/sample-doc/RESEARCH METHODOLOGY CHECKLIST.pdf",
   },
   {
     tag: "Planner",
     title: "Timeline + Milestones Sheet (Gantt-ready)",
     text: "Turn your scope into a practical milestone schedule with realistic sequencing.",
     cta: "Download Planner",
+    href: "/sample-doc/SERVICES OVERVIEW_RESEARCH PLANNING_Timeline_Milestones_Planner.xlsx",
   },
 ];
 
@@ -204,18 +209,21 @@ const sampleExcerpts = [
     meta: "2 pages | Clarity Check",
     title: "Proposal Clarity Check - Before to After",
     text: "Shows how we fix problem statement and gap, objectives and RQ alignment, and methodology red flags.",
+    pdfHref: "/sample-doc/PROPOSAL CLARITY PACK (1).pdf",
   },
   {
     label: "Core sample",
     meta: "2-3 pages | Blueprint",
     title: "Proposal Blueprint - Outline + Methods Map + Timeline",
     text: "Shows a format-aware outline, logic chain mapping, methods mapping, and a milestone timeline.",
+    pdfHref: "/sample-doc/PROPOSAL BLUEPRINT PACK (1).pdf",
   },
   {
     label: "Premium sample",
     meta: "2-3 pages | Supervisor-ready",
     title: "Supervisor-Ready Pack - Format + QC Summary",
     text: "Shows format compliance polish, tone refinement, and QC summary notes before submission.",
+    pdfHref: "/sample-doc/SUPERVISOR READY PROPOSAL PACK (1).pdf",
   },
 ];
 
@@ -293,6 +301,19 @@ export default function ResearchPlanningPage() {
     styles.workPanel5,
     styles.workPanel6,
   ];
+
+  const [uploadedPDF, setUploadedPDF] = useState<string | null>(null);
+
+  const handlePDFUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setUploadedPDF(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <>
@@ -811,12 +832,9 @@ export default function ResearchPlanningPage() {
                 <span className={styles.tag}>{template.tag}</span>
                 <h3>{template.title}</h3>
                 <p>{template.text}</p>
-                <Link
-                  href="/contact"
-                  className={`${styles.btn} ${styles.btnPrimary}`}
-                >
+                <a href={template.href} download className={`${styles.btn} ${styles.btnPrimary}`}>
                   {template.cta}
-                </Link>
+                </a>
               </article>
             ))}
           </div>
@@ -846,12 +864,14 @@ export default function ResearchPlanningPage() {
                   >
                     Preview
                   </Link>
-                  <Link
-                    href="/contact"
+                  <a
+                    href={sample.pdfHref}
                     className={`${styles.btn} ${styles.btnGhost} ${styles.btnSmall}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     Request PDF
-                  </Link>
+                  </a>
                 </div>
               </article>
             ))}
@@ -891,97 +911,7 @@ export default function ResearchPlanningPage() {
               </div>
             </div>
 
-            <form className={styles.sampleForm} action="/contact" method="get">
-              <div className={styles.field}>
-                <label htmlFor="srName">Full name *</label>
-                <input
-                  id="srName"
-                  name="name"
-                  type="text"
-                  required
-                  placeholder="Your name"
-                />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor="srEmail">Email *</label>
-                <input
-                  id="srEmail"
-                  name="email"
-                  type="email"
-                  required
-                  placeholder="name@email.com"
-                />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor="srPhone">Phone or WhatsApp *</label>
-                <input
-                  id="srPhone"
-                  name="phone"
-                  type="tel"
-                  required
-                  placeholder="+91..."
-                />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor="srLevel">Level *</label>
-                <select id="srLevel" name="level" defaultValue="" required>
-                  <option value="" disabled>
-                    Select
-                  </option>
-                  <option>PhD / Registration</option>
-                  <option>Thesis / Dissertation</option>
-                  <option>Grant / Funding</option>
-                  <option>Other</option>
-                </select>
-              </div>
-              <div className={`${styles.field} ${styles.fieldFull}`}>
-                <label htmlFor="srSubject">Subject or domain *</label>
-                <input
-                  id="srSubject"
-                  name="subject"
-                  type="text"
-                  required
-                  placeholder="e.g., Psychology, Civil Engineering, Management"
-                />
-              </div>
-              <div className={`${styles.field} ${styles.fieldFull}`}>
-                <label htmlFor="srReq">Requirement *</label>
-                <textarea
-                  id="srReq"
-                  name="requirement"
-                  rows={4}
-                  required
-                  placeholder="What do you want to review in the sample? (gap, RQs, methodology, timeline, format)"
-                />
-              </div>
-              <div className={`${styles.field} ${styles.fieldFull}`}>
-                <label htmlFor="srFile">
-                  Upload institute or funder format (optional)
-                </label>
-                <input
-                  id="srFile"
-                  name="formatfile"
-                  type="file"
-                  accept=".pdf,.doc,.docx,.rtf,.txt"
-                />
-                <p className={styles.mutedLine}>
-                  If you upload your template, we can align the sample structure
-                  more closely to your format.
-                </p>
-              </div>
-              <div className={`${styles.field} ${styles.fieldFull}`}>
-                <button
-                  className={`${styles.btn} ${styles.btnPrimary} ${styles.sampleSubmitBtn}`}
-                  type="submit"
-                >
-                  Send me a sample preview
-                </button>
-                <p className={styles.mutedLine}>
-                  By submitting, you agree we may contact you to share the
-                  preview.
-                </p>
-              </div>
-            </form>
+            <SampleRequestWhatsAppForm />
           </div>
         </div>
       </section>
@@ -1030,16 +960,12 @@ export default function ResearchPlanningPage() {
               <h3>
                 Ready to turn your topic into a clear, defendable proposal?
               </h3>
-              <p className={styles.finalCtaNoWrap}>
-                Get research planning support that connects{" "}
-                <strong>
-                  gap -&gt; objectives -&gt; research questions -&gt; methodology
-                  -&gt; timeline
-                </strong>{" "}
-                so your proposal is structured,
-                <br />
-                feasible, and supervisor-ready.
-              </p>
+                <p className={styles.finalCtaNoWrap}>
+                  Get research planning support that connects{" "}
+                  <strong>gap -&gt; objectives -&gt; research questions -&gt; methodology -&gt; timeline</strong>{" "}
+                  so your proposal is structured
+                  <br />and supervisor-ready.
+                </p>
             </div>
             <div className={styles.finalButtons}>
               <Link
@@ -1054,6 +980,49 @@ export default function ResearchPlanningPage() {
                 Upload Your Brief
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <h2 className={styles.sectionTitle}>
+            Upload a PDF
+          </h2>
+          <p className={styles.sectionSub}>
+            Upload a PDF to share with us.
+          </p>
+          <div className={styles.cardGrid}>
+            <article className={styles.card}>
+              <h3>Essentials</h3>
+              <ul>
+                <li>Topic or area plus 5-10 keywords</li>
+                <li>Deadline and expected proposal length (if known)</li>
+                <li>University or funder template (if available)</li>
+              </ul>
+            </article>
+            <article className={styles.card}>
+              <h3>Helpful extras</h3>
+              <ul>
+                <li>Supervisor comments (if any)</li>
+                <li>5-15 key references (optional)</li>
+                <li>Constraints: tools, access, setting, or time</li>
+              </ul>
+            </article>
+            <article className={styles.card}>
+              <h3>Start now</h3>
+              <p>
+                Upload your brief and we will recommend the best path
+                (Starter/Core/Premium) with a transparent quote.
+              </p>
+              <Link
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.btn} ${styles.btnPrimary} ${styles.shareBriefBtn}`}
+              >
+                Upload Brief
+              </Link>
+            </article>
           </div>
         </div>
       </section>

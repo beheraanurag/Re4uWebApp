@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { API_BASE } from "@/lib/api";
 
 const COUNTRY_CODES = [
@@ -59,6 +60,7 @@ export function BookNowModal({
   const [status, setStatus] = useState<string | null>(null);
   const [errors, setErrors] = useState<string[]>([]);
   const [services, setServices] = useState<string[]>([]);
+  const [mounted, setMounted] = useState(false);
   const [form, setForm] = useState({
     fullName: "",
     email: "",
@@ -76,6 +78,10 @@ export function BookNowModal({
         : "/api/book-now",
     [],
   );
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   function toggleService(value: string) {
     setServices((current) =>
@@ -232,35 +238,39 @@ export function BookNowModal({
         {triggerLabel}
       </button>
 
-      {isOpen ? (
-        <div
-          className="fixed inset-0 z-[9999] flex items-end justify-center bg-[rgba(15,23,42,.56)] p-2 sm:items-center sm:p-4"
-          onClick={(event) => {
-            if (event.target === event.currentTarget) closeModal();
-          }}
-        >
-          <div className="max-h-[96dvh] w-full max-w-[860px] overflow-auto rounded-2xl border border-[#A8C7E6]/60 bg-white p-4 shadow-[0_18px_45px_rgba(15,23,42,.20)] sm:max-h-[92vh] sm:rounded-3xl sm:p-6 md:p-8">
-            <div className="mb-4 sm:mb-6">
-              <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-[#A8C7E6]/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#1F3A5F]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#3F7F72]" />
-                RESEARCHEDIT4U ENQUIRY
-              </div>
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <h3 className="m-0 text-xl font-semibold text-[#0f172a] sm:text-2xl">Share your manuscript with our team</h3>
-                  <p className="mt-2 text-sm text-[#64748b]">
-                    Tell us what you are working on. We will reply with a tailored plan, timeline, and quote.
-                  </p>
+      {isOpen && mounted
+        ? createPortal(
+            <div
+              className="fixed inset-0 z-[9999] flex items-end justify-center bg-[rgba(15,23,42,.56)] p-2 sm:items-center sm:p-4"
+              onClick={(event) => {
+                if (event.target === event.currentTarget) closeModal();
+              }}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Upload draft for quote"
+            >
+              <div className="max-h-[96dvh] w-full max-w-[860px] overflow-auto rounded-2xl border border-[#A8C7E6]/60 bg-white p-4 shadow-[0_18px_45px_rgba(15,23,42,.20)] sm:max-h-[92vh] sm:rounded-3xl sm:p-6 md:p-8">
+                <div className="mb-4 sm:mb-6">
+                  <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-[#A8C7E6]/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#1F3A5F]">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#3F7F72]" />
+                    RESEARCHEDIT4U ENQUIRY
+                  </div>
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <h3 className="m-0 text-xl font-semibold text-[#0f172a] sm:text-2xl">Share your manuscript with our team</h3>
+                      <p className="mt-2 text-sm text-[#64748b]">
+                        Tell us what you are working on. We will reply with a tailored plan, timeline, and quote.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={closeModal}
+                      className="w-full rounded-xl border border-[#A8C7E6]/60 bg-white px-3 py-2 text-sm font-semibold text-[#1F3A5F] sm:w-auto"
+                    >
+                      Close
+                    </button>
+                  </div>
                 </div>
-                <button
-                  type="button"
-                  onClick={closeModal}
-                  className="w-full rounded-xl border border-[#A8C7E6]/60 bg-white px-3 py-2 text-sm font-semibold text-[#1F3A5F] sm:w-auto"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
 
             <form onSubmit={onSubmit}>
               <div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2">
@@ -427,9 +437,11 @@ export function BookNowModal({
                 </button>
               </div>
             </form>
-          </div>
-        </div>
-      ) : null}
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </>
   );
 }

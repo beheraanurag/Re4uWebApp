@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import styles from "./AboutInvitationSection.module.css";
 
 type EntryKey = "learn" | "improve" | "collab";
@@ -64,8 +64,6 @@ export function AboutInvitationSection() {
     improve: false,
     collab: false,
   });
-
-  const openCount = useMemo(() => Object.values(openByKey).filter(Boolean).length, [openByKey]);
 
   return (
     <section className={styles.section} aria-label="Invitation">
@@ -165,10 +163,6 @@ export function AboutInvitationSection() {
             })}
           </div>
 
-          <div className={styles.footer}>
-            Mobile: cards stack vertically for easy reading. Desktop: 3-column layout. Tap to expand/collapse.{" "}
-            {openCount > 0 ? `${openCount} open.` : "All collapsed."}
-          </div>
         </div>
       </div>
     </section>

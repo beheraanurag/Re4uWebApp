@@ -101,10 +101,6 @@ export function AboutPromiseSection() {
   }, []);
 
   useEffect(() => {
-    if (!isDesktop) setFocusIndex(null);
-  }, [isDesktop]);
-
-  useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
 
@@ -126,19 +122,17 @@ export function AboutPromiseSection() {
   const goto = (index: number) => {
     const el = trackRef.current;
     if (!el) return;
-    const target = el.querySelector<HTMLElement>(`[data-deck-card][data-index="${index}"]`);
+    const next = Math.max(0, Math.min(STEPS.length - 1, index));
+    const target = el.querySelector<HTMLElement>(`[data-deck-card][data-index="${next}"]`);
     target?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
-    setActiveIndex(index);
+    setActiveIndex(next);
   };
 
   return (
     <section className={styles.section} aria-label="Our promise">
       <header className={styles.pageHead}>
         <h2 className={styles.title}>Our promise</h2>
-        <p className={styles.sub}>
-          A clean, transparent process with five checkpoints. Each card is a checkpoint; outcomes remain
-          explicit.
-        </p>
+        <p className={styles.sub}>Five clear checkpoints, with outcomes kept explicit at every step.</p>
       </header>
 
       <div className={styles.shell} aria-label="Promise deck">
@@ -149,17 +143,26 @@ export function AboutPromiseSection() {
         </div>
 
         <div className={styles.content}>
-          <div className={styles.introCard}>
-            <div className={styles.introText}>
-              A clean, transparent process with five checkpoints. Each card is a checkpoint; outcomes remain
-              explicit.
-            </div>
-          </div>
-
           <div className={styles.deckShell}>
             <div className={styles.deckHint}>Swipe ↔</div>
 
-            <div ref={trackRef} className={styles.deckTrack} aria-label="Promise steps deck">
+            <div
+              ref={trackRef}
+              className={styles.deckTrack}
+              aria-label="Promise steps deck"
+              tabIndex={0}
+              role="group"
+              onKeyDown={(event) => {
+                if (event.key === "ArrowRight") {
+                  event.preventDefault();
+                  goto(activeIndex + 1);
+                }
+                if (event.key === "ArrowLeft") {
+                  event.preventDefault();
+                  goto(activeIndex - 1);
+                }
+              }}
+            >
               {STEPS.map((step, idx) => (
                 <div
                   key={step.title}
@@ -217,32 +220,39 @@ export function AboutPromiseSection() {
               ))}
             </div>
 
-            <div className={styles.dots} aria-label="Deck progress dots">
-              {STEPS.map((step, idx) => (
-                <button
-                  key={step.title}
-                  type="button"
-                  className={`${styles.dotBtn} ${idx === activeIndex ? styles.dotBtnActive : ""}`}
-                  aria-label={`Go to step ${step.n}`}
-                  onClick={() => goto(idx)}
-                />
-              ))}
-            </div>
-          </div>
+            <div className={styles.navRow} aria-label="Deck navigation">
+              <button
+                type="button"
+                className={styles.navBtn}
+                aria-label="Previous step"
+                disabled={activeIndex === 0}
+                onClick={() => goto(activeIndex - 1)}
+              >
+                <span className={styles.arrow} aria-hidden="true" />
+              </button>
 
-          <div className={styles.ethicsBar}>
-            <div>
-              <b>Ethics &amp; scope</b>
-              <span>
-                No guarantees. No shortcuts. Human review with clear ownership — and honest guidance about what
-                is possible.
-              </span>
-            </div>
-            <div className={styles.ethicsTag}>Sequential · clean · transparent</div>
-          </div>
+              <div className={styles.dots} aria-label="Deck progress dots">
+                {STEPS.map((step, idx) => (
+                  <button
+                    key={step.title}
+                    type="button"
+                    className={`${styles.dotBtn} ${idx === activeIndex ? styles.dotBtnActive : ""}`}
+                    aria-label={`Go to step ${step.n}`}
+                    onClick={() => goto(idx)}
+                  />
+                ))}
+              </div>
 
-          <div className={styles.footer}>
-            Tip: On desktop, click a card to “focus” it. On mobile, swipe between cards.
+              <button
+                type="button"
+                className={styles.navBtn}
+                aria-label="Next step"
+                disabled={activeIndex === STEPS.length - 1}
+                onClick={() => goto(activeIndex + 1)}
+              >
+                <span className={`${styles.arrow} ${styles.arrowRight}`} aria-hidden="true" />
+              </button>
+            </div>
           </div>
         </div>
       </div>

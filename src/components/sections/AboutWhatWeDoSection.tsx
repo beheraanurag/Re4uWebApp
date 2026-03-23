@@ -126,7 +126,6 @@ export function AboutWhatWeDoSection() {
             build confidence that carries forward.
           </p>
         </div>
-        <div className={styles.badge}>Ring sequence - outcome trail</div>
       </div>
 
       <div className={styles.card}>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import styles from "./AboutHowWeWorkSection.module.css";
 
 type WorkStep = {
@@ -20,7 +20,6 @@ const STEPS: WorkStep[] = [
     bullets: [
       "Clarify what the paper is trying to prove and for whom.",
       "Confirm journal-style expectations (section logic).",
-      "Mark non-negotiables: claims, scope, limitations.",
     ],
     ethics: "We don’t change your research claims — we help you express what you already show.",
     chips: ["Scope clarified", "Target reader defined"],
@@ -78,8 +77,6 @@ const STEPS: WorkStep[] = [
 export function AboutHowWeWorkSection() {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
 
-  const openCount = useMemo(() => (activeIndex === null ? 0 : 1), [activeIndex]);
-
   return (
     <section className={styles.section} aria-label="How we work">
       <header className={styles.pageHead}>
@@ -91,13 +88,6 @@ export function AboutHowWeWorkSection() {
       </header>
 
       <div className={styles.shell} aria-label="How we work accordion">
-        <div className={styles.sectionHeader}>
-          <div className={styles.kicker}>
-            <span className={styles.dot} aria-hidden="true" /> Sequential · mobile-friendly
-          </div>
-          <div className={styles.hint}>Tap a step to expand · works on mobile + desktop</div>
-        </div>
-
         <div className={styles.content}>
           <div className={styles.accWrap}>
             {STEPS.map((step, index) => {
@@ -157,13 +147,6 @@ export function AboutHowWeWorkSection() {
                 </div>
               );
             })}
-          </div>
-
-          <div className={styles.footer}>
-            <b>Concept 2 — Accordion journey</b>
-            <br />
-            Scroll-native, fast to read, no layout overflow. One step open at a time.{" "}
-            {openCount > 0 ? `${openCount} open.` : "All collapsed."}
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import styles from "./AboutPrinciplesSection.module.css";
 
 type PrincipleKey = "clarity" | "integrity" | "humans" | "equity";
@@ -75,15 +75,13 @@ export function AboutPrinciplesSection() {
     equity: false,
   });
 
-  const openCount = useMemo(() => Object.values(openKeys).filter(Boolean).length, [openKeys]);
-
   return (
     <section className={styles.section} aria-label="Our principles">
       <header className={styles.pageHead}>
         <h2 className={styles.title}>Our principles</h2>
         <p className={styles.sub}>
-          Click a principle to read how we operate — not as slogans, but as rules. On desktop: 2×2 grid. On
-          mobile: single-column stack.
+          Click a principle to read how we operate — not as slogans, but as rules. These keep quality consistent
+          across every service and every client.
         </p>
       </header>
 
@@ -95,14 +93,6 @@ export function AboutPrinciplesSection() {
 
           <div className={styles.leadCard}>
             <h3>What we will not compromise</h3>
-            <p>
-              Click a principle to read how we operate — not as slogans, but as rules. These keep quality
-              consistent across every service and every client.
-            </p>
-            <div className={styles.leadCardSmall}>
-              One more non‑negotiable: we respect the research process. We support your work — we do not
-              replace it.
-            </div>
           </div>
         </div>
 
@@ -158,15 +148,8 @@ export function AboutPrinciplesSection() {
             })}
           </div>
 
-          <div className={styles.footer}>
-            <b>Concept 1 — Cards + accordion</b>
-            <br />
-            Bullet points improve scan-ability under “Read principle.” Large tap targets, no overlays, fully
-            responsive. {openCount > 0 ? `${openCount} open.` : "All collapsed."}
-          </div>
         </div>
       </div>
     </section>
   );
 }
-

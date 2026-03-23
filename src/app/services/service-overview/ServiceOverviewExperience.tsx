@@ -67,43 +67,42 @@ const DEFAULT_SAMPLE_PDF =
 
 const SAMPLE_DOC_BY_CATEGORY_MODULE: Record<string, string> = {
   "planning:Topic Selection":
-    "/sample-doc/RESEARCH PLANNING SAMPLE_RE4U SOLUTIONS.pdf",
+    "/sample-doc/RESEARCH TOPIC SELECTION SAMPLE.pdf",
   "planning:Proposal Support":
-    "/sample-doc/RESEARCH PLANNING SAMPLE_RE4U SOLUTIONS.pdf",
+    "/sample-doc/SERVICES_RESEARCH PROPOSAL SUPPORT_1.pdf",
   "planning:Research Design":
-    "/sample-doc/RESEARCH PLANNING SAMPLE_RE4U SOLUTIONS.pdf",
+    "/sample-doc/RESEARCH DESIGN SAMPLE.pdf",
   "planning:Ethics and Feasibility":
-    "/sample-doc/CONSULTATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+    "/sample-doc/ETHICS AND FEASIBILITY.pdf",
   "data:Statistical Analysis":
-    "/sample-doc/DATA ANALYSIS SAMPLE_RE4U SOLUTIONS.pdf",
-  "data:Data Cleaning": "/sample-doc/DATA ANALYSIS SAMPLE_RE4U SOLUTIONS.pdf",
-  "data:ML Modelling": "/sample-doc/DATA ANALYSIS SAMPLE_RE4U SOLUTIONS.pdf",
-  "data:Interpretation Help":
-    "/sample-doc/DATA ANALYSIS SAMPLE_RE4U SOLUTIONS.pdf",
+    "/sample-doc/Statistical_Analysis_Sample_RE4U.xlsx",
+  "data:Data Cleaning": "/sample-doc/RE4U_Data_Cleaning_Sample.xlsx",
+  "data:ML Modelling": "/sample-doc/SERVICES OVERVIEW_ML MODELLING.pdf",
+  "data:Interpretation Help": "/sample-doc/SERVICES OVERVIEW_DATA INTERPRETATION SUPPORT.pdf",
   "editorial:Substantive Editing":
-    "/sample-doc/EDITING SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+    "/sample-doc/SERVICES OVERVIEW_SUBSTANTIVE EDITING.pdf",
   "editorial:Language Polishing":
-    "/sample-doc/SEE EDITING SAMPLE_RE4U SOLUTIONS.pdf",
+    "/sample-doc/SERVICES OVERVIEW_LANGUAGE POLISHING.pdf",
   "editorial:Formatting Help":
-    "/sample-doc/EDITING SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+    "/sample-doc/SERVICES OVERVIEW_FORMATTING SAMPLE.pdf",
   "editorial:AI and Plagiarism Fix":
-    "/sample-doc/AI_PLAGIARISM REWRITE SAFE_RE4U SOLUTIONS.pdf",
+    "/sample-doc/AI_PLAGIARISM REMOVAL SAMPLE.pdf",
   "publication:Pre-Submission Review":
-    "/sample-doc/REJECTION RISK CHECK_RE4U SOLUTIONS.pdf",
+    "/sample-doc/SERVICES OVERVIEW_PRE-SUBMISSION PEER REVIEW SAMPLE.pdf",
   "publication:Manuscript Editing":
-    "/sample-doc/EDITING SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+    "/sample-doc/SERVICES OVERVIEW_MANUSCRIPTEDTING_VERSION 1.0.pdf",
   "publication:Journal Selection":
-    "/sample-doc/JOURNAL MATCH PRO_RE4U SOLUTIONS.pdf",
+    "/sample-doc/SERVICES OVERVIEW_JOURNAL SELECTION _FINAL.pdf",
   "publication:Submission Guidance":
-    "/sample-doc/PUBLICATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+    "/sample-doc/SERVICES OVERVIEW_SUBMISSION GUIDANCE.pdf",
   "presentations:PhD Presentations":
-    "/sample-doc/PUBLICATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+    "/sample-doc/SERVICES OVERVIEW_PHD PRESENTATION VERSION 1.0.pdf",
   "presentations:Conference Posters":
-    "/sample-doc/PUBLICATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+    "/sample-doc/SERVICES OVERVIEW_CONFERENCE POSTERS.pdf",
   "presentations:Oral Slides":
-    "/sample-doc/PUBLICATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+    "/sample-doc/SERVICES OVERVIEW_ORAL SLIDES.pdf",
   "presentations:Visual Enhancements":
-    "/sample-doc/PUBLICATION SUPPORT SAMPLE_RE4U SOLUTIONS.pdf",
+    "/sample-doc/SERVICES OVERVIEW_VISUAL ENHANCEMENT SAMPLE.pdf",
 };
 
 const SAMPLE_DOC_BY_ASSET_ID: Record<string, string> = {
@@ -140,6 +139,7 @@ function getSampleFileLabel(filePath: string): string {
   const filename = filePath.split("/").pop() ?? "Sample PDF";
   return filename
     .replace(/_RE4U SOLUTIONS\.pdf$/i, "")
+    .replace(/\.(pdf|xlsx)$/i, "")
     .replace(/_/g, " ")
     .trim();
 }
@@ -534,6 +534,19 @@ export default function ServiceOverviewExperience({
     }
   }
 
+  const [uploadedPDF, setUploadedPDF] = useState<string | null>(null);
+
+  const handlePDFUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setUploadedPDF(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className={styles.page}>
       <section className={styles.heroSection}>
@@ -913,8 +926,7 @@ export default function ServiceOverviewExperience({
             >
               {activeCategoryItems.map((item) => {
                 const meta = `Category: ${categoryLabels[activeCategory]} | Starts at: ${item.price}`;
-                const samplePdfPath = getCategorySamplePdfPath(activeCategory, item.title);
-                const samplePdfLabel = getSampleFileLabel(samplePdfPath);
+                const sampleButtonLabel = item.title;
 
                 return (
                   <article key={`${activeCategory}-${item.title}`} className={styles.categoryCard}>
@@ -960,11 +972,13 @@ export default function ServiceOverviewExperience({
                         </button>
                         <button
                           type="button"
-                          className={`${styles.btn} ${styles.btnGhost}`}
+                          className={`${styles.btn} ${styles.btnGhost} ${styles.sampleBtn}`}
                           onClick={() => onDownloadCategorySample(activeCategory, item.title)}
-                          aria-label={`Open sample PDF: ${samplePdfLabel}`}
+                          aria-label={`Open sample: ${sampleButtonLabel}`}
+                          title={sampleButtonLabel}
                         >
-                          Open {samplePdfLabel}
+                          <span className={styles.sampleBtnTop}>Open sample</span>
+                          <span className={styles.sampleBtnSub}>{sampleButtonLabel}</span>
                         </button>
                       </div>
                     </div>
@@ -993,7 +1007,6 @@ export default function ServiceOverviewExperience({
                 </span>
               </div>
               <p className={styles.categoryFootText}>
-                Wire Book now to your quote form and prefill module plus category.
               </p>
             </div>
           </div>
@@ -1209,7 +1222,7 @@ export default function ServiceOverviewExperience({
 
       <section className={`${styles.section} ${styles.trustSection}`} id="overview-trust">
         <div className={styles.container}>
-          <div className={`${styles.sectionKicker} ${styles.trustSectionKicker}`}>WHY RESEARCHERS TRUST US</div>
+          <div className={styles.sectionKicker}>WHY RESEARCHERS TRUST US</div>
           <h2 className={`${styles.sectionTitle} ${styles.trustSectionTitle} ${fontClassName}`}>
             Trusted because we reduce confusion, not because we sell packages
           </h2>
