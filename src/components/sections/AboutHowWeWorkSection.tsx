@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import styles from "./AboutHowWeWorkSection.module.css";
 
 type WorkStep = {
@@ -76,6 +77,7 @@ const STEPS: WorkStep[] = [
 
 export function AboutHowWeWorkSection() {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  const [heroSrc, setHeroSrc] = useState("/presentation-hero.png");
 
   return (
     <section className={styles.section} aria-label="How we work">
@@ -86,6 +88,17 @@ export function AboutHowWeWorkSection() {
           without crossing ethical lines.
         </p>
       </header>
+
+      <div className={styles.hero} aria-label="Publication roadmap">
+        <Image
+          src={heroSrc}
+          alt="Publication roadmap"
+          fill
+          className={styles.heroImg}
+          sizes="(min-width: 940px) 1072px, 100vw"
+          onError={() => setHeroSrc("/presentation-hero.svg")}
+        />
+      </div>
 
       <div className={styles.shell} aria-label="How we work accordion">
         <div className={styles.content}>

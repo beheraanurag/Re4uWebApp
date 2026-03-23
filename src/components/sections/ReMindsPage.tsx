@@ -478,7 +478,7 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
                 </p>
                 <div className="mt-3 rounded-xl border border-[rgba(42,46,53,.10)] bg-[rgba(233,227,213,.32)] p-3">
                   <Image
-                    src="/presentation-hero.svg"
+                    src="/presentation-hero.png"
                     alt="Publication roadmap"
                     width={1200}
                     height={640}
@@ -539,6 +539,17 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
                   >
                     Get Free Check
                   </button>
+
+                  <div className="mt-4 rounded-xl border border-[rgba(42,46,53,.10)] bg-white/70 p-3 shadow-[0_10px_20px_rgba(42,46,53,.06)]">
+                    <Image
+                      src="/free-check-benefits.png"
+                      alt="Quick review, practical guidance, and confidential support"
+                      width={1200}
+                      height={520}
+                      className="h-auto w-full"
+                    />
+                  </div>
+
                   {checkMsg ? (
                     <div className="mt-2 text-xs font-extrabold text-[rgba(42,46,53,.78)]">
                       {checkMsg}

@@ -4,7 +4,6 @@ import Link from "next/link";
 import styles from "./page.module.css";
 import { WHATSAPP_URL } from "@/lib/contact";
 import { SampleRequestWhatsAppForm } from "./SampleRequestWhatsAppForm";
-import { useState } from "react";
 
 const heroBullets = [
   "Research proposal outline aligned to your university or funder format",
@@ -301,19 +300,6 @@ export default function ResearchPlanningPage() {
     styles.workPanel5,
     styles.workPanel6,
   ];
-
-  const [uploadedPDF, setUploadedPDF] = useState<string | null>(null);
-
-  const handlePDFUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setUploadedPDF(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   return (
     <>

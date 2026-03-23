@@ -45,6 +45,22 @@
   max-width: 92ch;
 }
 
+.hero {
+  margin-top: 16px;
+  position: relative;
+  height: clamp(240px, 42vw, 520px);
+  border-radius: var(--w-radius);
+  overflow: hidden;
+  border: 1px solid rgba(165, 191, 218, 0.5);
+  background: rgba(15, 23, 48, 0.08);
+  box-shadow: 0 16px 34px rgba(17, 24, 39, 0.12);
+}
+
+.heroImg {
+  display: block;
+  object-fit: cover;
+}
+
 .shell {
   margin-top: 16px;
   border: 1px solid rgba(165, 191, 218, 0.65);
