@@ -173,35 +173,35 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
         <div className="flex flex-wrap gap-1">
           {/* Text Formatting */}
           <div className="flex gap-1">
-            <Button
+            <Button type="button"
               variant={editor.isActive('bold') ? 'default' : 'ghost'}
               size="sm"
               onClick={() => editor.chain().focus().toggleBold().run()}
             >
               <Bold className="h-4 w-4" />
             </Button>
-            <Button
+            <Button type="button"
               variant={editor.isActive('italic') ? 'default' : 'ghost'}
               size="sm"
               onClick={() => editor.chain().focus().toggleItalic().run()}
             >
               <Italic className="h-4 w-4" />
             </Button>
-            <Button
+            <Button type="button"
               variant={editor.isActive('underline') ? 'default' : 'ghost'}
               size="sm"
               onClick={() => editor.chain().focus().toggleUnderline().run()}
             >
               <UnderlineIcon className="h-4 w-4" />
             </Button>
-            <Button
+            <Button type="button"
               variant={editor.isActive('strike') ? 'default' : 'ghost'}
               size="sm"
               onClick={() => editor.chain().focus().toggleStrike().run()}
             >
               <Strikethrough className="h-4 w-4" />
             </Button>
-            <Button
+            <Button type="button"
               variant={editor.isActive('code') ? 'default' : 'ghost'}
               size="sm"
               onClick={() => editor.chain().focus().toggleCode().run()}
@@ -214,21 +214,21 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
 
           {/* Headings */}
           <div className="flex gap-1">
-            <Button
+            <Button type="button"
               variant={editor.isActive('heading', { level: 1 }) ? 'default' : 'ghost'}
               size="sm"
               onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
             >
               <Heading1 className="h-4 w-4" />
             </Button>
-            <Button
+            <Button type="button"
               variant={editor.isActive('heading', { level: 2 }) ? 'default' : 'ghost'}
               size="sm"
               onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
             >
               <Heading2 className="h-4 w-4" />
             </Button>
-            <Button
+            <Button type="button"
               variant={editor.isActive('heading', { level: 3 }) ? 'default' : 'ghost'}
               size="sm"
               onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
@@ -241,21 +241,21 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
 
           {/* Lists */}
           <div className="flex gap-1">
-            <Button
+            <Button type="button"
               variant={editor.isActive('bulletList') ? 'default' : 'ghost'}
               size="sm"
               onClick={() => editor.chain().focus().toggleBulletList().run()}
             >
               <List className="h-4 w-4" />
             </Button>
-            <Button
+            <Button type="button"
               variant={editor.isActive('orderedList') ? 'default' : 'ghost'}
               size="sm"
               onClick={() => editor.chain().focus().toggleOrderedList().run()}
             >
               <ListOrdered className="h-4 w-4" />
             </Button>
-            <Button
+            <Button type="button"
               variant={editor.isActive('blockquote') ? 'default' : 'ghost'}
               size="sm"
               onClick={() => editor.chain().focus().toggleBlockquote().run()}
@@ -268,28 +268,28 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
 
           {/* Alignment */}
           <div className="flex gap-1">
-            <Button
+            <Button type="button"
               variant={editor.isActive({ textAlign: 'left' }) ? 'default' : 'ghost'}
               size="sm"
               onClick={() => editor.chain().focus().setTextAlign('left').run()}
             >
               <AlignLeft className="h-4 w-4" />
             </Button>
-            <Button
+            <Button type="button"
               variant={editor.isActive({ textAlign: 'center' }) ? 'default' : 'ghost'}
               size="sm"
               onClick={() => editor.chain().focus().setTextAlign('center').run()}
             >
               <AlignCenter className="h-4 w-4" />
             </Button>
-            <Button
+            <Button type="button"
               variant={editor.isActive({ textAlign: 'right' }) ? 'default' : 'ghost'}
               size="sm"
               onClick={() => editor.chain().focus().setTextAlign('right').run()}
             >
               <AlignRight className="h-4 w-4" />
             </Button>
-            <Button
+            <Button type="button"
               variant={editor.isActive({ textAlign: 'justify' }) ? 'default' : 'ghost'}
               size="sm"
               onClick={() => editor.chain().focus().setTextAlign('justify').run()}
@@ -302,14 +302,14 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
 
           {/* Insert Elements */}
           <div className="flex gap-1">
-            <Button
+            <Button type="button"
               variant="ghost"
               size="sm"
               onClick={addTable}
             >
               <TableIcon className="h-4 w-4" />
             </Button>
-            <Button
+            <Button type="button"
               variant="ghost"
               size="sm"
               onClick={() => setShowImageInput(!showImageInput)}
@@ -317,7 +317,7 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
             >
               <ImageIcon className="h-4 w-4" />
             </Button>
-            <Button
+            <Button type="button"
               variant="ghost"
               size="sm"
               onClick={triggerFileUpload}
@@ -327,7 +327,7 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
               <ImageIcon className="h-4 w-4" />
               {isUploading && <span className="ml-1 text-xs">...</span>}
             </Button>
-            <Button
+            <Button type="button"
               variant="ghost"
               size="sm"
               onClick={() => setShowLinkInput(!showLinkInput)}
@@ -335,7 +335,7 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
               <LinkIcon className="h-4 w-4" />
             </Button>
             {editor.isActive('link') && (
-              <Button
+              <Button type="button"
                 variant="ghost"
                 size="sm"
                 onClick={() => editor.chain().focus().unsetLink().run()}
@@ -343,7 +343,7 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
                 <Unlink className="h-4 w-4" />
               </Button>
             )}
-            <Button
+            <Button type="button"
               variant={editor.isActive('codeBlock') ? 'default' : 'ghost'}
               size="sm"
               onClick={() => editor.chain().focus().toggleCodeBlock().run()}
@@ -356,7 +356,7 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
 
           {/* Styling */}
           <div className="flex gap-1">
-            <Button
+            <Button type="button"
               variant="ghost"
               size="sm"
               onClick={() => editor.chain().focus().setColor('#3F7F72').run()}
@@ -364,7 +364,7 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
             >
               <Palette className="h-4 w-4 text-[#3F7F72]" />
             </Button>
-            <Button
+            <Button type="button"
               variant="ghost"
               size="sm"
               onClick={() => editor.chain().focus().setColor('#3b82f6').run()}
@@ -378,7 +378,7 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
 
           {/* History */}
           <div className="flex gap-1">
-            <Button
+            <Button type="button"
               variant="ghost"
               size="sm"
               onClick={() => editor.chain().focus().undo().run()}
@@ -386,7 +386,7 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
             >
               <Undo className="h-4 w-4" />
             </Button>
-            <Button
+            <Button type="button"
               variant="ghost"
               size="sm"
               onClick={() => editor.chain().focus().redo().run()}
@@ -410,8 +410,8 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
                 onKeyPress={(e) => e.key === 'Enter' && setLink()}
               />
             </div>
-            <Button onClick={setLink} size="sm">Add Link</Button>
-            <Button onClick={() => setShowLinkInput(false)} variant="outline" size="sm">Cancel</Button>
+            <Button type="button" onClick={setLink} size="sm">Add Link</Button>
+            <Button type="button" onClick={() => setShowLinkInput(false)} variant="outline" size="sm">Cancel</Button>
           </div>
         )}
 
@@ -428,8 +428,8 @@ export function TiptapEditor({ content, onChange, placeholder }: TiptapEditorPro
                 onKeyPress={(e) => e.key === 'Enter' && addImage()}
               />
             </div>
-            <Button onClick={addImage} size="sm">Add Image</Button>
-            <Button onClick={() => setShowImageInput(false)} variant="outline" size="sm">Cancel</Button>
+            <Button type="button" onClick={addImage} size="sm">Add Image</Button>
+            <Button type="button" onClick={() => setShowImageInput(false)} variant="outline" size="sm">Cancel</Button>
           </div>
         )}
       </div>
