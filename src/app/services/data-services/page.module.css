@@ -697,6 +697,12 @@
   height: 100%;
 }
 
+.resourceCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .packageTop,
 .sampleTop {
   display: flex;
@@ -834,6 +840,11 @@
 .resourceCard p,
 .resourceCard .btn {
   margin-top: 8px;
+}
+
+.resourceCard .btn {
+  margin-top: auto;
+  align-self: flex-start;
 }
 
 .faqList {

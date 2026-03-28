@@ -123,6 +123,14 @@ function formatTurnaround(value: string) {
     .trim();
 }
 
+function getTodayLocalISODate() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 export default function PresentationsExperience({
   fontClassName,
 }: PresentationsExperienceProps) {
@@ -139,7 +147,7 @@ export default function PresentationsExperience({
   >("All Samples");
   const [activeSample, setActiveSample] = useState<SampleItem | null>(null);
   const [need, setNeed] = useState<PresentationNeed>("defence");
-  const [deadline, setDeadline] = useState("");
+  const [deadline, setDeadline] = useState(getTodayLocalISODate());
   const [notes, setNotes] = useState("");
   const [fileName, setFileName] = useState("");
   const [faqFilter, setFaqFilter] = useState<FaqFilter>("all");
@@ -587,10 +595,6 @@ export default function PresentationsExperience({
                 <h2 className={`${styles.sectionTitle} ${fontClassName}`}>
                   Why researchers trust RE4U
                 </h2>
-                <p className={styles.sectionSub}>
-                  Front: title + 3 highlights + CTA. Flip: what
-                  you get.
-                </p>
               </div>
               <span className={styles.trustHeaderBadge}>6-grid flip cards</span>
             </div>
@@ -624,14 +628,6 @@ export default function PresentationsExperience({
                           ))}
                         </span>
 
-                        <span className={styles.trustScoreRow}>
-                          <span className={styles.trustStars} aria-hidden="true">
-                            {"\u2605\u2605\u2605\u2605\u2605"}
-                          </span>
-                          <span className={styles.trustScore}>{card.rating.toFixed(1)}</span>
-                          <span className={styles.trustCta}>See details</span>
-                        </span>
-
                         <span className={styles.trustHint}>
                           Tap to flip and see exactly what you get.
                         </span>
@@ -655,11 +651,6 @@ export default function PresentationsExperience({
                 );
               })}
             </div>
-
-            <p className={styles.trustUpdate}>
-              Update <span>REVIEW DATA</span> with real review counts before
-              publishing.
-            </p>
           </div>
         </div>
       </section>
@@ -734,9 +725,6 @@ export default function PresentationsExperience({
                   defence, or conference.
                 </p>
               </div>
-              <span className={styles.planPricingBadge}>
-                US-ready pricing - 2 revision rounds
-              </span>
             </div>
 
             <div className={styles.planGrid}>
@@ -958,7 +946,7 @@ export default function PresentationsExperience({
                 />
               </label>
 
-              <label className={styles.formField}>
+              <label className={`${styles.formField} ${styles.formFieldWide}`}>
                 <span>Notes</span>
                 <textarea
                   className={styles.textarea}
@@ -986,13 +974,6 @@ export default function PresentationsExperience({
                 onClick={() => fileInputRef.current?.click()}
               >
                 Choose file
-              </button>
-              <button
-                type="button"
-                className={styles.subtleBtn}
-                onClick={() => setFileName("Will attach later")}
-              >
-                Attach later
               </button>
               <span className={styles.recommendationMeta}>
                 {fileName || "PPTX / PDF / DOCX (optional for initial quote)"}
@@ -1056,7 +1037,7 @@ export default function PresentationsExperience({
 
       <section className={styles.section} id="faqs">
         <div className={styles.container}>
-          <h2 className={`${styles.sectionTitle} ${fontClassName}`}>FAQs</h2>
+          <h2 className={`${styles.sectionTitle} ${fontClassName}`}>Frequently Asked Questions</h2>
           <p className={styles.sectionSub}>
             Fast answers for thesis defence presentations, conference decks, and
             research posters.

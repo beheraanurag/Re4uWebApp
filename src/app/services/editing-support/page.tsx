@@ -26,8 +26,6 @@ export const metadata: Metadata = {
 };
 
 export default function EditingSupportPage() {
-  const titleClassName = styles.dsSectionTitle;
-
   return (
     <main className={styles.page}>
         <section className={styles.hero}>
@@ -111,13 +109,13 @@ export default function EditingSupportPage() {
           </div>
         </section>
 
-        <EditingDiagnosticPreview titleClassName={titleClassName} />
+        <EditingDiagnosticPreview />
 
-        <EditingStagesPreview titleClassName={titleClassName} />
+        <EditingStagesPreview />
 
-        <EditingPlansPricingPreview titleClassName={titleClassName} />
+        <EditingPlansPricingPreview />
 
-        <EditingHowItWorks titleClassName={titleClassName} />
+        <EditingHowItWorks />
 
         <EditingSelfCheck />
 
@@ -141,7 +139,7 @@ export default function EditingSupportPage() {
                 <Link href="/contact" className={`${styles.btn} ${styles.btnPrimary}`}>
                   Start with a Quote
                 </Link>
-                <Link href="/services" className={styles.btn}>
+                <Link href="/" className={styles.btn}>
                   Explore All Services
                 </Link>
               </div>

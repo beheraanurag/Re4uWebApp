@@ -45,13 +45,6 @@ type ModuleLeadForm = {
   query: string;
 };
 
-type SampleLeadForm = {
-  name: string;
-  email: string;
-  region: string;
-  note: string;
-};
-
 type TestimonialLeadForm = {
   name: string;
   email: string;
@@ -168,6 +161,10 @@ function buildContactHref(params: {
   return `/contact?${query.toString()}`;
 }
 
+function buildWhatsAppHref(message: string) {
+  return `${WHATSAPP_URL}?text=${encodeURIComponent(message)}`;
+}
+
 function openSamplePdf(filePath: string) {
   const encodedPath = encodeURI(filePath);
   window.open(encodedPath, "_blank", "noopener,noreferrer");
@@ -228,15 +225,6 @@ export default function ServiceOverviewExperience({
   });
 
   const [sampleTabById, setSampleTabById] = useState<Record<string, TabMode>>({});
-  const [sampleModalOpen, setSampleModalOpen] = useState(false);
-  const [sampleLeadAsset, setSampleLeadAsset] = useState<SampleAsset | null>(null);
-  const [sampleLeadError, setSampleLeadError] = useState("");
-  const [sampleLeadForm, setSampleLeadForm] = useState<SampleLeadForm>({
-    name: "",
-    email: "",
-    region: "",
-    note: "",
-  });
 
   const [expandedTestimonials, setExpandedTestimonials] = useState<string[]>([]);
   const [testimonialModalOpen, setTestimonialModalOpen] = useState(false);
@@ -275,7 +263,7 @@ export default function ServiceOverviewExperience({
   }, [heroAutoPlay]);
 
   useEffect(() => {
-    if (!moduleModalOpen && !heroModalOpen && !serviceModalOpen && !sampleModalOpen && !testimonialModalOpen) {
+    if (!moduleModalOpen && !heroModalOpen && !serviceModalOpen && !testimonialModalOpen) {
       document.body.style.overflow = "";
       return;
     }
@@ -286,7 +274,7 @@ export default function ServiceOverviewExperience({
     return () => {
       document.body.style.overflow = previous;
     };
-  }, [heroModalOpen, moduleModalOpen, serviceModalOpen, sampleModalOpen, testimonialModalOpen]);
+  }, [heroModalOpen, moduleModalOpen, serviceModalOpen, testimonialModalOpen]);
 
   useEffect(() => {
     function onEscape(event: KeyboardEvent) {
@@ -294,10 +282,6 @@ export default function ServiceOverviewExperience({
 
       if (testimonialModalOpen) {
         setTestimonialModalOpen(false);
-        return;
-      }
-      if (sampleModalOpen) {
-        setSampleModalOpen(false);
         return;
       }
       if (serviceModalOpen) {
@@ -315,7 +299,7 @@ export default function ServiceOverviewExperience({
 
     window.addEventListener("keydown", onEscape);
     return () => window.removeEventListener("keydown", onEscape);
-  }, [heroModalOpen, moduleModalOpen, serviceModalOpen, sampleModalOpen, testimonialModalOpen]);
+  }, [heroModalOpen, moduleModalOpen, serviceModalOpen, testimonialModalOpen]);
 
   const activeModuleHint = selectedModule
     ? `Stage: ${activeStage} | Module: ${selectedModule}`
@@ -358,6 +342,15 @@ export default function ServiceOverviewExperience({
     setSelectedModule(moduleKey);
   }
 
+  function openModuleModal() {
+    if (!selectedModule) {
+      const fallbackKey = stageModules[0]?.key ?? "";
+      if (fallbackKey) setSelectedModule(fallbackKey);
+    }
+    setModuleLeadError("");
+    setModuleModalOpen(true);
+  }
+
   function submitModuleLead(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const name = moduleLeadForm.name.trim();
@@ -370,22 +363,32 @@ export default function ServiceOverviewExperience({
       return;
     }
 
+    if (!selectedModule) {
+      setModuleLeadError("Please select a module first.");
+      return;
+    }
+
     setModuleLeadError("");
-    router.push(
-      buildContactHref({
-        source: "service-overview-module",
-        name,
-        email,
-        need: activeStage,
-        notes: [
-          "Module lead",
-          `Stage: ${activeStage}`,
-          `Module: ${selectedModule}`,
-          `Phone: ${phone}`,
-          `Query: ${query}`,
-        ].join("\n"),
-      }),
-    );
+    const message = [
+      "Hi RE4U,",
+      "Request pricing and scope (module)",
+      "",
+      `Stage: ${activeStage}`,
+      `Module: ${selectedModule}`,
+      "",
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Phone: ${phone}`,
+      `Query: ${query}`,
+      "",
+      "Source: service-overview (module modal)",
+    ].join("\n");
+
+    const whatsappHref = buildWhatsAppHref(message);
+    const opened = window.open(whatsappHref, "_blank", "noopener,noreferrer");
+    if (!opened) window.location.href = whatsappHref;
+
+    setModuleModalOpen(false);
   }
 
   function toggleWorkflowReveal(stepId: number) {
@@ -417,40 +420,6 @@ export default function ServiceOverviewExperience({
     return sampleTabById[assetId] ?? "preview";
   }
 
-  function openSampleLead(asset: SampleAsset) {
-    setSampleLeadAsset(asset);
-    setSampleLeadError("");
-    setSampleModalOpen(true);
-  }
-
-  function submitSampleLead(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!sampleLeadAsset) return;
-
-    const email = sampleLeadForm.email.trim();
-    const region = sampleLeadForm.region.trim();
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
-      setSampleLeadError("Please enter a valid email.");
-      return;
-    }
-
-    setSampleLeadError("");
-    router.push(
-      buildContactHref({
-        source: "service-overview-samples",
-        name: sampleLeadForm.name.trim(),
-        email,
-        notes: [
-          "Sample asset request",
-          `Asset: ${sampleLeadAsset.title}`,
-          `Region: ${region || "Not provided"}`,
-          `Note: ${sampleLeadForm.note.trim() || "None"}`,
-        ].join("\n"),
-      }),
-    );
-  }
-
   function toggleTestimonial(testimonialId: string) {
     setExpandedTestimonials((current) =>
       current.includes(testimonialId)
@@ -479,20 +448,24 @@ export default function ServiceOverviewExperience({
     }
 
     setTestimonialLeadError("");
-    router.push(
-      buildContactHref({
-        source: "service-overview-testimonials",
-        name,
-        email,
-        need: stage,
-        notes: [
-          "Testimonial section lead",
-          `Stage: ${stage}`,
-          `Blocker: ${blocker}`,
-          `Query: ${query}`,
-        ].join("\n"),
-      }),
-    );
+    const message = [
+      "Hi RE4U,",
+      "Request pricing and scope",
+      "",
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Stage: ${stage}`,
+      `Blocker: ${blocker}`,
+      `Query: ${query}`,
+      "",
+      "Source: service-overview (FAQ / pricing modal)",
+    ].join("\n");
+
+    const whatsappHref = buildWhatsAppHref(message);
+    const opened = window.open(whatsappHref, "_blank", "noopener,noreferrer");
+    if (!opened) window.location.href = whatsappHref;
+
+    setTestimonialModalOpen(false);
   }
 
   function toggleFaqOpen(item: FaqItem) {
@@ -674,9 +647,6 @@ export default function ServiceOverviewExperience({
             <h2 className={`${styles.sectionTitle} ${fontClassName}`}>
               From stress to clarity without overthinking.
             </h2>
-            <p className={styles.sectionSub}>
-              Keep it human. Show the stress in one line, then show relief in calm cards.
-            </p>
 
             <div className={styles.tagRow}>
               {stressTags.map((tag) => (
@@ -800,8 +770,7 @@ export default function ServiceOverviewExperience({
             <button
               type="button"
               className={`${styles.btn} ${styles.btnPrimary}`}
-              disabled={!selectedModule}
-              onClick={() => setModuleModalOpen(true)}
+              onClick={openModuleModal}
             >
               Request pricing and scope
             </button>
@@ -871,7 +840,7 @@ export default function ServiceOverviewExperience({
             <button
               type="button"
               className={`${styles.btn} ${styles.btnPrimary}`}
-              onClick={() => setModuleModalOpen(true)}
+              onClick={openModuleModal}
             >
               Request pricing and scope
             </button>
@@ -891,10 +860,6 @@ export default function ServiceOverviewExperience({
                 <h2 className={`${styles.sectionTitle} ${fontClassName}`}>
                   Pick a category - see what you need, what you get, and starting price.
                 </h2>
-                <p className={styles.sectionSub}>
-                  Clean like your older layout, but tighter. Each module includes a
-                  <strong> Download sample</strong> button and a clear Starts at price line.
-                </p>
               </div>
             </header>
 
@@ -1181,16 +1146,6 @@ export default function ServiceOverviewExperience({
                             </span>
                             Open matched PDF
                           </button>
-                          <button
-                            type="button"
-                            className={`${styles.btn} ${styles.btnGhost}`}
-                            onClick={() => openSampleLead(asset)}
-                          >
-                            <span className={styles.sampleCtaIcon} aria-hidden="true">
-                              @
-                            </span>
-                            Email me this
-                          </button>
                         </div>
                         <p className={styles.sampleMicro}>
                           Matched file: {samplePdfLabel}. PDF opens in a new tab.
@@ -1341,12 +1296,7 @@ export default function ServiceOverviewExperience({
       <section className={styles.section} id="overview-faq">
         <div className={styles.container}>
           <div className={styles.sectionKicker}>FAQ</div>
-          <h2 className={`${styles.sectionTitle} ${fontClassName}`}>
-            Smart accordion: scan fast, then open only what you need
-          </h2>
-          <p className={styles.sectionSub}>
-            Category filters, open-all control, and copy-ready answers for supervisor sharing.
-          </p>
+          <h2 className={`${styles.sectionTitle} ${fontClassName}`}>Frequently Asked Questions</h2>
 
           <div className={styles.faqBar}>
             <div className={styles.faqChips} role="tablist" aria-label="FAQ categories">
@@ -1377,12 +1327,13 @@ export default function ServiceOverviewExperience({
               >
                 {faqOpenAll ? "Collapse all" : "Open all"}
               </button>
-              <Link
-                href={buildContactHref({ source: "service-overview-faq" })}
+              <button
+                type="button"
                 className={`${styles.btn} ${styles.btnPrimary}`}
+                onClick={() => openTestimonialLead("", "")}
               >
                 Request pricing
-              </Link>
+              </button>
             </div>
           </div>
 
@@ -1633,141 +1584,25 @@ export default function ServiceOverviewExperience({
             </div>
 
             <p className={styles.modalMeta}>{serviceModalContent.meta}</p>
-            <p className={styles.sectionSub}>
-              Next step: open enquiry form with module and category prefilled.
-            </p>
 
-            <Link
-              href={buildContactHref({
-                source: "service-overview-category",
-                notes: serviceModalContent.meta,
-              })}
-              className={`${styles.btn} ${styles.btnPrimary}`}
-            >
-              Continue to contact
-            </Link>
-          </div>
-        </div>
-      ) : null}
-
-      {sampleModalOpen && sampleLeadAsset ? (
-        <div className={styles.modalBackdrop} role="presentation" onClick={() => setSampleModalOpen(false)}>
-          <div
-            className={styles.modalCard}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="overview-sample-modal-title"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className={styles.modalHead}>
-              <h3 id="overview-sample-modal-title">Email asset: {sampleLeadAsset.title}</h3>
-              <button
-                type="button"
-                className={`${styles.btn} ${styles.btnGhost}`}
-                onClick={() => setSampleModalOpen(false)}
+            <div className={styles.ctaRow}>
+              <a
+                href={buildWhatsAppHref(
+                  [
+                    "Hi RE4U,",
+                    "I want pricing and scope for this module:",
+                    serviceModalContent.title,
+                    serviceModalContent.meta,
+                  ]
+                    .filter(Boolean)
+                    .join("\n"),
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.btn} ${styles.btnPrimary}`}
               >
-                Close
-              </button>
-            </div>
-
-            <div className={styles.sampleModalBody}>
-              <div className={styles.sampleModalGrid}>
-                <form className={styles.sampleLeadForm} onSubmit={submitSampleLead}>
-                  <label className={styles.field}>
-                    <span>Name</span>
-                    <input
-                      type="text"
-                      value={sampleLeadForm.name}
-                      onChange={(event) =>
-                        setSampleLeadForm((prev) => ({ ...prev, name: event.target.value }))
-                      }
-                      placeholder="Your name"
-                    />
-                  </label>
-                  <label className={styles.field}>
-                    <span>Email *</span>
-                    <input
-                      type="email"
-                      value={sampleLeadForm.email}
-                      onChange={(event) =>
-                        setSampleLeadForm((prev) => ({ ...prev, email: event.target.value }))
-                      }
-                      placeholder="you@university.edu"
-                    />
-                    <small className={styles.sampleHelper}>
-                      We only use this to send the asset and reply if needed.
-                    </small>
-                  </label>
-                  <label className={styles.fieldWide}>
-                    <span>Country / region (optional)</span>
-                    <select
-                      value={sampleLeadForm.region}
-                      onChange={(event) =>
-                        setSampleLeadForm((prev) => ({ ...prev, region: event.target.value }))
-                      }
-                    >
-                      <option value="">Select...</option>
-                      <option value="India">India</option>
-                      <option value="United States">United States</option>
-                      <option value="United Kingdom">United Kingdom</option>
-                      <option value="Australia">Australia</option>
-                      <option value="Other">Other</option>
-                    </select>
-                    <small className={styles.sampleHelper}>
-                      Used only to align terminology (IRB, HREC, REC).
-                    </small>
-                  </label>
-                  <label className={styles.fieldWide}>
-                    <span>Optional note (1-2 lines)</span>
-                    <textarea
-                      rows={3}
-                      value={sampleLeadForm.note}
-                      onChange={(event) =>
-                        setSampleLeadForm((prev) => ({ ...prev, note: event.target.value }))
-                      }
-                      placeholder="Example: supervisor says the gap is unclear; need defensible methodology."
-                    />
-                    <small className={styles.sampleHelper}>
-                      Keep it short. We ask follow-ups only if needed.
-                    </small>
-                  </label>
-
-                  {sampleLeadError ? <p className={styles.error}>{sampleLeadError}</p> : null}
-
-                  <div className={styles.cardActions}>
-                    <button type="submit" className={`${styles.btn} ${styles.btnPrimary}`}>
-                      Send to my email
-                    </button>
-                    <button
-                      type="button"
-                      className={`${styles.btn} ${styles.btnGhost}`}
-                      onClick={() => downloadSamplePdf(getAssetSamplePdfPath(sampleLeadAsset.id))}
-                    >
-                      Download matched PDF
-                    </button>
-                  </div>
-                </form>
-
-                <aside className={styles.sampleSideNote}>
-                  <p>
-                    <strong>What happens next</strong>
-                  </p>
-                  <p>- We send the asset link and a short guide for usage.</p>
-                  <p>- If you add a note, we can suggest the best-fit module.</p>
-                  <p>
-                    <strong>Confidential and ethical</strong>
-                  </p>
-                  <p>
-                    We support clarity, structure, and defensible methods. We do not
-                    support misconduct.
-                  </p>
-                </aside>
-              </div>
-            </div>
-
-            <div className={styles.sampleModalFoot}>
-              <span className={styles.sampleStatus}>Asset: {sampleLeadAsset.title}</span>
-              <span className={styles.sampleStatus}>Close with Esc or the Close button.</span>
+                Continue to contact
+              </a>
             </div>
           </div>
         </div>

@@ -119,7 +119,7 @@ export function EditingFaqsSection() {
             <span className={styles.faqsDot} aria-hidden="true" />
             FAQs (fast answers)
           </span>
-          <h2 className={styles.faqsTitle}>FAQs</h2>
+          <h2 className={styles.faqsTitle}>FAQ &ndash; Frequently Asked Questions</h2>
           <p className={styles.faqsSub}>
             You don’t need a long guide. These answers cover the only questions people still ask after reading the page.
           </p>

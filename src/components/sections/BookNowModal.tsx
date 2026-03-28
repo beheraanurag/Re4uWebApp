@@ -24,6 +24,7 @@ const SERVICE_REQUIREMENTS = [
   { value: "language_editing", label: "Language Editing / Substantive Editing" },
   { value: "research_design", label: "Research Design & Problem / GAP Framing" },
   { value: "data_analysis", label: "Data Analysis & Statistics" },
+  { value: "academic_presentation", label: "Academic Presentation" },
   {
     value: "publication_support",
     label: "Publication Support (Journal Selection, Submission, Response to Reviewers)",

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRef } from "react";
 import {
   BarChart3,
@@ -13,11 +12,12 @@ import {
   PenSquare,
 } from "lucide-react";
 
+import { WHATSAPP_URL } from "@/lib/contact";
+
 const POPULAR_SERVICES = [
   {
     id: "research-planning",
     title: "Research Planning",
-    exploreHref: "/services/research-planning",
     subtitle: "Start right, move faster",
     bullets: [
       "Validate topic and objectives",
@@ -30,7 +30,6 @@ const POPULAR_SERVICES = [
   {
     id: "data-services",
     title: "Data Services",
-    exploreHref: "/services/data-services",
     subtitle: "Stats & ML that hold up",
     bullets: [
       "Analyze in SPSS / R / Python",
@@ -43,7 +42,6 @@ const POPULAR_SERVICES = [
   {
     id: "editorial-support",
     title: "Editorial Support",
-    exploreHref: "/services/editing-support",
     subtitle: "Polished, compliant, clear",
     bullets: [
       "Edit language and structure",
@@ -56,7 +54,6 @@ const POPULAR_SERVICES = [
   {
     id: "publication-support",
     title: "Publication Support",
-    exploreHref: "/services/publication-support",
     subtitle: "Submit with confidence",
     bullets: [
       "Target suitable journals",
@@ -69,7 +66,6 @@ const POPULAR_SERVICES = [
   {
     id: "academic-presentations",
     title: "Academic Presentations",
-    exploreHref: "/services/presentations",
     subtitle: "Impactful visuals that land",
     bullets: [
       "Design slides and posters",
@@ -82,7 +78,6 @@ const POPULAR_SERVICES = [
   {
     id: "consultation-support",
     title: "Consultation Support",
-    exploreHref: "",
     subtitle: "Expert guidance at every step",
     bullets: [
       "One-on-one project discussions",
@@ -114,6 +109,16 @@ function downloadSamplePdf(serviceId: string) {
   document.body.appendChild(anchor);
   anchor.click();
   anchor.remove();
+}
+
+function getExploreWhatsAppHref(serviceTitle: string) {
+  const message = [
+    "Hi RE4U,",
+    `I want to know more about: ${serviceTitle}.`,
+    "Please share pricing, timeline, and next steps.",
+  ].join("\n");
+
+  return `${WHATSAPP_URL}?text=${encodeURIComponent(message)}`;
 }
 
 export function PopularServicesSection() {
@@ -149,6 +154,7 @@ export function PopularServicesSection() {
           >
             {POPULAR_SERVICES.map((service) => {
               const Icon = service.icon;
+              const exploreHref = getExploreWhatsAppHref(service.title);
               return (
                 <article
                   key={service.id}
@@ -185,21 +191,14 @@ export function PopularServicesSection() {
                     >
                       Download Sample
                     </button>
-                    {service.exploreHref ? (
-                      <Link
-                        href={service.exploreHref}
-                        className="text-xs font-bold text-[#1F3A5F] hover:text-[#3F7F72]"
-                      >
-                        Explore -&gt;
-                      </Link>
-                    ) : (
-                      <span
-                        aria-disabled="true"
-                        className="cursor-not-allowed text-xs font-bold text-[#1F3A5F]/45"
-                      >
-                        Explore -&gt;
-                      </span>
-                    )}
+                    <a
+                      href={exploreHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-bold text-[#1F3A5F] hover:text-[#3F7F72]"
+                    >
+                      Explore -&gt;
+                    </a>
                   </div>
                 </article>
               );

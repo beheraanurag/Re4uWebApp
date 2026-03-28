@@ -743,12 +743,25 @@ export default function DataServicesExperience({
                   >
                     {pack.ctaPrimary}
                   </Link>
-                  <a
-                    href={pack.ctaSecondary === "See sample excerpts" ? "#samples" : "#workflow"}
-                    className={`${styles.btn} ${styles.btnGhost}`}
-                  >
-                    {pack.ctaSecondary}
-                  </a>
+                  {pack.ctaSecondary === "Talk to an Analyst" ? (
+                    <Link
+                      href={buildContactHref({
+                        source: "data-services-package-secondary",
+                        plan: pack.id,
+                        notes: "Talk to an analyst request",
+                      })}
+                      className={`${styles.btn} ${styles.btnGhost}`}
+                    >
+                      {pack.ctaSecondary}
+                    </Link>
+                  ) : (
+                    <a
+                      href={pack.ctaSecondary === "See sample excerpts" ? "#samples" : "#workflow"}
+                      className={`${styles.btn} ${styles.btnGhost}`}
+                    >
+                      {pack.ctaSecondary}
+                    </a>
+                  )}
                 </div>
               </article>
             ))}
@@ -951,7 +964,9 @@ export default function DataServicesExperience({
       <section className={`${styles.section} ${styles.sectionSoft}`} id="faq">
         <div className={styles.container}>
           <header className={styles.sectionHead}>
-            <h2 className={`${styles.sectionTitle} ${fontClassName}`}>FAQ</h2>
+            <h2 className={`${styles.sectionTitle} ${fontClassName}`}>
+              FAQ &ndash; Frequently Asked Questions
+            </h2>
             <p className={styles.sectionSub}>Straight answers so you can decide quickly.</p>
           </header>
 

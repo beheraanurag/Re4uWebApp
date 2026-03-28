@@ -5,7 +5,6 @@ import Link from "next/link";
 import type { Service } from "@/lib/types";
 import { API_BASE } from "@/lib/api";
 import { BookNowModal } from "@/components/sections/BookNowModal";
-import { WHATSAPP_URL } from "@/lib/contact";
 
 const QUICK_OFFERS = [
   {
@@ -90,8 +89,12 @@ export function ServicesPreview({ services: _services }: { services: Service[] }
     return () => window.clearTimeout(timer);
   }, [isModalOpen]);
 
-  function openModal() {
-    window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer");
+  function openGuidePdf() {
+    window.open(
+      encodeURI("/sample-doc/SEVEN STEP REJECTION PROOF CHECKLIST_RE4U SOLUTIONS.pdf"),
+      "_blank",
+      "noopener,noreferrer",
+    );
   }
 
   function closeModal() {
@@ -243,25 +246,10 @@ export function ServicesPreview({ services: _services }: { services: Service[] }
               <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-dashed border-[#A8C7E6]/55 pt-4 sm:flex-nowrap">
                 <button
                   type="button"
-                  onClick={openModal}
+                  onClick={openGuidePdf}
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-[#A8C7E6]/60 bg-[#1F3A5F] px-3 py-2 text-[13px] font-bold text-white shadow-md sm:whitespace-nowrap"
                 >
                   Get the free guide
-                </button>
-                <button
-                  type="button"
-                  onClick={() =>
-                    window.open(
-                      encodeURI(
-                        "/sample-doc/SEVEN STEP REJECTION PROOF CHECKLIST_RE4U SOLUTIONS.pdf",
-                      ),
-                      "_blank",
-                      "noopener,noreferrer",
-                    )
-                  }
-                  className="rounded-full border border-[#A8C7E6]/60 bg-white px-3 py-2 text-center text-[13px] font-bold text-[#1F3A5F] sm:whitespace-nowrap hover:bg-[#E9E3D5]"
-                >
-                  What is inside?
                 </button>
               </div>
             </article>

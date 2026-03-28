@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Search } from "lucide-react";
 import type { Post } from "@/lib/types";
+import { WHATSAPP_URL } from "@/lib/contact";
 
 type Mode = "stages" | "problems" | "downloads" | "latest";
 
@@ -32,6 +33,10 @@ type DownloadItem = {
   category: string;
   downloads: number;
   filetype: string;
+  href: string;
+  downloadName?: string;
+  ctaLabel?: string;
+  download?: boolean;
 };
 
 const STAGES = [
@@ -72,14 +77,20 @@ const DOWNLOADS: DownloadItem[] = [
     category: "Checklists",
     downloads: 1820,
     filetype: "PDF",
+    href: "/sample-doc/reminds/journal-selection-checklist.pdf",
+    downloadName: "Journal Selection Checklist.pdf",
+    download: true,
   },
   {
     id: "d2",
-    title: "Rebuttal Letter Template (DOCX)",
+    title: "Rebuttal Letter Template (PDF)",
     desc: "Point-by-point structure with polite, editor-friendly wording.",
     category: "Templates",
     downloads: 2640,
-    filetype: "DOCX",
+    filetype: "PDF",
+    href: "/sample-doc/reminds/rebuttal-letter-template.pdf",
+    downloadName: "Rebuttal Letter Template.pdf",
+    download: true,
   },
   {
     id: "d3",
@@ -88,6 +99,9 @@ const DOWNLOADS: DownloadItem[] = [
     category: "Checklists",
     downloads: 1490,
     filetype: "PDF",
+    href: "/sample-doc/reminds/similarity-reduction-checklist.pdf",
+    downloadName: "SIMILARITY REDUCTION CHECKLIST.pdf",
+    download: true,
   },
   {
     id: "d4",
@@ -95,15 +109,21 @@ const DOWNLOADS: DownloadItem[] = [
     desc: "How to respond to reviewers and reduce rework.",
     category: "Webinars",
     downloads: 980,
-    filetype: "Replay",
+    filetype: "MP4",
+    href: "/sample-doc/reminds/webinar-surviving-peer-review-replay.mp4",
+    downloadName: "Webinar_ Surviving Peer Review (Replay).mp4",
+    ctaLabel: "Watch / Download",
   },
   {
     id: "d5",
-    title: "Cover Letter Starter Pack (DOCX)",
+    title: "Cover Letter Starter Pack (PDF)",
     desc: "3 cover letter styles for different journals.",
     category: "Templates",
     downloads: 1210,
-    filetype: "DOCX",
+    filetype: "PDF",
+    href: "/sample-doc/reminds/cover-letter-starter-pack.pdf",
+    downloadName: "Cover Letter Starter Pack.pdf",
+    download: true,
   },
   {
     id: "d6",
@@ -112,6 +132,9 @@ const DOWNLOADS: DownloadItem[] = [
     category: "Toolkits",
     downloads: 870,
     filetype: "PDF",
+    href: "/sample-doc/reminds/ethics-authorship-mini-guide.pdf",
+    downloadName: "Ethics & Authorship Mini-Guide.pdf",
+    download: true,
   },
 ];
 
@@ -164,7 +187,7 @@ const FALLBACK_POSTS: PostItem[] = [
     desc: "A point-by-point template that keeps the editor on your side.",
     format: "Series",
     readMin: 7,
-    stage: "Peer Review",
+    stage: "Submission",
     problem: "Rebuttal / Reviewer Comments",
     type: "Template",
     author: "RE4U Editorial",
@@ -245,11 +268,26 @@ function inferFormat(tags: string[], index: number): "Series" | "Guide" {
 }
 
 function inferStage(title: string, excerpt: string, tags: string[]): string {
-  const corpus = normalize(`${tags.join(" ")} ${title} ${excerpt}`);
+  // Only use explicit tags for stage classification.
+  // This prevents false positives like "review" in a title accidentally classifying as "Peer Review".
+  const corpus = normalize(tags.join(" "));
   if (corpus.includes("acceptance")) return "Acceptance";
-  if (corpus.includes("peer") || corpus.includes("review")) return "Peer Review";
+  if (
+    corpus.includes("peer review") ||
+    corpus.includes("peer-review") ||
+    corpus.includes("peer_review") ||
+    corpus.includes("peerreview")
+  ) {
+    return "Peer Review";
+  }
   if (corpus.includes("submission") || corpus.includes("submit")) return "Submission";
-  if (corpus.includes("journal")) return "Journal Selection";
+  if (
+    corpus.includes("journal selection") ||
+    corpus.includes("journal choice") ||
+    corpus.includes("journal")
+  ) {
+    return "Journal Selection";
+  }
   if (corpus.includes("draft")) return "Draft";
   if (corpus.includes("idea")) return "Idea";
   return "Draft";
@@ -326,7 +364,11 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
   const [activeChip, setActiveChip] = useState("All Stages");
   const [query, setQuery] = useState("");
   const [formatFilter, setFormatFilter] = useState<FormatFilter>("All");
-  const [checkForm, setCheckForm] = useState({ name: "", email: "", link: "" });
+  const [checkForm, setCheckForm] = useState<{
+    name: string;
+    email: string;
+    file: File | null;
+  }>({ name: "", email: "", file: null });
   const [checkMsg, setCheckMsg] = useState("");
   const [newsEmail, setNewsEmail] = useState("");
   const [newsMsg, setNewsMsg] = useState("");
@@ -400,17 +442,35 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
   function handleCheckSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const emailOk = checkForm.email.trim().includes("@");
-    const linkOk = checkForm.link.trim().length > 5;
+    const fileOk = Boolean(checkForm.file);
     if (!emailOk) {
       setCheckMsg("Please enter a valid email.");
       return;
     }
-    if (!linkOk) {
-      setCheckMsg("Please paste an upload link (Google Drive/Dropbox).");
+    if (!fileOk) {
+      setCheckMsg("Please upload your manuscript file.");
       return;
     }
-    setCheckMsg("Submitted. We will reply within 24-48 hrs.");
-    setCheckForm({ name: "", email: "", link: "" });
+
+    const fileName = checkForm.file?.name || "Not uploaded";
+    const message = [
+      "Free Manuscript Check request",
+      "",
+      checkForm.name.trim() ? `Name: ${checkForm.name.trim()}` : "",
+      `Email: ${checkForm.email.trim()}`,
+      `File selected: ${fileName}`,
+      "",
+      "Note: WhatsApp cannot auto-attach files from a website. Please attach the manuscript manually in WhatsApp.",
+      "",
+      "Please share clarity/structure feedback and next-step suggestions.",
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const href = `${WHATSAPP_URL}?text=${encodeURIComponent(message)}`;
+    const opened = window.open(href, "_blank", "noopener,noreferrer");
+    if (!opened) window.location.href = href;
+    setCheckMsg("Opening WhatsApp… Please attach the manuscript file and send.");
   }
 
   function handleNewsSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -520,13 +580,18 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
                   </div>
                   <div className="mt-3">
                     <label className="text-xs font-extrabold text-[rgba(42,46,53,.72)]">
-                      Upload manuscript / paste link (required)
+                      Upload manuscript (required)
                     </label>
                     <input
                       className="mt-1 w-full rounded-full border border-[rgba(42,46,53,.14)] bg-white px-4 py-2 text-sm"
-                      value={checkForm.link}
-                      onChange={(event) => setCheckForm({ ...checkForm, link: event.target.value })}
-                      placeholder="Paste Google Drive / Dropbox link"
+                      type="file"
+                      accept=".pdf,.doc,.docx"
+                      onChange={(event) =>
+                        setCheckForm({
+                          ...checkForm,
+                          file: event.target.files?.[0] ?? null,
+                        })
+                      }
                       required
                     />
                   </div>
@@ -541,13 +606,13 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
                   </button>
 
                   <div className="mt-4 rounded-xl border border-[rgba(42,46,53,.10)] bg-white/70 p-3 shadow-[0_10px_20px_rgba(42,46,53,.06)]">
-                    <Image
-                      src="/free-check-benefits.png"
-                      alt="Quick review, practical guidance, and confidential support"
-                      width={1200}
-                      height={520}
-                      className="h-auto w-full"
-                    />
+                      <Image
+                        src="/free-check-benefits.jpg"
+                        alt="Quick review, practical guidance, and confidential support"
+                        width={1200}
+                        height={520}
+                        className="h-auto w-full"
+                      />
                   </div>
 
                   {checkMsg ? (
@@ -598,7 +663,7 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
             </div>
 
             <div className="flex flex-wrap items-center gap-3 border-t border-[rgba(42,46,53,.10)] px-4 py-4">
-              <div className="flex flex-1 gap-2 overflow-auto">
+              <div className="flex min-w-0 flex-1 flex-wrap gap-2">
                 {chips.map((chip) => (
                   <button
                     key={chip}
@@ -656,65 +721,74 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
           <div className="mt-6">
             <div className="mb-3 text-xs font-semibold text-[rgba(42,46,53,.68)]">{metaText}</div>
             {mode === "downloads" ? (
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {filteredDownloads.map((item) => (
-                  <article
-                    key={item.id}
-                    className="rounded-2xl border border-[rgba(42,46,53,.12)] bg-white shadow-[0_12px_22px_rgba(42,46,53,.07)]"
-                  >
-                    <div className="h-[104px] rounded-t-[20px] bg-[rgba(42,46,53,.04)]" />
-                    <div className="p-3">
-                      <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(42,46,53,.12)] bg-white/70 px-2.5 py-1 text-xs font-extrabold text-[rgba(42,46,53,.80)]">
-                        <span className="h-2 w-2 rounded-full bg-[#1F3A5F]" />
-                        {item.category}
-                      </span>
-                      <h3
-                        className="mt-2 text-sm font-extrabold text-[#2A2E35]"
-                        style={{
-                          display: "-webkit-box",
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: "vertical",
-                          overflow: "hidden",
-                        }}
-                      >
-                        {item.title}
-                      </h3>
-                      <p
-                        className="mt-1 text-xs text-[rgba(42,46,53,.70)]"
-                        style={{
-                          display: "-webkit-box",
-                          WebkitLineClamp: 3,
-                          WebkitBoxOrient: "vertical",
-                          overflow: "hidden",
-                        }}
-                      >
-                        {item.desc}
-                      </p>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        <span className="rounded-full border border-[rgba(42,46,53,.12)] bg-white/70 px-2 py-1 text-[11px] font-extrabold text-[rgba(42,46,53,.70)]">
-                          {item.filetype}
+              filteredDownloads.length ? (
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                  {filteredDownloads.map((item) => (
+                    <article
+                      key={item.id}
+                      className="rounded-2xl border border-[rgba(42,46,53,.12)] bg-white shadow-[0_12px_22px_rgba(42,46,53,.07)]"
+                    >
+                      <div className="h-[104px] rounded-t-[20px] bg-[rgba(42,46,53,.04)]" />
+                      <div className="p-3">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(42,46,53,.12)] bg-white/70 px-2.5 py-1 text-xs font-extrabold text-[rgba(42,46,53,.80)]">
+                          <span className="h-2 w-2 rounded-full bg-[#1F3A5F]" />
+                          {item.category}
                         </span>
-                        <span className="rounded-full border border-[rgba(42,46,53,.12)] bg-white/70 px-2 py-1 text-[11px] font-extrabold text-[rgba(42,46,53,.70)]">
-                          {item.downloads.toLocaleString()} downloads
-                        </span>
-                      </div>
-                      <div className="mt-3 flex items-center justify-between text-xs font-extrabold text-[rgba(42,46,53,.70)]">
-                        <span>Popular</span>
-                        <button
-                          type="button"
-                          className="inline-flex items-center gap-2 text-[#1F3A5F]"
+                        <h3
+                          className="mt-2 text-sm font-extrabold text-[#2A2E35]"
+                          style={{
+                            display: "-webkit-box",
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: "vertical",
+                            overflow: "hidden",
+                          }}
                         >
-                          <span className="grid h-7 w-7 place-items-center rounded-xl border border-[rgba(42,46,53,.12)] bg-white/80">
-                            {"->"}
+                          {item.title}
+                        </h3>
+                        <p
+                          className="mt-1 text-xs text-[rgba(42,46,53,.70)]"
+                          style={{
+                            display: "-webkit-box",
+                            WebkitLineClamp: 3,
+                            WebkitBoxOrient: "vertical",
+                            overflow: "hidden",
+                          }}
+                        >
+                          {item.desc}
+                        </p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <span className="rounded-full border border-[rgba(42,46,53,.12)] bg-white/70 px-2 py-1 text-[11px] font-extrabold text-[rgba(42,46,53,.70)]">
+                            {item.filetype}
                           </span>
-                          Download
-                        </button>
+                          <span className="rounded-full border border-[rgba(42,46,53,.12)] bg-white/70 px-2 py-1 text-[11px] font-extrabold text-[rgba(42,46,53,.70)]">
+                            {item.downloads.toLocaleString()} downloads
+                          </span>
+                        </div>
+                        <div className="mt-3 flex items-center justify-between text-xs font-extrabold text-[rgba(42,46,53,.70)]">
+                          <span>Popular</span>
+                          <a
+                            href={item.href}
+                            className="inline-flex items-center gap-2 text-[#1F3A5F]"
+                            target={item.download ? undefined : "_blank"}
+                            rel={item.download ? undefined : "noopener noreferrer"}
+                            download={item.download ? item.downloadName ?? "" : undefined}
+                          >
+                            <span className="grid h-7 w-7 place-items-center rounded-xl border border-[rgba(42,46,53,.12)] bg-white/80">
+                              {"->"}
+                            </span>
+                            {item.ctaLabel ?? "Download"}
+                          </a>
+                        </div>
                       </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            ) : (
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <div className="rounded-2xl border border-[rgba(42,46,53,.12)] bg-white/80 p-5 text-sm font-semibold text-[rgba(42,46,53,.72)] shadow-[0_12px_22px_rgba(42,46,53,.07)]">
+                  No downloads match this filter yet.
+                </div>
+              )
+            ) : filteredPosts.length ? (
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {filteredPosts.map((item) => (
                   <article
@@ -786,6 +860,10 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
                     </div>
                   </article>
                 ))}
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-[rgba(42,46,53,.12)] bg-white/80 p-5 text-sm font-semibold text-[rgba(42,46,53,.72)] shadow-[0_12px_22px_rgba(42,46,53,.07)]">
+                No posts match this filter yet.
               </div>
             )}
           </div>

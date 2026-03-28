@@ -1,4 +1,3 @@
-﻿import Link from "next/link";
 import { ShieldCheck, Target, TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -114,7 +113,7 @@ export function TrustControlsSection() {
             </p>
             <div className="flex flex-wrap gap-2">
               <Button asChild variant="outline" className="rounded-full border-[#A8C7E6]/60">
-                <Link href="/case-studies">See editing samples</Link>
+                <a href="/#sec-subjects">See editing samples</a>
               </Button>
               <BookNowModal
                 source="trust-controls"

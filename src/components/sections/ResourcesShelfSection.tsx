@@ -30,7 +30,7 @@ type ResourceItem = {
   categories: FilterKey[];
 };
 
-const FILTERS: Array<{ key: FilterKey; label: string }> = [
+const ALL_FILTERS: Array<{ key: FilterKey; label: string }> = [
   { key: "all", label: "All" },
   { key: "series", label: "Series" },
   { key: "standalone", label: "Standalone" },
@@ -49,8 +49,8 @@ const FALLBACK_RESOURCES: ResourceItem[] = [
     coverImage: null,
     kind: "Series",
     readMeta: "6 min | Checklist",
-    tags: ["series", "abstract", "peer"],
-    categories: ["series", "peer"],
+    tags: ["series", "abstract"],
+    categories: ["series"],
   },
   {
     id: "r-02",
@@ -60,8 +60,8 @@ const FALLBACK_RESOURCES: ResourceItem[] = [
     coverImage: null,
     kind: "Guide",
     readMeta: "7 min | Framework",
-    tags: ["standalone", "journal"],
-    categories: ["standalone", "journal"],
+    tags: ["standalone"],
+    categories: ["standalone"],
   },
   {
     id: "r-03",
@@ -72,8 +72,8 @@ const FALLBACK_RESOURCES: ResourceItem[] = [
     coverImage: null,
     kind: "Guide",
     readMeta: "8 min | Clarity",
-    tags: ["standalone", "ai"],
-    categories: ["standalone", "ai"],
+    tags: ["standalone"],
+    categories: ["standalone"],
   },
   {
     id: "r-04",
@@ -84,8 +84,8 @@ const FALLBACK_RESOURCES: ResourceItem[] = [
     coverImage: null,
     kind: "Series",
     readMeta: "7 min | Templates",
-    tags: ["series", "peer"],
-    categories: ["series", "peer"],
+    tags: ["series"],
+    categories: ["series"],
   },
 ];
 
@@ -105,22 +105,22 @@ function inferCategories(
   excerpt: string,
   kind: ResourceType,
 ): FilterKey[] {
-  const corpus = `${tags.join(" ")} ${title} ${excerpt}`.toLowerCase();
   const categories: FilterKey[] = [kind === "Series" ? "series" : "standalone"];
 
-  if (corpus.includes("journal")) categories.push("journal");
-  if (
-    corpus.includes("ai") ||
-    corpus.includes("similarity") ||
-    corpus.includes("plagiarism")
-  ) {
+  void title;
+  void excerpt;
+
+  // Only trust explicit tags for topical filters.
+  // (Do not infer from title/excerpt; that causes false positives when no such post exists.)
+  const normalizedTags = tags.map((tag) => tag.trim().toLowerCase()).filter(Boolean);
+  const hasTagLike = (needle: string) =>
+    normalizedTags.some((tag) => tag === needle || tag.includes(needle));
+
+  if (hasTagLike("journal")) categories.push("journal");
+  if (hasTagLike("ai") || hasTagLike("similarity") || hasTagLike("plagiarism")) {
     categories.push("ai");
   }
-  if (
-    corpus.includes("review") ||
-    corpus.includes("reviewer") ||
-    corpus.includes("rebuttal")
-  ) {
+  if (hasTagLike("peer") || hasTagLike("reviewer") || hasTagLike("rebuttal")) {
     categories.push("peer");
   }
   return Array.from(new Set(categories));
@@ -160,6 +160,7 @@ export function ResourcesShelfSection({ posts }: { posts: ResourcePost[] }) {
   const [query, setQuery] = useState("");
 
   const resources = useMemo(() => toResourceItems(posts), [posts]);
+  const filterOptions = ALL_FILTERS;
 
   const filtered = useMemo(() => {
     const safeQuery = normalizeText(query);
@@ -202,7 +203,7 @@ export function ResourcesShelfSection({ posts }: { posts: ResourcePost[] }) {
         <div className="mt-5 rounded-2xl border border-[#A8C7E6]/60 bg-white/65 p-4 shadow-md">
           <div className="flex flex-wrap items-center justify-between gap-3 pb-3">
             <div className="flex flex-wrap gap-2">
-              {FILTERS.map((item) => (
+              {filterOptions.map((item) => (
                 <button
                   key={item.key}
                   type="button"
@@ -309,23 +310,26 @@ export function ResourcesShelfSection({ posts }: { posts: ResourcePost[] }) {
                 Series highlights
               </h4>
               <div className="mt-3 grid gap-2">
-                {(seriesItems.length > 0 ? seriesItems : filtered.slice(0, 2)).map((item) => (
-                  <div
-                    key={`series-${item.id}`}
-                    className="flex items-start justify-between gap-3 rounded-[16px] border border-[#A8C7E6]/60 bg-white px-3 py-2"
-                  >
-                    <div>
-                      <strong className="block text-[14.5px] text-[#2A2E35]">{item.title}</strong>
-                      <small className="text-xs text-[#2A2E35]/75">{item.excerpt}</small>
-                    </div>
-                    <Link
-                      href={item.href}
-                      className="text-xs font-extrabold text-[#1F3A5F]"
+                {seriesItems.length > 0 ? (
+                  seriesItems.map((item) => (
+                    <div
+                      key={`series-${item.id}`}
+                      className="flex items-start justify-between gap-3 rounded-[16px] border border-[#A8C7E6]/60 bg-white px-3 py-2"
                     >
-                      Open
-                    </Link>
+                      <div>
+                        <strong className="block text-[14.5px] text-[#2A2E35]">{item.title}</strong>
+                        <small className="text-xs text-[#2A2E35]/75">{item.excerpt}</small>
+                      </div>
+                      <Link href={item.href} className="text-xs font-extrabold text-[#1F3A5F]">
+                        Open
+                      </Link>
+                    </div>
+                  ))
+                ) : (
+                  <div className="rounded-[16px] border border-[#A8C7E6]/60 bg-white px-3 py-2 text-xs text-[#2A2E35]/75">
+                    No series posts match this filter yet.
                   </div>
-                ))}
+                )}
               </div>
             </div>
 
@@ -334,23 +338,26 @@ export function ResourcesShelfSection({ posts }: { posts: ResourcePost[] }) {
                 Standalone guides
               </h4>
               <div className="mt-3 grid gap-2">
-                {(standaloneItems.length > 0 ? standaloneItems : filtered.slice(0, 2)).map((item) => (
-                  <div
-                    key={`standalone-${item.id}`}
-                    className="flex items-start justify-between gap-3 rounded-[16px] border border-[#A8C7E6]/60 bg-white px-3 py-2"
-                  >
-                    <div>
-                      <strong className="block text-[14.5px] text-[#2A2E35]">{item.title}</strong>
-                      <small className="text-xs text-[#2A2E35]/75">{item.excerpt}</small>
-                    </div>
-                    <Link
-                      href={item.href}
-                      className="text-xs font-extrabold text-[#1F3A5F]"
+                {standaloneItems.length > 0 ? (
+                  standaloneItems.map((item) => (
+                    <div
+                      key={`standalone-${item.id}`}
+                      className="flex items-start justify-between gap-3 rounded-[16px] border border-[#A8C7E6]/60 bg-white px-3 py-2"
                     >
-                      Open
-                    </Link>
+                      <div>
+                        <strong className="block text-[14.5px] text-[#2A2E35]">{item.title}</strong>
+                        <small className="text-xs text-[#2A2E35]/75">{item.excerpt}</small>
+                      </div>
+                      <Link href={item.href} className="text-xs font-extrabold text-[#1F3A5F]">
+                        Open
+                      </Link>
+                    </div>
+                  ))
+                ) : (
+                  <div className="rounded-[16px] border border-[#A8C7E6]/60 bg-white px-3 py-2 text-xs text-[#2A2E35]/75">
+                    No standalone guides match this filter yet.
                   </div>
-                ))}
+                )}
               </div>
             </div>
           </div>

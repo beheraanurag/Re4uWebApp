@@ -4,6 +4,8 @@ import Link from "next/link";
 import styles from "./page.module.css";
 import { WHATSAPP_URL } from "@/lib/contact";
 import { SampleRequestWhatsAppForm } from "./SampleRequestWhatsAppForm";
+import { HeroQuoteWhatsAppForm } from "./HeroQuoteWhatsAppForm";
+import { UploadBriefModal } from "./UploadBriefModal";
 
 const heroBullets = [
   "Research proposal outline aligned to your university or funder format",
@@ -113,7 +115,6 @@ const workflowSteps = [
       "Required format or template (if available)",
       "Deadline plus expected length (if known)",
     ],
-    primaryCta: "Upload Your Brief",
     secondaryCta: "Get a Free Planning Call",
   },
   {
@@ -345,66 +346,13 @@ export default function ResearchPlanningPage() {
                   >
                     Get a Free Planning Call
                   </Link>
-                  <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={styles.btn}>
-                    Upload Your Brief
-                  </Link>
                   <a href="#packages" className={`${styles.btn} ${styles.btnGhost}`}>
                     View Packages
                   </a>
                 </div>
               </div>
 
-              <form
-                className={`${styles.quickForm} ${styles.heroQuoteForm}`}
-                action="/contact"
-                method="get"
-              >
-                <p className={styles.formTitle}>
-                  Get a quote in 30 minutes (WhatsApp or Email)
-                </p>
-                <div className={styles.formGrid}>
-                  <input className={styles.input} name="name" placeholder="Full Name" required />
-                  <input
-                    className={styles.input}
-                    name="whatsapp"
-                    placeholder="WhatsApp Number"
-                    required
-                  />
-                  <select
-                    className={styles.input}
-                    name="level"
-                    defaultValue=""
-                    required
-                  >
-                    <option value="" disabled>
-                      Academic Level
-                    </option>
-                    <option>UG</option>
-                    <option>PG</option>
-                    <option>PhD</option>
-                    <option>Postdoc</option>
-                    <option>Grant</option>
-                  </select>
-                  <input className={styles.input} type="date" name="deadline" required />
-                </div>
-                <div className={styles.formActions}>
-                  <Link
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`${styles.btn} ${styles.btnPrimary}`}
-                  >
-                    Get Quote and Next Steps
-                  </Link>
-                  <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={styles.btn}>
-                    Share More Details
-                  </Link>
-                </div>
-                <p className={styles.formNote}>
-                  Transparent quote before work starts | Confidential |
-                  Integrity-first
-                </p>
-              </form>
+              <HeroQuoteWhatsAppForm />
 
               <div className={`${styles.trustStrip} ${styles.heroTrustStrip}`}>
                 <span className={styles.chip}>
@@ -514,9 +462,6 @@ export default function ResearchPlanningPage() {
                 <span className={`${styles.chip} ${styles.segmentChip}`}>
                   Planning clarity
                 </span>
-                <span className={styles.mutedLine}>
-                  One view at a time | Cleaner on mobile
-                </span>
               </div>
               <div className={styles.seg} role="tablist" aria-label="Section toggle">
                 <label
@@ -559,18 +504,14 @@ export default function ResearchPlanningPage() {
                   </article>
                   <article className={styles.card}>
                     <h3>Fast start</h3>
-                    <p>
+                   <p>
                       Upload your brief and we will recommend the best package
                       with a transparent quote before work begins.
                     </p>
-                    <Link
-                      href={WHATSAPP_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`${styles.btn} ${styles.btnPrimary} ${styles.fastStartBtn}`}
-                    >
-                      Upload Your Brief
-                    </Link>
+                    <UploadBriefModal
+                      triggerLabel="Upload Your Brief"
+                      triggerClassName={`${styles.btn} ${styles.btnPrimary} ${styles.fastStartBtn}`}
+                    />
                     <p className={styles.mutedLine}>
                       Confidential | Integrity-first | Quote before work
                     </p>
@@ -645,9 +586,22 @@ export default function ResearchPlanningPage() {
                   >
                     {item.ctaPrimary}
                   </Link>
-                  <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={styles.btn}>
-                    {item.ctaSecondary}
-                  </Link>
+                  {item.ctaSecondary === "Upload Format and Topic" ? (
+                    <UploadBriefModal
+                      triggerLabel={item.ctaSecondary}
+                      enquiryLabel="Upload Format and Topic"
+                      triggerClassName={styles.btn}
+                    />
+                  ) : (
+                    <Link
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.btn}
+                    >
+                      {item.ctaSecondary}
+                    </Link>
+                  )}
                 </div>
                 <p className={styles.integrity}>
                   Integrity-first delivery with no fabricated results or claims.
@@ -715,14 +669,22 @@ export default function ResearchPlanningPage() {
                         </a>
                       ) : null}
                       {step.primaryCta ? (
-                        <Link
-                          href={WHATSAPP_URL}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`${styles.btn} ${styles.btnPrimary} ${styles.btnSmall}`}
-                        >
-                          {step.primaryCta}
-                        </Link>
+                        step.primaryCta === "Get Your Quote" ? (
+                          <UploadBriefModal
+                            triggerLabel={step.primaryCta}
+                            enquiryLabel="Get Your Quote"
+                            triggerClassName={`${styles.btn} ${styles.btnPrimary} ${styles.btnSmall}`}
+                          />
+                        ) : (
+                          <Link
+                            href={WHATSAPP_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`${styles.btn} ${styles.btnPrimary} ${styles.btnSmall}`}
+                          >
+                            {step.primaryCta}
+                          </Link>
+                        )
                       ) : null}
                       {step.secondaryCta ? (
                         <Link
@@ -790,14 +752,11 @@ export default function ResearchPlanningPage() {
                 Upload your brief and we will recommend the best path
                 (Starter/Core/Premium) with a transparent quote.
               </p>
-              <Link
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${styles.btn} ${styles.btnPrimary} ${styles.shareBriefBtn}`}
-              >
-                Upload Brief
-              </Link>
+              <UploadBriefModal
+                triggerLabel="Upload Brief"
+                enquiryLabel="Upload Brief"
+                triggerClassName={`${styles.btn} ${styles.btnPrimary} ${styles.shareBriefBtn}`}
+              />
             </article>
           </div>
         </div>
@@ -845,10 +804,12 @@ export default function ResearchPlanningPage() {
                 <p>{sample.text}</p>
                 <div className={styles.sampleActions}>
                   <Link
-                    href="/contact"
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={`${styles.btn} ${styles.btnPrimary} ${styles.btnSmall}`}
                   >
-                    Preview
+                    Start Now
                   </Link>
                   <a
                     href={sample.pdfHref}
@@ -962,9 +923,6 @@ export default function ResearchPlanningPage() {
               >
                 Get a Free Planning Call
               </Link>
-              <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={styles.btn}>
-                Upload Your Brief
-              </Link>
             </div>
           </div>
         </div>
@@ -1000,14 +958,11 @@ export default function ResearchPlanningPage() {
                 Upload your brief and we will recommend the best path
                 (Starter/Core/Premium) with a transparent quote.
               </p>
-              <Link
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${styles.btn} ${styles.btnPrimary} ${styles.shareBriefBtn}`}
-              >
-                Upload Brief
-              </Link>
+              <UploadBriefModal
+                triggerLabel="Upload Brief"
+                enquiryLabel="Upload Brief"
+                triggerClassName={`${styles.btn} ${styles.btnPrimary} ${styles.shareBriefBtn}`}
+              />
             </article>
           </div>
         </div>

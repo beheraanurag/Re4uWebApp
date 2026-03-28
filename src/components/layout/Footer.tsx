@@ -111,13 +111,13 @@ export function Footer() {
               Specialised academic support for researchers, universities, and R&D teams - with ethics-first editorial and publication strategy.
             </p>
             <div className="mt-3 flex flex-col gap-2.5">
-              <Link href="#ethical-policy" className="text-sm font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">
+              <Link href="/about" className="text-sm font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">
                 Ethical support policy
               </Link>
-              <Link href="#confidentiality-policy" className="text-sm font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">
+              <Link href="/about" className="text-sm font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">
                 Confidentiality
               </Link>
-              <Link href="#no-ghostwriting" className="text-sm font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">
+              <Link href="/about" className="text-sm font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">
                 No-ghostwriting policy
               </Link>
               <Link href="/careers" className="text-sm font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">
@@ -162,8 +162,11 @@ export function Footer() {
               <Link href="mailto:support@researchedit4u.in" className="text-sm font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">
                 support@researchedit4u.in
               </Link>
+              <Link href="tel:+919556312253" className="text-sm font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">
+                Call: 95563 12253
+              </Link>
               <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">
-                WhatsApp (quick response)
+                WhatsApp: 80937 78526 (quick response)
               </Link>
               <Link href="https://www.instagram.com/re4u_research?igsh=dWVxNmU1ZTU4ZHM5" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">
                 Instagram (@re4u_research)
@@ -184,9 +187,9 @@ export function Footer() {
           <div className="mx-auto flex w-full max-w-[98rem] flex-col gap-3 px-4 py-5 text-sm text-[#3b4c67] sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
             <div>(c) {currentYear} ResearchEdit4U</div>
             <div className="flex flex-wrap items-center gap-3">
-              <Link href="#terms" className="font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">Terms</Link>
-              <Link href="#privacy" className="font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">Privacy</Link>
-              <Link href="#cookies" className="font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">Cookies</Link>
+              <Link href="/terms" className="font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">Terms</Link>
+              <Link href="/privacy" className="font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">Privacy</Link>
+              <Link href="/refund" className="font-semibold text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline">Refund</Link>
               <Link
                 href="/admin/login"
                 className="text-[#2f558f] no-underline hover:text-[#1d2f4d] hover:underline"

@@ -188,7 +188,7 @@ const DELIVERABLES: Deliverable[] = [
     problem:
       "You are stuck on \"where to submit\" - and you do not want to lose weeks to the wrong journal.",
     whatYouGet: [
-      "Shortlist of 5-10 journals based on scope-fit + article-type fit.",
+      "Shortlist of 2-4 journals based on scope-fit + article-type fit.",
       "Fit reasoning for each journal (not generic lists).",
       "Avoid list with risk flags + a prep snapshot (format + common screening items).",
     ],
@@ -395,7 +395,7 @@ const PRICING_PACKAGES: PricingPackage[] = [
     description:
       "If your draft is clean, but you do not want to gamble on the journal or miss submission requirements.",
     features: [
-      "5-10 journal shortlist + reasons",
+      "2-4 journal shortlist + reasons",
       "Avoid list + risk flags",
       "Submission-ready checklist (files/format/essentials)",
     ],
@@ -410,7 +410,7 @@ const PRICING_PACKAGES: PricingPackage[] = [
         "You get a checklist that keeps the portal process smooth.",
       ],
       youGet: [
-        "5-10 journal shortlist + reasons",
+        "2-4 journal shortlist + reasons",
         "Avoid list + risk flags",
         "Submission-ready checklist (files/format/essentials)",
       ],
@@ -943,21 +943,6 @@ const crossIcon = (
   </svg>
 );
 
-const pledgeText = [
-  "We are a publication support service - not a shortcut service.",
-  "",
-  "We will never:",
-  "• Guarantee acceptance or promise \"1-2 day publication\"",
-  "• Sell authorship or recommend paper-mill pathways",
-  "• Advise gaming similarity scores",
-  "• Hide AI use when a journal requires disclosure",
-  "",
-  "What we do promise:",
-  "• Clear journal-fit reasoning (you will understand the \"why\")",
-  "• A submission plan with integrity safeguards",
-  "• Practical, prioritized improvements you can act on immediately",
-].join("\n");
-
 type FaqItem = {
   id: string;
   question: string;
@@ -1119,7 +1104,6 @@ export function PublicationSupportPage() {
     return state;
   });
   const [integrityOpen, setIntegrityOpen] = useState<string>("acc1");
-  const [copyState, setCopyState] = useState<"idle" | "copied">("idle");
   const [faqQuery, setFaqQuery] = useState("");
   const [openFaq, setOpenFaq] = useState<string>(FAQS[0]?.id ?? "");
   const [ctaOpen, setCtaOpen] = useState(false);
@@ -1291,16 +1275,6 @@ export function PublicationSupportPage() {
       },
     [],
   );
-
-  const handleCopyPledge = async () => {
-    try {
-      await navigator.clipboard.writeText(pledgeText);
-      setCopyState("copied");
-      window.setTimeout(() => setCopyState("idle"), 1200);
-    } catch {
-      window.alert("Copy failed. Please copy manually.");
-    }
-  };
 
   const handleCtaSubmit = () => {
     const message = [
@@ -1496,7 +1470,7 @@ export function PublicationSupportPage() {
                 Who this is for
               </div>
               <h2 className={styles.audienceTitle}>Different stage. Same goal.</h2>
-              <p className={styles.audienceSub}>Choose your stage to see what typically goes wrong - and what you will receive from us (in plain English).</p>
+              <p className={styles.audienceSub}>Choose your stage to see what typically goes wrong - and what you will receive from us.</p>
               <div className={styles.aiLine}>
                 <span className={styles.aiBadge} aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none">
@@ -1708,7 +1682,7 @@ export function PublicationSupportPage() {
                         <div>
                           <div className={styles.deliverH3}>
                             {step.title}
-                            {step.id === "shortlist" ? " (5-10 options)" : ""}
+                            {step.id === "shortlist" ? " (2-4 options)" : ""}
                             {step.id === "readiness" ? " (peer-review style)" : ""}
                             {step.id === "integrity" ? " (publication ethics-first)" : ""}
                             {step.id === "submission" ? " (format + process support)" : ""}
@@ -1749,7 +1723,6 @@ export function PublicationSupportPage() {
                           <div className={styles.deliverArtifact}>
                             <div className={styles.deliverArtifactHead}>
                               <b>{step.previewTitle}</b>
-                              <span className={styles.deliverMiniPill}>preview</span>
                             </div>
                             {step.previewRows.map((row) => (
                               <div key={row.label} className={styles.deliverRowItem}>
@@ -1843,16 +1816,6 @@ export function PublicationSupportPage() {
                     <div className={styles.pricingTitleRow}>
                       <div className={styles.pricingItemTitle}>{pkg.title}</div>
                       <span className={styles.pricingPill}>{pkg.turnaround}</span>
-                    </div>
-                    <div className={styles.pricingStars} aria-label="Rating">
-                      {Array.from({ length: 5 }).map((_, idx) => (
-                        <span key={idx} className={styles.pricingStar}>
-                          {starIcon}
-                        </span>
-                      ))}
-                      <span className={styles.pricingStarNote}>
-                        <b>{pkg.rating}</b> ({pkg.ratingNote})
-                      </span>
                     </div>
                     <div className={styles.pricingDesc}>{pkg.description}</div>
                     <ul className={styles.pricingFeatures}>
@@ -1953,7 +1916,6 @@ export function PublicationSupportPage() {
             <div className={styles.addOnChips}>
               <div className={styles.addOnRow}>
                 <b>Choose an add-on</b>
-                <span className={styles.addOnPill}>short, clean, mobile-first</span>
               </div>
               <div className={styles.addOnGrid}>
                 {ADD_ONS.map((addOn) => (
@@ -2209,22 +2171,6 @@ export function PublicationSupportPage() {
                 anything that could create future risk.
               </p>
             </div>
-            <div className={styles.integrityBtnRow}>
-              <button
-                className={`${styles.integrityBtn} ${styles.integrityBtnPrimary}`}
-                type="button"
-                onClick={() =>
-                  openWhatsAppMessage(
-                    "Hi RE4U team, I want an integrity-first publication support plan. Please guide me.",
-                  )
-                }
-              >
-                {whatsappIcon} Ask RE4U
-              </button>
-              <button className={styles.integrityBtn} type="button" onClick={handleCopyPledge}>
-                {deliverStar} {copyState === "copied" ? "Copied ✓" : "Copy pledge"}
-              </button>
-            </div>
           </div>
 
           <div className={styles.integrityContent}>
@@ -2308,13 +2254,6 @@ export function PublicationSupportPage() {
                 >
                   {whatsappIcon} Start on WhatsApp
                 </button>
-                <button
-                  className={styles.integrityBtnSmall}
-                  type="button"
-                  onClick={() => window.print()}
-                >
-                  {infoIcon} Print / Save
-                </button>
               </div>
 
               <div className={styles.integrityNote}>
@@ -2331,7 +2270,7 @@ export function PublicationSupportPage() {
                 <span className={styles.audDot} aria-hidden="true" />
                 FAQs
               </div>
-              <h2 className={styles.faqTitle}>FAQs</h2>
+              <h2 className={styles.faqTitle}>Frequently Asked Questions (FAQs)</h2>
               <p className={styles.faqSub}>
                 Find quick answers. Search by keyword, or tap any question to expand.
               </p>
@@ -2523,11 +2462,6 @@ export function PublicationSupportPage() {
               </div>
 
               <div className={styles.finalCtaBtnRow}>
-                <BookNowModal
-                  source="publication-support-final-cta"
-                  triggerLabel="Upload Manuscript"
-                  triggerClassName={`${styles.finalCtaBtn} ${styles.finalCtaBtnPrimary}`}
-                />
                 <button
                   className={styles.finalCtaBtn}
                   type="button"

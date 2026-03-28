@@ -28,6 +28,7 @@ const navItems = [
   { href: "/services", label: "Services", hasDropdown: true },
   { href: "/blog", label: "RE Minds" },
   { href: "/case-studies", label: "Case stories" },
+  { href: "/careers", label: "Careers" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -61,6 +62,10 @@ export function Navbar() {
                 <span className="whitespace-nowrap">Mon-Sat: 10:00-19:00 IST</span>
                 <span className="whitespace-nowrap">| Email: support@researchedit4u.in</span>
               </div>
+              <div className="flex items-center gap-1">
+                <span className="whitespace-nowrap">Call: 95563 12253</span>
+                <span className="whitespace-nowrap">| WhatsApp: 80937 78526</span>
+              </div>
               <div className="flex items-center gap-1" aria-hidden>
                 <span className="whitespace-nowrap">Trusted by 4051+ researchers</span>
                 <span className="whitespace-nowrap">| 200+ accepted papers</span>
@@ -69,6 +74,10 @@ export function Navbar() {
               <div className="flex items-center gap-1" aria-hidden>
                 <span className="whitespace-nowrap">Mon-Sat: 10:00-19:00 IST</span>
                 <span className="whitespace-nowrap">| Email: support@researchedit4u.in</span>
+              </div>
+              <div className="flex items-center gap-1" aria-hidden>
+                <span className="whitespace-nowrap">Call: 95563 12253</span>
+                <span className="whitespace-nowrap">| WhatsApp: 80937 78526</span>
               </div>
             </div>
           </div>
@@ -83,6 +92,9 @@ export function Navbar() {
             <div className="flex flex-wrap gap-5 text-[0.78rem]">
               <span className="whitespace-nowrap">Mon-Sat: 10:00-19:00 IST</span>
               <span className="whitespace-nowrap before:mx-1.5 before:content-['|']">Email: support@researchedit4u.in</span>
+              <span className="whitespace-nowrap before:mx-1.5 before:content-['|']">
+                Call: 95563 12253, WhatsApp: 80937 78526
+              </span>
             </div>
           </div>
         </div>

@@ -374,7 +374,7 @@ export const plans: Plan[] = [
     name: "Defence Deck Pro",
     whoFor:
       "Final PhD thesis defence presentation with strong flow and visuals.",
-    price: "INR 5,500",
+    price: "INR 5,999",
     priceMeta: "one-time",
     etaLabel: "First draft",
     eta: "5 business days",
@@ -393,7 +393,7 @@ export const plans: Plan[] = [
     name: "Poster Impact",
     whoFor:
       "Conferences and exhibitions needing a print-ready poster.",
-    price: "INR 2,500",
+    price: "INR 2,999",
     priceMeta: "one-time",
     etaLabel: "First draft",
     eta: "5 business days",
@@ -411,7 +411,7 @@ export const plans: Plan[] = [
     name: "Presentation + Poster Bundle",
     whoFor:
       "Defence + conference-ready package (best value).",
-    price: "INR 7,500",
+    price: "INR 7,999",
     priceMeta: "one-time",
     etaLabel: "Delivery",
     eta: "8-10 business days",

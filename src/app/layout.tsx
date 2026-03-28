@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/layout/AppShell";
 import { Providers } from "./providers";
-import { LOGO_MAIN_SRC } from "@/lib/branding";
+import { SITE_APPLE_ICON_SRC, SITE_ICON_16_SRC, SITE_ICON_32_SRC, SITE_ICON_SRC } from "@/lib/branding";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -21,9 +21,13 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: LOGO_MAIN_SRC,
-    shortcut: LOGO_MAIN_SRC,
-    apple: LOGO_MAIN_SRC,
+    icon: [
+      { url: SITE_ICON_16_SRC, type: "image/png", sizes: "16x16" },
+      { url: SITE_ICON_32_SRC, type: "image/png", sizes: "32x32" },
+      { url: SITE_ICON_SRC, type: "image/png", sizes: "512x512" },
+    ],
+    shortcut: SITE_ICON_32_SRC,
+    apple: [{ url: SITE_APPLE_ICON_SRC, type: "image/png", sizes: "180x180" }],
   },
 };
 
