@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { Service } from "@/lib/types";
-import { API_BASE } from "@/lib/api";
 import { BookNowModal } from "@/components/sections/BookNowModal";
 
 const QUICK_OFFERS = [
@@ -65,6 +64,8 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export function ServicesPreview({ services: _services }: { services: Service[] }) {
   void _services;
   const [inlineEmail, setInlineEmail] = useState("");
+  const [inlineStatus, setInlineStatus] = useState<string | null>(null);
+  const [inlineLoading, setInlineLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalStatus, setModalStatus] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -97,6 +98,43 @@ export function ServicesPreview({ services: _services }: { services: Service[] }
     );
   }
 
+  async function submitInlineGuide(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const safeEmail = inlineEmail.trim();
+    if (!EMAIL_REGEX.test(safeEmail)) {
+      setInlineStatus("Please enter a valid email address.");
+      return;
+    }
+
+    setInlineLoading(true);
+    setInlineStatus(null);
+    try {
+      const res = await fetch("/api/free-guide", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: safeEmail,
+          source: "homepage-free-guide",
+        }),
+      });
+
+      if (!res.ok) {
+        const data = (await res.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(data?.error || "Request failed");
+      }
+
+      setInlineStatus(`Download started. We also sent your request from ${safeEmail}.`);
+      setInlineEmail("");
+      openGuidePdf();
+    } catch (error) {
+      const fallback = "Request failed. Please try again in a moment.";
+      const message = error instanceof Error && error.message ? error.message : fallback;
+      setInlineStatus(message);
+    } finally {
+      setInlineLoading(false);
+    }
+  }
+
   function closeModal() {
     setIsModalOpen(false);
     if (lastFocusRef.current) {
@@ -121,18 +159,20 @@ export function ServicesPreview({ services: _services }: { services: Service[] }
         .filter(Boolean)
         .join("\n");
 
-      const res = await fetch(`${API_BASE}/contact`, {
+      const res = await fetch("/api/free-guide", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: form.name.trim() || "Quick offers guide request",
           email: safeEmail,
-          message,
+          source: "homepage-free-guide-modal",
+          name: form.name.trim() || undefined,
+          org: form.org.trim() || undefined,
+          message: message || undefined,
         }),
       });
       if (!res.ok) throw new Error("Request failed");
 
-      setModalStatus(`Success: download link sent to ${safeEmail}.`);
+      setModalStatus(`Success: request sent from ${safeEmail}.`);
       setForm({ name: "", email: "", org: "" });
       setInlineEmail("");
     } catch {
@@ -234,24 +274,29 @@ export function ServicesPreview({ services: _services }: { services: Service[] }
                 <li>Written by PhD editors across disciplines.</li>
               </ul>
 
-              <div className="mt-3 flex items-center gap-2">
+              <form className="mt-3" onSubmit={submitInlineGuide}>
                 <input
                   value={inlineEmail}
                   onChange={(event) => setInlineEmail(event.target.value)}
                   type="email"
                   placeholder="Enter your email to download"
                   className="w-full rounded-full border border-[#A8C7E6]/60 bg-white/90 px-4 py-2 text-sm"
+                  autoComplete="email"
+                  required
                 />
-              </div>
-              <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-dashed border-[#A8C7E6]/55 pt-4 sm:flex-nowrap">
+                <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-dashed border-[#A8C7E6]/55 pt-4 sm:flex-nowrap">
                 <button
-                  type="button"
-                  onClick={openGuidePdf}
+                  type="submit"
+                  disabled={inlineLoading}
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-[#A8C7E6]/60 bg-[#1F3A5F] px-3 py-2 text-[13px] font-bold text-white shadow-md sm:whitespace-nowrap"
                 >
-                  Get the free guide
+                  {inlineLoading ? "Please wait..." : "Get the free guide"}
                 </button>
-              </div>
+                </div>
+                {inlineStatus ? (
+                  <p className="mt-2 text-xs text-[#2A2E35]/80">{inlineStatus}</p>
+                ) : null}
+              </form>
             </article>
           </div>
         </div>

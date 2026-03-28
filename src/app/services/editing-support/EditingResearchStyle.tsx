@@ -171,6 +171,9 @@ export function EditingResearchStyle() {
   const [consent, setConsent] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
 
   const currentStyle = RESEARCH_STYLES[styleKey];
   const selectPlan = useCallback((planKey: string) => {
@@ -199,6 +202,8 @@ export function EditingResearchStyle() {
     });
     setConsent(false);
     setError(false);
+    setSubmitError(null);
+    setUploadFile(null);
     setSubmitted(false);
   };
 
@@ -212,18 +217,57 @@ export function EditingResearchStyle() {
     setModalOpen(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const { name, mobile, email } = formInputs;
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
     const valid =
       selectedPlan.length > 2 &&
       name.trim().length > 1 &&
       mobile.trim().length > 6 &&
-      email.includes("@") &&
+      emailOk &&
       consent &&
       improvements.length >= 1;
     setError(!valid);
+    setSubmitError(null);
     if (!valid) return;
-    setSubmitted(true);
+
+    setIsSubmitting(true);
+    try {
+      const formData = new FormData();
+      formData.append("source", "editing-research-style");
+      formData.append("researchStyle", currentStyle.title);
+      formData.append("selectedPlan", selectedPlan);
+      formData.append("name", formInputs.name.trim());
+      formData.append("mobile", formInputs.mobile.trim());
+      formData.append("email", formInputs.email.trim());
+      formData.append("deadline", formInputs.deadline);
+      formData.append("wordCount", formInputs.wordCount.trim());
+      formData.append("field", formInputs.field.trim());
+      formData.append("improvements", improvements.join(", "));
+      formData.append("consent", consent ? "yes" : "no");
+      if (uploadFile) {
+        formData.append("file", uploadFile);
+      }
+
+      const response = await fetch("/api/research-style-quote", {
+        method: "POST",
+        body: formData,
+      });
+      const data = (await response.json().catch(() => null)) as { error?: string } | null;
+      if (!response.ok) {
+        throw new Error(data?.error || "Unable to submit quote request.");
+      }
+
+      setSubmitted(true);
+    } catch (submitErr) {
+      const message =
+        submitErr instanceof Error && submitErr.message
+          ? submitErr.message
+          : "Unable to submit quote request.";
+      setSubmitError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const improvementList = useMemo(
@@ -477,7 +521,10 @@ export function EditingResearchStyle() {
                         <input
                           className={styles.researchStyleInput}
                           type="file"
-                          onChange={() => {}}
+                          onChange={(event) => {
+                            const file = event.target.files?.[0] ?? null;
+                            setUploadFile(file);
+                          }}
                         />
                       </label>
                       <label className={styles.researchStyleField}>
@@ -555,14 +602,20 @@ export function EditingResearchStyle() {
                         and give consent.
                       </div>
                     )}
+                    {submitError && (
+                      <div className={styles.researchStyleError}>
+                        {submitError}
+                      </div>
+                    )}
 
                     <div className={styles.researchStyleModalActions}>
                       <button
                         type="button"
                         className={`${styles.btn} ${styles.btnPrimary}`}
                         onClick={handleSubmit}
+                        disabled={isSubmitting}
                       >
-                        Submit for quote
+                        {isSubmitting ? "Submitting..." : "Submit for quote"}
                       </button>
                     </div>
                   </div>

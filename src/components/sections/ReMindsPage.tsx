@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Search } from "lucide-react";
 import type { Post } from "@/lib/types";
-import { WHATSAPP_URL } from "@/lib/contact";
 
 type Mode = "stages" | "problems" | "downloads" | "latest";
 
@@ -370,10 +369,13 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
     file: File | null;
   }>({ name: "", email: "", file: null });
   const [checkMsg, setCheckMsg] = useState("");
+  const [checkLoading, setCheckLoading] = useState(false);
   const [newsEmail, setNewsEmail] = useState("");
   const [newsMsg, setNewsMsg] = useState("");
+  const [newsLoading, setNewsLoading] = useState(false);
   const [requestForm, setRequestForm] = useState({ type: "", email: "" });
   const [requestMsg, setRequestMsg] = useState("");
+  const [requestLoading, setRequestLoading] = useState(false);
 
   const postItems = useMemo(() => toPostItems(posts), [posts]);
 
@@ -439,7 +441,7 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
     if (nextMode === "latest") setActiveChip("All");
   }
 
-  function handleCheckSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleCheckSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const emailOk = checkForm.email.trim().includes("@");
     const fileOk = Boolean(checkForm.file);
@@ -451,39 +453,67 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
       setCheckMsg("Please upload your manuscript file.");
       return;
     }
+    setCheckLoading(true);
+    setCheckMsg("");
+    try {
+      const payload = new FormData();
+      payload.append("enquiryType", "free-check");
+      payload.append("name", checkForm.name.trim());
+      payload.append("email", checkForm.email.trim());
+      if (checkForm.file) {
+        payload.append("file", checkForm.file);
+      }
 
-    const fileName = checkForm.file?.name || "Not uploaded";
-    const message = [
-      "Free Manuscript Check request",
-      "",
-      checkForm.name.trim() ? `Name: ${checkForm.name.trim()}` : "",
-      `Email: ${checkForm.email.trim()}`,
-      `File selected: ${fileName}`,
-      "",
-      "Note: WhatsApp cannot auto-attach files from a website. Please attach the manuscript manually in WhatsApp.",
-      "",
-      "Please share clarity/structure feedback and next-step suggestions.",
-    ]
-      .filter(Boolean)
-      .join("\n");
-
-    const href = `${WHATSAPP_URL}?text=${encodeURIComponent(message)}`;
-    const opened = window.open(href, "_blank", "noopener,noreferrer");
-    if (!opened) window.location.href = href;
-    setCheckMsg("Opening WhatsApp… Please attach the manuscript file and send.");
+      const response = await fetch("/api/reminds-enquiry", {
+        method: "POST",
+        body: payload,
+      });
+      const data = (await response.json().catch(() => null)) as { error?: string } | null;
+      if (!response.ok) {
+        throw new Error(data?.error || "Unable to send request.");
+      }
+      setCheckMsg("Request sent. We will share your free check report in 24-48 hrs.");
+      setCheckForm({ name: "", email: "", file: null });
+    } catch (error) {
+      const message = error instanceof Error && error.message ? error.message : "Unable to send request.";
+      setCheckMsg(message);
+    } finally {
+      setCheckLoading(false);
+    }
   }
 
-  function handleNewsSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleNewsSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!newsEmail.trim().includes("@")) {
       setNewsMsg("Please enter a valid email.");
       return;
     }
-    setNewsMsg("Subscribed successfully.");
-    setNewsEmail("");
+    setNewsLoading(true);
+    setNewsMsg("");
+    try {
+      const response = await fetch("/api/reminds-enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          enquiryType: "subscribe",
+          email: newsEmail.trim(),
+        }),
+      });
+      const data = (await response.json().catch(() => null)) as { error?: string } | null;
+      if (!response.ok) {
+        throw new Error(data?.error || "Unable to subscribe.");
+      }
+      setNewsMsg("Subscribed successfully.");
+      setNewsEmail("");
+    } catch (error) {
+      const message = error instanceof Error && error.message ? error.message : "Unable to subscribe.";
+      setNewsMsg(message);
+    } finally {
+      setNewsLoading(false);
+    }
   }
 
-  function handleRequestSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleRequestSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!requestForm.type) {
       setRequestMsg("Please select a request type.");
@@ -493,8 +523,30 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
       setRequestMsg("Please enter a valid email.");
       return;
     }
-    setRequestMsg("Request sent. We will respond within 24-48 hrs.");
-    setRequestForm({ type: "", email: "" });
+    setRequestLoading(true);
+    setRequestMsg("");
+    try {
+      const response = await fetch("/api/reminds-enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          enquiryType: "resource-request",
+          requestType: requestForm.type,
+          email: requestForm.email.trim(),
+        }),
+      });
+      const data = (await response.json().catch(() => null)) as { error?: string } | null;
+      if (!response.ok) {
+        throw new Error(data?.error || "Unable to send request.");
+      }
+      setRequestMsg("Request sent. We will respond within 24-48 hrs.");
+      setRequestForm({ type: "", email: "" });
+    } catch (error) {
+      const message = error instanceof Error && error.message ? error.message : "Unable to send request.";
+      setRequestMsg(message);
+    } finally {
+      setRequestLoading(false);
+    }
   }
 
   const metaText = useMemo(() => {
@@ -600,9 +652,10 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
                   </div>
                   <button
                     type="submit"
+                    disabled={checkLoading}
                     className="mt-3 rounded-full bg-[#1F3A5F] px-4 py-2 text-sm font-extrabold text-white shadow-[0_14px_22px_rgba(31,58,95,.20)] transition hover:bg-[#3F7F72]"
                   >
-                    Get Free Check
+                    {checkLoading ? "Sending..." : "Get Free Check"}
                   </button>
 
                   <div className="mt-4 rounded-xl border border-[rgba(42,46,53,.10)] bg-white/70 p-3 shadow-[0_10px_20px_rgba(42,46,53,.06)]">
@@ -890,9 +943,10 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
             />
             <button
               type="submit"
+              disabled={newsLoading}
               className="mt-3 rounded-full bg-[#1F3A5F] px-4 py-2 text-sm font-extrabold text-white transition hover:bg-[#3F7F72]"
             >
-              Subscribe
+              {newsLoading ? "Subscribing..." : "Subscribe"}
             </button>
             {newsMsg ? (
               <small className="mt-3 block text-xs font-extrabold text-[rgba(42,46,53,.72)]">
@@ -929,9 +983,10 @@ export function ReMindsPage({ posts }: { posts: Post[] }) {
             />
             <button
               type="submit"
+              disabled={requestLoading}
               className="mt-3 rounded-full bg-[#1F3A5F] px-4 py-2 text-sm font-extrabold text-white transition hover:bg-[#3F7F72]"
             >
-              Send request
+              {requestLoading ? "Sending..." : "Send request"}
             </button>
             {requestMsg ? (
               <small className="mt-3 block text-xs font-extrabold text-[rgba(42,46,53,.72)]">

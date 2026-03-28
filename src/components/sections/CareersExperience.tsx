@@ -449,26 +449,35 @@ export function CareersExperience() {
 
     const lines = [
       "Career application details:",
-      `- Role preference: ${form.role}`,
-      `- Primary stream: ${form.stream}`,
-      form.phone.trim() ? `- Phone: ${form.phone.trim()}` : "",
-      form.location.trim() ? `- Location: ${form.location.trim()}` : "",
-      form.linkedin.trim() ? `- LinkedIn/Portfolio: ${form.linkedin.trim()}` : "",
+      `- Full name: ${form.fullName.trim() || "-"}`,
+      `- Email: ${form.email.trim() || "-"}`,
+      `- Phone: ${form.phone.trim() || "-"}`,
+      `- Location: ${form.location.trim() || "-"}`,
+      `- Role preference: ${form.role.trim() || "-"}`,
+      `- Primary stream: ${form.stream || "-"}`,
+      `- LinkedIn/Portfolio: ${form.linkedin.trim() || "-"}`,
+      `- Consent to contact: ${form.consent ? "Yes" : "No"}`,
       "",
       "Candidate note:",
       form.note.trim() || "No additional note provided.",
-    ]
-      .filter(Boolean)
-      .join("\n");
+      "",
+      "Meta:",
+      "- Source: careers-apply-form",
+      `- Submitted at: ${new Date().toISOString()}`,
+    ].join("\n");
 
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/contact`, {
+      const endpoint = API_BASE.trim()
+        ? `${API_BASE.replace(/\/$/, "")}/contact`
+        : "/api/contact";
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: form.fullName.trim(),
           email: form.email.trim(),
+          source: "careers-application",
           message: lines,
         }),
       });

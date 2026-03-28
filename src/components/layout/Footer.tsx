@@ -30,14 +30,39 @@ const SOCIAL_LINKS = [
 
 export function Footer() {
   const [email, setEmail] = useState("");
-  const [showToast, setShowToast] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email.trim() && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setShowToast(true);
-      setEmail("");
-      setTimeout(() => setShowToast(false), 2200);
+    const safeEmail = email.trim();
+    if (safeEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(safeEmail)) {
+      setLoading(true);
+      setStatusMessage(null);
+      try {
+        const response = await fetch("/api/footer-subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: safeEmail, source: "footer-notify-me" }),
+        });
+        const data = (await response.json().catch(() => null)) as { error?: string } | null;
+        if (!response.ok) {
+          throw new Error(data?.error || "Unable to subscribe right now.");
+        }
+        setStatusMessage("Thanks - you're subscribed. Please check your email.");
+        setEmail("");
+      } catch (error) {
+        const message =
+          error instanceof Error && error.message
+            ? error.message
+            : "Unable to subscribe right now.";
+        setStatusMessage(message);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setStatusMessage("Please enter a valid email address.");
+      return;
     }
   };
 
@@ -78,16 +103,17 @@ export function Footer() {
                 </div>
                 <Button
                   type="submit"
+                  disabled={loading}
                   className="w-full rounded-2xl border border-[#2f558f] bg-[#2f558f] px-6 py-3 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(46,83,142,0.24)] hover:border-[#1d2f4d] hover:bg-[#1d2f4d] sm:w-auto whitespace-nowrap"
                 >
-                  Notify me
+                  {loading ? "Please wait..." : "Notify me"}
                 </Button>
                 <div className="w-full text-xs text-[#5f7190] md:pr-1.5 md:text-right">
                   Unsubscribe anytime - Privacy-respectful
                 </div>
-                {showToast && (
+                {statusMessage && (
                   <div className="mt-2 w-full text-sm font-bold text-[#2f558f]">
-                    Thanks - you&apos;re subscribed.
+                    {statusMessage}
                   </div>
                 )}
               </form>

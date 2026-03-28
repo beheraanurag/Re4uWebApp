@@ -53,10 +53,22 @@ BOOKNOW_SMTP_USER=your-smtp-username
 BOOKNOW_SMTP_PASS=your-smtp-password
 BOOKNOW_SMTP_FROM=no-reply@yourdomain.com
 BOOKNOW_SMTP_TO=ops@yourdomain.com,support@yourdomain.com
+CONTACT_SMTP_TO=support@yourdomain.com
+FREE_GUIDE_SMTP_TO=support@yourdomain.com
+SUBSCRIBE_SMTP_TO=support@yourdomain.com
+RESEARCH_STYLE_QUOTE_SMTP_TO=support@yourdomain.com
+RESEARCH_PLANNING_SMTP_TO=support@yourdomain.com
+REMINDS_SMTP_TO=support@yourdomain.com
 ```
 
 Notes:
 - `BOOKNOW_SMTP_TO` supports comma-separated recipient emails.
+- `CONTACT_SMTP_TO` is optional. If omitted, contact-style requests go to `BOOKNOW_SMTP_TO`.
+- `FREE_GUIDE_SMTP_TO` is optional. If omitted, free-guide requests go to `BOOKNOW_SMTP_TO`.
+- `SUBSCRIBE_SMTP_TO` is optional. If omitted, footer subscriptions go to `BOOKNOW_SMTP_TO`.
+- `RESEARCH_STYLE_QUOTE_SMTP_TO` is optional. If omitted, editing quote requests go to `BOOKNOW_SMTP_TO`.
+- `RESEARCH_PLANNING_SMTP_TO` is optional. If omitted, research-planning enquiries go to `BOOKNOW_SMTP_TO`.
+- `REMINDS_SMTP_TO` is optional. If omitted, ReMinds requests go to `BOOKNOW_SMTP_TO`.
 - `BOOKNOW_SMTP_PORT=465` with `BOOKNOW_SMTP_SECURE=true` is the recommended setup.
 - If `NEXT_PUBLIC_API_URL` is set, the modal continues using `${NEXT_PUBLIC_API_URL}/contact` instead of local SMTP route.
 

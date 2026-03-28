@@ -29,12 +29,16 @@ export function FreeResourcesSection() {
 
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/contact`, {
+      const endpoint = API_BASE.trim()
+        ? `${API_BASE.replace(/\/$/, "")}/contact`
+        : "/api/contact";
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: role,
           email: safeEmail,
+          source: "homepage-free-resources",
           message:
             "Free resource request:\n- Resource: Rejection-proof submission checklist\n- Source: Homepage offers section",
         }),

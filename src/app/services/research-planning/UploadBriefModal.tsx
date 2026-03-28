@@ -1,15 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
-
-const ENQUIRY_EMAIL_TO = "support@researchedit4u.in";
-
-function openEmailPrefilled(subject: string, body: string) {
-  const href = `mailto:${ENQUIRY_EMAIL_TO}?subject=${encodeURIComponent(
-    subject,
-  )}&body=${encodeURIComponent(body)}`;
-  window.location.href = href;
-}
+import { useState } from "react";
 
 type TimelineValue = "" | "1-10" | "10-20" | "20-30" | "30-plus";
 
@@ -46,8 +37,8 @@ export function UploadBriefModal({
   const [requirements, setRequirements] = useState<string[]>([]);
   const [message, setMessage] = useState("");
   const [files, setFiles] = useState<File[]>([]);
-
-  const fileNames = useMemo(() => files.map((f) => f.name).filter(Boolean), [files]);
+  const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
 
   const toggleRequirement = (value: string) => {
     setRequirements((prev) =>
@@ -109,8 +100,9 @@ export function UploadBriefModal({
             </div>
 
             <form
-              onSubmit={(event) => {
+              onSubmit={async (event) => {
                 event.preventDefault();
+                setStatus(null);
 
                 const trimmedName = fullName.trim();
                 const trimmedEmail = email.trim();
@@ -130,38 +122,43 @@ export function UploadBriefModal({
                   window.alert("Please select at least one service requirement.");
                   return;
                 }
+                setSubmitting(true);
+                try {
+                  const payload = new FormData();
+                  payload.append("enquiryType", "upload-brief");
+                  payload.append("source", "research-planning-upload-brief");
+                  payload.append("triggerLabel", triggerLabel);
+                  payload.append("enquiryLabel", enquiryLabel ?? "");
+                  payload.append("emailSubject", emailSubject ?? "");
+                  payload.append("name", trimmedName);
+                  payload.append("email", trimmedEmail);
+                  payload.append("countryCode", countryCode);
+                  payload.append("phone", phone.trim());
+                  payload.append("timeline", timeline);
+                  payload.append("message", message.trim());
+                  requirements.forEach((item) => payload.append("requirements", item));
+                  files.forEach((file) => payload.append("files", file));
 
-                const phoneLine = phone.trim()
-                  ? `Phone: ${countryCode === "other" ? "" : countryCode}${countryCode === "other" ? "" : " "}${phone.trim()}`
-                  : "Phone: -";
+                  const response = await fetch("/api/research-planning-enquiry", {
+                    method: "POST",
+                    body: payload,
+                  });
+                  const data = (await response.json().catch(() => null)) as { error?: string } | null;
+                  if (!response.ok) {
+                    throw new Error(data?.error || "Unable to submit enquiry.");
+                  }
 
-                const messageLines = [
-                  `New enquiry (${enquiryLabel ?? triggerLabel})`,
-                  "",
-                  `Name: ${trimmedName}`,
-                  `Email: ${trimmedEmail}`,
-                  phoneLine,
-                  "",
-                  `Timeline: ${timeline}`,
-                  "",
-                  "Service requirements:",
-                  ...requirements.map((item) => `- ${item}`),
-                  "",
-                  "Files selected:",
-                  fileNames.length ? fileNames.map((n) => `- ${n}`).join("\n") : "- Not uploaded",
-                  fileNames.length
-                    ? "Note: Files cannot be auto-attached from a website. Please attach the files manually in your email."
-                    : "",
-                  "",
-                  "Additional message:",
-                  message.trim() || "-",
-                ].filter(Boolean);
-
-                openEmailPrefilled(
-                  emailSubject ?? `RESEARCHEDIT4U ENQUIRY - ${enquiryLabel ?? triggerLabel}`,
-                  messageLines.join("\n"),
-                );
-                setOpen(false);
+                  setStatus("Submitted successfully. Our team will contact you shortly.");
+                  window.setTimeout(() => setOpen(false), 700);
+                } catch (submitErr) {
+                  const messageText =
+                    submitErr instanceof Error && submitErr.message
+                      ? submitErr.message
+                      : "Unable to submit enquiry.";
+                  setStatus(messageText);
+                } finally {
+                  setSubmitting(false);
+                }
               }}
             >
               <div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2">
@@ -268,7 +265,7 @@ export function UploadBriefModal({
                     onChange={(e) => setFiles(Array.from(e.target.files ?? []))}
                   />
                   <span className="text-xs text-[#94a3b8]">
-                    Files must be attached manually in your email after it opens.
+                    Files are submitted directly with this enquiry.
                   </span>
                 </label>
 
@@ -292,11 +289,15 @@ export function UploadBriefModal({
                 </span>
                 <button
                   type="submit"
+                  disabled={submitting}
                   className="w-full rounded-full bg-[#1F3A5F] px-5 py-2.5 text-sm font-semibold text-[#f9fafb] shadow-[0_10px_25px_rgba(15,23,42,.22)] hover:bg-[#3F7F72] sm:w-auto"
                 >
-                  Submit enquiry
+                  {submitting ? "Submitting..." : "Submit enquiry"}
                 </button>
               </div>
+              {status ? (
+                <div className="mt-3 text-sm text-[#1F3A5F]">{status}</div>
+              ) : null}
             </form>
           </div>
         </div>

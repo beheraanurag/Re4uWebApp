@@ -2,24 +2,18 @@
 
 import { useState } from "react";
 import styles from "./page.module.css";
-import { WHATSAPP_URL } from "@/lib/contact";
-
-function openWhatsAppPrefilled(message: string) {
-  const href = `${WHATSAPP_URL}?text=${encodeURIComponent(message)}`;
-  const opened = window.open(href, "_blank", "noopener,noreferrer");
-  if (!opened) {
-    window.location.href = href;
-  }
-}
 
 export function SampleRequestWhatsAppForm() {
   const [selectedFileName, setSelectedFileName] = useState<string>("");
+  const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
 
   return (
     <form
       className={styles.sampleForm}
-      onSubmit={(event) => {
+      onSubmit={async (event) => {
         event.preventDefault();
+        setStatus(null);
         const formEl = event.currentTarget;
         if (!formEl.checkValidity()) {
           formEl.reportValidity();
@@ -39,24 +33,42 @@ export function SampleRequestWhatsAppForm() {
             ? String((file as File).name ?? "")
             : "";
 
-        const message = [
-          "Subject-specific sample request (Research Planning)",
-          "",
-          `Name: ${fullName}`,
-          `Email: ${email}`,
-          `Phone/WhatsApp: ${phone}`,
-          "",
-          `Level: ${level}`,
-          `Subject/domain: ${subject}`,
-          "",
-          "Requirement:",
-          requirement || "-",
-          "",
-          `Template/format file selected: ${fileName || "Not uploaded"}`,
-          fileName ? "Note: WhatsApp cannot auto-attach files from a website. Please attach the file manually in WhatsApp." : "",
-        ].join("\n");
+        setSubmitting(true);
+        try {
+          const payload = new FormData();
+          payload.append("enquiryType", "sample-preview");
+          payload.append("source", "research-planning-sample-preview");
+          payload.append("name", fullName);
+          payload.append("email", email);
+          payload.append("phone", phone);
+          payload.append("level", level);
+          payload.append("subject", subject);
+          payload.append("requirement", requirement);
+          if (fileName && file instanceof File) {
+            payload.append("files", file);
+          }
 
-        openWhatsAppPrefilled(message);
+          const response = await fetch("/api/research-planning-enquiry", {
+            method: "POST",
+            body: payload,
+          });
+          const data = (await response.json().catch(() => null)) as { error?: string } | null;
+          if (!response.ok) {
+            throw new Error(data?.error || "Unable to send sample request.");
+          }
+
+          setStatus("Request sent. We will email your sample preview shortly.");
+          formEl.reset();
+          setSelectedFileName("");
+        } catch (submitErr) {
+          const messageText =
+            submitErr instanceof Error && submitErr.message
+              ? submitErr.message
+              : "Unable to send sample request.";
+          setStatus(messageText);
+        } finally {
+          setSubmitting(false);
+        }
       }}
     >
       <div className={styles.field}>
@@ -145,12 +157,14 @@ export function SampleRequestWhatsAppForm() {
         <button
           className={`${styles.btn} ${styles.btnPrimary} ${styles.sampleSubmitBtn}`}
           type="submit"
+          disabled={submitting}
         >
-          Send me a sample preview
+          {submitting ? "Sending..." : "Send me a sample preview"}
         </button>
         <p className={styles.mutedLine}>
           By submitting, you agree we may contact you to share the preview.
         </p>
+        {status ? <p className={styles.mutedLine}>{status}</p> : null}
       </div>
     </form>
   );

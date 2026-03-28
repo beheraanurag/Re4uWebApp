@@ -256,7 +256,7 @@ export function TestimonialsSection() {
   const [copyLabel, setCopyLabel] = useState("Copy share link");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [email, setEmail] = useState("");
-  const [sendState, setSendState] = useState<"idle" | "sent" | "invalid">("idle");
+  const [sendState, setSendState] = useState<"idle" | "sending" | "sent" | "invalid" | "error">("idle");
   const touchStartX = useRef<number | null>(null);
 
   const filteredStories = useMemo(() => {
@@ -336,12 +336,39 @@ export function TestimonialsSection() {
     setIsModalOpen(false);
   }
 
-  function sendSample() {
+  async function sendSample() {
     if (!email.trim() || !email.includes("@")) {
       setSendState("invalid");
       return;
     }
-    setSendState("sent");
+    if (!activeStory) return;
+
+    setSendState("sending");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: "Testimonials sample request",
+          email: email.trim(),
+          source: "testimonials-sample-request",
+          message: [
+            "Anonymised sample request from testimonials section",
+            `Story ID: ${activeStory.id}`,
+            `Category: ${activeStory.category}`,
+            `Headline: ${activeStory.headline}`,
+            `Profile: ${activeStory.profile.role} | ${activeStory.profile.field} | ${activeStory.profile.region} | ${activeStory.profile.stage}`,
+          ].join("\n"),
+        }),
+      });
+      if (!res.ok) {
+        const data = (await res.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(data?.error || "Request failed");
+      }
+      setSendState("sent");
+    } catch {
+      setSendState("error");
+    }
   }
 
   function onTouchStart(event: React.TouchEvent<HTMLElement>) {
@@ -699,17 +726,24 @@ export function TestimonialsSection() {
                   <button
                     type="button"
                     onClick={sendSample}
+                    disabled={sendState === "sending"}
                     className="h-10 rounded-full bg-[#1F3A5F] px-4 text-xs font-semibold text-white"
                   >
-                    {sendState === "sent" ? "Requested" : "Send sample"}
+                    {sendState === "sending"
+                      ? "Sending..."
+                      : sendState === "sent"
+                        ? "Requested"
+                        : "Send sample"}
                   </button>
                 </div>
                 <p className="mt-3 text-[11.5px] text-[#2A2E35]/65">
                   {sendState === "invalid"
                     ? "Please enter a valid email address."
+                    : sendState === "error"
+                      ? "Request failed. Please try again."
                     : sendState === "sent"
-                      ? "Prototype: request captured. Connect this action to your lead workflow."
-                      : "Prototype only: no emails are sent. Connect this action to your lead workflow."}
+                      ? "Request received. We will email the anonymised sample."
+                      : "Enter your email to request this anonymised sample."}
                 </p>
               </div>
             </div>

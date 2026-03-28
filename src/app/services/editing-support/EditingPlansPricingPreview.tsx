@@ -124,6 +124,8 @@ export function EditingPlansPricingPreview({ titleClassName }: { titleClassName?
   const [selectedChecks, setSelectedChecks] = useState<string[]>([]);
   const [error, setError] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = modalOpen ? "hidden" : "";
@@ -142,6 +144,7 @@ export function EditingPlansPricingPreview({ titleClassName }: { titleClassName?
     setModalOpen(true);
     setSubmitted(false);
     setError(false);
+    setSubmitError(null);
   };
 
   const closeModal = () => {
@@ -159,16 +162,47 @@ export function EditingPlansPricingPreview({ titleClassName }: { titleClassName?
     setError(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
     const ok =
       name.trim().length > 1 &&
       mobile.trim().length > 6 &&
-      email.trim().includes("@") &&
+      emailOk &&
       consent &&
       selectedChecks.length >= 1;
     setError(!ok);
+    setSubmitError(null);
     if (!ok) return;
-    setSubmitted(true);
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/editing-plans-quote", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          source: "editing-plans-pricing",
+          selectedPlan: selectedPlan.trim(),
+          name: name.trim(),
+          mobile: mobile.trim(),
+          email: email.trim(),
+          requested: selectedChecks.join(", "),
+          consent: consent ? "yes" : "no",
+        }),
+      });
+      const data = (await response.json().catch(() => null)) as { error?: string } | null;
+      if (!response.ok) {
+        throw new Error(data?.error || "Unable to submit quote request.");
+      }
+      setSubmitted(true);
+    } catch (submitErr) {
+      const message =
+        submitErr instanceof Error && submitErr.message
+          ? submitErr.message
+          : "Unable to submit quote request.";
+      setSubmitError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const requestedList = useMemo(() => selectedChecks.join(", "), [selectedChecks]);
@@ -455,14 +489,20 @@ export function EditingPlansPricingPreview({ titleClassName }: { titleClassName?
                     consent.
                   </div>
                 )}
+                {submitError && (
+                  <div className={styles.pricingError}>
+                    {submitError}
+                  </div>
+                )}
 
                 <div className={styles.pricingModalActions}>
                   <button
                     type="button"
                     className={`${styles.btn} ${styles.btnPrimary}`}
                     onClick={handleSubmit}
+                    disabled={isSubmitting}
                   >
-                    Submit for quote
+                    {isSubmitting ? "Submitting..." : "Submit for quote"}
                   </button>
                 </div>
               </div>
