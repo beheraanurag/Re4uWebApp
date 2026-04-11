@@ -50,12 +50,13 @@ const SUBJECTS: SubjectScorecard[] = [
   },
   {
     key: "med-health",
-    title: "Medical & Health Sciences",
+    title: "Pharmaceutical & Health sciences",
     tag: "Clinical and health reporting",
     desc:
       "IMRaD structure, reporting guideline alignment (CONSORT/STROBE), ethical language precision, and reviewer-ready clinical clarity.",
     stats: { edited: "760+", matches: "210+", accepts: "44+" },
     subfields: [
+      "Pharmacy",
       "Clinical Medicine",
       "Public Health",
       "Nursing",
