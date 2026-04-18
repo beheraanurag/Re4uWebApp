@@ -12,9 +12,16 @@ import { ResourcesShelfSection } from "@/components/sections/ResourcesShelfSecti
 import { PopularServicesSection } from "@/components/sections/PopularServicesSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import styles from "./page.module.css";
+import type { Metadata } from "next";
 
 // Cache for 60s to reduce CPU; revalidate in background (was force-dynamic)
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "https://researchedit4u.in/",
+  },
+};
 
 export default async function HomePage() {
   const [services, posts] = await Promise.all([getServices(), getPublishedPosts()]);
